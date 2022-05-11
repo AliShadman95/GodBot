@@ -9,6 +9,7 @@
  *
  */
 import bot from "@app/core/token";
+import configs from "@configs/config";
 
 import logger from "@app/functions/utils/logger";
 
@@ -21,7 +22,7 @@ import logger from "@app/functions/utils/logger";
 const launch = async (): Promise<void> => {
 	logger.info("command: /launch", "launch.ts:launch()");
 
-	bot.start();
+	bot.login(configs.discord.token);
 };
 
 export { launch };

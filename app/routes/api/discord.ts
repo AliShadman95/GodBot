@@ -9,15 +9,15 @@
  *
  */
 
-import message from "@app/functions/api/telegram/message";
-import bot from "@app/functions/api/telegram/bot";
+import message from "@app/functions/api/discord/message";
+import bot from "@app/functions/api/discord/bot";
 
-const telegram = {
+const discord = {
 	api: {
 		message: message,
 		bot: bot,
 	},
 };
 
-export { telegram };
-export default telegram;
+export { discord };
+export default discord;

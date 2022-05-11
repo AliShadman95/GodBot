@@ -60,7 +60,10 @@
 		"prepare": "ts-patch install -s"
 	},
 	"dependencies": {
+		"@napi-rs/canvas": "^0.1.21",
 		"@ptkdev/logger": "^1.8.0",
+		"canvas": "^2.9.1",
+		"cwebp": "^2.0.5",
 		"discord.js": "^13.6.0",
 		"grammy": "^1.6.1",
 		"mongoose": "^5.13.14"

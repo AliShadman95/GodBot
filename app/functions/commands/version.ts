@@ -10,7 +10,7 @@
  */
 import bot from "@app/core/token";
 import v from "@app/configs/version.json";
-import telegram from "@routes/api/telegram";
+import telegram from "@routes/api/discord";
 import logger from "@app/functions/utils/logger";
 
 /**
@@ -20,7 +20,7 @@ import logger from "@app/functions/utils/logger";
  *
  */
 const version = async (): Promise<void> => {
-	bot.command("version", async (ctx) => {
+	/* 	bot.command("version", async (ctx) => {
 		logger.info("command: /version", "version.ts:version()");
 
 		await telegram.api.message.send(
@@ -28,7 +28,7 @@ const version = async (): Promise<void> => {
 			telegram.api.message.getChatID(ctx),
 			`v${v?.semver || "0.0.0"} (${v?.hash || ""})`,
 		);
-	});
+	}); */
 };
 
 export { version };

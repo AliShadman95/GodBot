@@ -1,9 +1,7 @@
 /**
- * Wrapper telegram api (message)
+ * Wrapper discord api (message)
  * =====================
  *
- * @contributors: Patryk Rzucidło [@ptkdev] <support@ptkdev.io> (https://ptk.dev)
- *                Alì Shadman [@AliShadman95] (https://github.com/AliShadman95)
  *
  * @license: MIT License
  *
@@ -16,8 +14,8 @@ const getUsername = (ctx: any): string => {
 	return username?.trim() || "";
 };
 
-const getUserID = (ctx: any): string => {
-	const id = ctx?.update?.message?.from?.id || ctx?.update?.callback_query?.from?.id;
+const getUserID = (message: any): string => {
+	const id = message?.author?.id;
 
 	return `${id}` || "0";
 };
@@ -61,30 +59,12 @@ const getText = (ctx: any): string => {
 	return ctx?.update?.message?.text || ctx?.message?.text || "";
 };
 
-const send = async (ctx: any, group_id: number, text: string, options: any = { parse_mode: "HTML" }): Promise<any> => {
-	if (group_id && text) {
+const send = async (ctx: any, text: string, image: any): Promise<any> => {
+	if (text || image) {
 		let message;
 
 		try {
-			message = await ctx.api.sendMessage(group_id, text, options);
-			return message;
-		} catch (err: any) {
-			logger.error(JSON.stringify(err), "message.ts:send()");
-		}
-	}
-};
-
-const sendPhoto = async (
-	ctx: any,
-	group_id: number,
-	photo: string,
-	options: any = { parse_mode: "HTML" },
-): Promise<any> => {
-	if (group_id && photo) {
-		let message;
-
-		try {
-			message = await ctx.api.sendPhoto(group_id, photo, options);
+			message = await ctx.channel.send(image ? { files: [{ attachment: image }] } : text);
 			return message;
 		} catch (err: any) {
 			logger.error(JSON.stringify(err), "message.ts:send()");
@@ -110,6 +90,10 @@ const pin = async (
 	}
 };
 
+const isCommand = (command) => {
+	return command.startsWith("!");
+};
+
 export {
 	getFullUser,
 	getUsername,
@@ -119,10 +103,10 @@ export {
 	getUserFirstName,
 	send,
 	pin,
-	sendPhoto,
 	getPhotoFileID,
 	getPhotoCaption,
 	getActionType,
+	isCommand,
 };
 export default {
 	getFullUser,
@@ -133,8 +117,9 @@ export default {
 	getUserFirstName,
 	send,
 	pin,
-	sendPhoto,
+
 	getPhotoFileID,
 	getPhotoCaption,
 	getActionType,
+	isCommand,
 };

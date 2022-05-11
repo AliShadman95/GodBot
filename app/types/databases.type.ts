@@ -2,200 +2,71 @@
  * Databases Interfaces
  * =====================
  *
- * Share your social media and links on Telegram
+ * The God Bot
  *
- * @contributors: Patryk Rzucidło [@ptkdev] <support@ptkdev.io> (https://ptk.dev)
- *                Alì Shadman [@AliShadman95] (https://github.com/AliShadman95)
  *
  * @license: MIT License
  *
  */
 
 /**
- * Telegram User Interface
+ * Discord Rank Interface
  * =====================
  *
- * @Context: telegram.api.message.getFullUser(ctx)
+ * @Context: message.author.User
  *
- * @interface [TelegramUserInterface](https://github.com/ptkdev/aboutmeinfo-telegram-bot/blob/main/app/webcomponent/types/databases.type.ts)
  *
- * @param { number } id - telegram
- * @param { boolean } is_bot - is user a bot
- * @param { string } first_name - user name from telegram
- * @param { string } username - user username from telegram
- * @param { string } language_code - user code language from OS
- * @param { string } question - user submitted question
- * @param { string } description - user submitted question tip
- * @param { number } score - user current score
- * @param { number } group_id - users group id
- * @param { string } error - error message
+ * @param { number } id - discord id
+ * @param { boolean } bot - is user a bot
+ * @param { string } username - user username from discord
+ * @param { string } avatar - avatar code from discord
+ * @param { number } points - points of user
  *
  */
-export interface TelegramUserInterface {
+export interface DiscordRankInterface {
 	/**
-	 * Telegram User Interface
+	 * Discord Rank Interface
 	 * =====================
 	 *
-	 * @interface [TelegramUserInterface](https://github.com/ptkdev/aboutmeinfo-telegram-bot/blob/main/app/webcomponent/types/databases.type.ts)
 	 *
-	 * @param { number } id - telegram
+	 * @param { string } id - discord id
 	 *
 	 */
-	id: number;
+	id: string;
 	/**
-	 * User Interface
+	 * Discord Rank Interface
 	 * =====================
 	 *
-	 * @interface [TelegramUserInterface](https://github.com/ptkdev/aboutmeinfo-telegram-bot/blob/main/app/webcomponent/types/databases.type.ts)
 	 *
-	 * @param { boolean } is_bot - is user a bot
+	 * @param { boolean } bot - is user a bot
 	 *
 	 */
-	is_bot?: boolean;
+	bot?: boolean;
 	/**
-	 * User Interface
+	 * Discord Rank Interface
 	 * =====================
 	 *
-	 * @interface [TelegramUserInterface](https://github.com/ptkdev/aboutmeinfo-telegram-bot/blob/main/app/webcomponent/types/databases.type.ts)
 	 *
-	 * @param { string } first_name - user name from telegram
-	 *
-	 */
-	first_name?: string;
-	/**
-	 * User Interface
-	 * =====================
-	 *
-	 * @interface [TelegramUserInterface](https://github.com/ptkdev/aboutmeinfo-telegram-bot/blob/main/app/webcomponent/types/databases.type.ts)
-	 *
-	 * @param { string } username - user username from telegram
+	 * @param { string } username - user username from discord
 	 *
 	 */
 	username?: string;
 	/**
-	 * User Interface
+	 * Discord Rank Interface
 	 * =====================
 	 *
-	 * @interface [TelegramUserInterface](https://github.com/ptkdev/aboutmeinfo-telegram-bot/blob/main/app/webcomponent/types/databases.type.ts)
 	 *
-	 * @param { string } language_code - user code language from OS
+	 * @param { string } avatar - avatar code from discord
 	 *
 	 */
-	language_code?: string;
+	avatar?: string;
 	/**
-	 * User Interface
+	 * Discord Rank Interface
 	 * =====================
 	 *
-	 * @interface [TelegramUserInterface](https://github.com/ptkdev/aboutmeinfo-telegram-bot/blob/main/app/webcomponent/types/databases.type.ts)
 	 *
-	 * @param { string } question - user submitted question
-	 *
-	 */
-	question?: string;
-	/**
-	 * User Interface
-	 * =====================
-	 *
-	 * @interface [TelegramUserInterface](https://github.com/ptkdev/aboutmeinfo-telegram-bot/blob/main/app/webcomponent/types/databases.type.ts)
-	 *
-	 * @param { string } description - user submitted question tip
+	 * @param { string } points - points of user
 	 *
 	 */
-	description?: string;
-	/**
-	 * User Interface
-	 * =====================
-	 *
-	 * @interface [TelegramUserInterface](https://github.com/ptkdev/aboutmeinfo-telegram-bot/blob/main/app/webcomponent/types/databases.type.ts)
-	 *
-	 * @param { number } score - user current score
-	 *
-	 */
-	score: number;
-	/**
-	 * User Interface
-	 * =====================
-	 *
-	 * @interface [TelegramUserInterface](https://github.com/ptkdev/aboutmeinfo-telegram-bot/blob/main/app/webcomponent/types/databases.type.ts)
-	 *
-	 * @param { number } group_id - users group id
-	 *
-	 */
-	group_id: number;
-	/**
-	 * User Interface
-	 * =====================
-	 *
-	 * @interface [TelegramUserInterface](https://github.com/ptkdev/aboutmeinfo-telegram-bot/blob/main/app/webcomponent/types/databases.type.ts)
-	 *
-	 * @param { string } error - error message
-	 *
-	 */
-	error?: string;
-}
-
-/**
- * SettingsInterface
- * =====================
- *
- * @interface [SettingsInterface](https://github.com/ptkdev/aboutmeinfo-telegram-bot/blob/main/app/types/game.type.ts)
- *
- * @param { string } language - language
- * @param { boolean } pin_message - pin message to the chat
- * @param { number } group_id - group id fron user playing
- *
- */
-export interface SettingsInterface {
-	/**
-	 * SettingsInterface
-	 * =====================
-	 *
-	 * @param { string } language - language
-	 *
-	 */
-	language: string;
-	/**
-	 * SettingsInterface
-	 * =====================
-	 *
-	 * @param { string } pin_message - pin message to the chat
-	 *
-	 */
-	pin_message: boolean;
-	/**
-	 * SettingsInterface
-	 * =====================
-	 *
-	 * @param { number } group_id - group id fron user playing
-	 *
-	 */
-	group_id: number;
-}
-
-/**
- * AboutInterface
- * =====================
- *
- * @interface [SettingsInterface](https://github.com/ptkdev/aboutmeinfo-telegram-bot/blob/main/app/types/game.type.ts)
- *
- * @param { string } language - language
- * @param { boolean } pin_message - pin message to the chat
- * @param { number } group_id - group id fron user playing
- *
- */
-export interface AboutInterface {
-	id: string;
-	username: string;
-	step: string;
-	instagram: string;
-	github: string;
-	linkedin: string;
-	facebook: string;
-	twitter: string;
-	tiktok: string;
-	steam: string;
-	onlyfans: string;
-	amazon: string;
-	website: string;
-	privacy: string;
+	points?: string;
 }

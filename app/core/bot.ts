@@ -18,15 +18,7 @@ import logger from "@app/functions/utils/logger";
 
 	await db.connection.connectDB();
 
-	await commands.start();
-	await commands.about();
-	await commands.settings();
-	await commands.set();
-	await commands.ral();
-	await commands.version();
-	await commands.privacy();
-	await commands.hears();
-
+	await commands.commandsHandler();
 	await commands.launch();
 })();
 

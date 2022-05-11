@@ -8,10 +8,9 @@
  * @license: MIT License
  *
  */
-import { Bot } from "grammy";
-import configs from "@configs/config";
+import { Client, Intents } from "discord.js";
 
-const bot = new Bot(configs.telegram.token);
+const bot = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 
 export { bot };
 export default bot;

@@ -11,7 +11,7 @@
 import bot from "@app/core/token";
 import translate from "@translations/translate";
 import db from "@routes/api/database";
-import telegram from "@routes/api/telegram";
+import telegram from "@routes/api/discord";
 import logger from "@app/functions/utils/logger";
 
 /**
@@ -21,7 +21,7 @@ import logger from "@app/functions/utils/logger";
  *
  */
 const privacy = async (): Promise<void> => {
-	bot.command("privacy", async (ctx) => {
+	/* bot.command("privacy", async (ctx) => {
 		logger.info("command: /privacy", "privacy.ts:privacy()");
 		if (telegram.api.message.getChatID(ctx) > 0) {
 			const lang = await db.settings.get({
@@ -41,7 +41,7 @@ const privacy = async (): Promise<void> => {
 				translate(lang.language, "set_command_privacy"),
 			);
 		}
-	});
+	}); */
 };
 
 export { privacy };

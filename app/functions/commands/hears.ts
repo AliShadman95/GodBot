@@ -11,7 +11,7 @@
 import bot from "@app/core/token";
 import translate from "@translations/translate";
 import db from "@routes/api/database";
-import telegram from "@routes/api/telegram";
+import telegram from "@routes/api/discord";
 import logger from "@app/functions/utils/logger";
 
 /**
@@ -21,7 +21,7 @@ import logger from "@app/functions/utils/logger";
  *
  */
 const hears = async (): Promise<void> => {
-	bot.on("message:text", async (ctx) => {
+	/* bot.on("message:text", async (ctx) => {
 		logger.info("hears: text", "hears.ts:on(text)");
 
 		const lang = await db.settings.get({
@@ -390,7 +390,7 @@ const hears = async (): Promise<void> => {
 				);
 			}
 		}
-	});
+	}); */
 };
 
 export { hears };

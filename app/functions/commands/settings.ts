@@ -12,7 +12,7 @@ import { InlineKeyboard } from "grammy";
 import bot from "@app/core/token";
 import translate from "@translations/translate";
 import db from "@routes/api/database";
-import telegram from "@routes/api/telegram";
+import telegram from "@routes/api/discord";
 import logger from "@app/functions/utils/logger";
 
 /**
@@ -22,7 +22,7 @@ import logger from "@app/functions/utils/logger";
  *
  */
 const settings = async (): Promise<void> => {
-	bot.command("settings", async (ctx) => {
+	/* bot.command("settings", async (ctx) => {
 		logger.info("command: /settings", "settings.ts:settings()");
 		const lang = await db.settings.get({
 			group_id: telegram.api.message.getChatID(ctx),
@@ -127,7 +127,7 @@ const settings = async (): Promise<void> => {
 			telegram.api.message.getChatID(ctx),
 			translate(lang.language, "settings_command_current_italian"),
 		);
-	});
+	}); */
 };
 
 export { settings };
