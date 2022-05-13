@@ -65,8 +65,10 @@
 		"canvas": "^2.9.1",
 		"cwebp": "^2.0.5",
 		"discord.js": "^13.6.0",
+		"express": "^4.18.1",
 		"grammy": "^1.6.1",
-		"mongoose": "^5.13.14"
+		"mongoose": "^5.13.14",
+		"node-html-to-image": "^3.2.4"
 	},
 	"devDependencies": {
 		"@ptkdev/all-shields-cli": "^2.0.2",

@@ -14,13 +14,32 @@ const getUsername = (ctx: any): string => {
 	return username?.trim() || "";
 };
 
-const getUserID = (message: any): string => {
-	const id = message?.author?.id;
+const getUserDiscriminator = (ctx: any): string => {
+	return ctx?.author?.discriminator;
+};
+const getUserID = (ctx: any): string => {
+	const id = ctx?.author?.id;
 
 	return `${id}` || "0";
 };
+const getUserAvatar = (ctx: any): string => {
+	return ctx?.author?.displayAvatarURL({ format: "jpg" });
+};
 
-const getUserFirstName = (ctx: any): string => {
+const send = async (ctx: any, text: string, image: any): Promise<any> => {
+	if (text || image) {
+		let message;
+
+		try {
+			message = await ctx.channel.send(image ? { files: [{ attachment: image }] } : text);
+			return message;
+		} catch (err: any) {
+			logger.error(JSON.stringify(err), "message.ts:send()");
+		}
+	}
+};
+
+/* const getUserFirstName = (ctx: any): string => {
 	const first_name = ctx?.update?.message?.from?.first_name;
 
 	return first_name?.trim() || "";
@@ -59,18 +78,7 @@ const getText = (ctx: any): string => {
 	return ctx?.update?.message?.text || ctx?.message?.text || "";
 };
 
-const send = async (ctx: any, text: string, image: any): Promise<any> => {
-	if (text || image) {
-		let message;
 
-		try {
-			message = await ctx.channel.send(image ? { files: [{ attachment: image }] } : text);
-			return message;
-		} catch (err: any) {
-			logger.error(JSON.stringify(err), "message.ts:send()");
-		}
-	}
-};
 
 const pin = async (
 	ctx: any,
@@ -88,38 +96,45 @@ const pin = async (
 			logger.error(JSON.stringify(err), "message.ts:pin()");
 		}
 	}
-};
+}; */
 
 const isCommand = (command) => {
 	return command.startsWith("!");
 };
 
 export {
-	getFullUser,
+	/* getFullUser, */
 	getUsername,
-	getChatID,
-	getText,
+	/* 	getChatID,
+	getText, */
 	getUserID,
-	getUserFirstName,
+	getUserAvatar,
+	getUserDiscriminator,
 	send,
+	/* getUserFirstName,
+	send,
+	
 	pin,
 	getPhotoFileID,
 	getPhotoCaption,
-	getActionType,
+	getActionType, */
 	isCommand,
 };
 export default {
-	getFullUser,
+	/* 	getFullUser, */
 	getUsername,
-	getChatID,
-	getText,
+	getUserDiscriminator,
+	getUserAvatar,
+	/* 	getChatID,
+	getText, */
 	getUserID,
-	getUserFirstName,
+	send,
+	/* 	getUserFirstName,
 	send,
 	pin,
 
 	getPhotoFileID,
 	getPhotoCaption,
-	getActionType,
+	getActionType, */
 	isCommand,
 };
