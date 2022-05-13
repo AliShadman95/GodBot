@@ -9,9 +9,9 @@
 import logger from "@app/functions/utils/logger";
 
 const getUsername = (ctx: any): string => {
-	const username = ctx?.update?.message?.from?.username;
+	const username = ctx?.author?.username;
 
-	return username?.trim() || "";
+	return username || "";
 };
 
 const getUserDiscriminator = (ctx: any): string => {
