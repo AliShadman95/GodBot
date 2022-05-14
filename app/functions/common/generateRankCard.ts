@@ -1,5 +1,5 @@
 import canvas from "canvas"; // For canvas.
-
+import { DiscordSettingsRankInterface } from "@app/types/databases.type";
 interface userInfo {
 	username: string;
 	isGradient: boolean;
@@ -20,14 +20,18 @@ const generateBackground = (ctx, { isGradient, gradientColor1, gradientColor2 }:
 	ctx.fillRect(0, 0, 1342, 853);
 };
 
-const generateText = (ctx, { username, discriminator, gradientColor2 }: userInfo) => {
+const generateText = (
+	ctx,
+	{ username, discriminator, xps, points }: userInfo & DiscordSettingsRankInterface,
+	currentLevelIndex: number,
+) => {
 	// Add our title text
 	ctx.font = "70px InterBold";
 	ctx.fillStyle = "cyan";
 
-	const numberLevelWidth = ctx.measureText("1000").width;
+	const numberLevelWidth = ctx.measureText(currentLevelIndex).width;
 
-	ctx.fillText("1000", 1270 - numberLevelWidth, 110);
+	ctx.fillText(currentLevelIndex, 1270 - numberLevelWidth, 110);
 
 	// Add our title text
 	ctx.font = "40px InterBold";
@@ -35,13 +39,13 @@ const generateText = (ctx, { username, discriminator, gradientColor2 }: userInfo
 
 	const levelLabelWidth = ctx.measureText("LEVEL").width;
 
-	ctx.fillText("LEVEL", 1270 - numberLevelWidth - levelLabelWidth - 20, 110);
+	ctx.fillText("LEVEL", 1270 - numberLevelWidth - levelLabelWidth - 10, 110);
 
 	// Add our title text
 	ctx.font = "70px InterBold";
 	ctx.fillStyle = "white";
 
-	const numberRankWidth = ctx.measureText("#1").width;
+	const numberRankWidth = ctx.measureText("#1").width; // TODO inserire gestione ranking fra utenti
 
 	ctx.fillText("#1", 1270 - numberLevelWidth - levelLabelWidth - numberRankWidth - 40, 110);
 
@@ -71,19 +75,32 @@ const generateText = (ctx, { username, discriminator, gradientColor2 }: userInfo
 	ctx.font = "38px InterBold";
 	ctx.fillStyle = "grey";
 
-	const xpNeededWidth = ctx.measureText("/ 10000 XP").width;
+	const xpNeededWidth = ctx.measureText(`/ ${xps[currentLevelIndex]} XP`).width;
 
-	ctx.fillText(`/ 10000 XP`, 1260 - xpNeededWidth, 250);
+	ctx.fillText(`/ ${xps[currentLevelIndex]} XP`, 1260 - xpNeededWidth, 250);
 
 	ctx.font = "38px InterBold";
 	ctx.fillStyle = "white";
 
-	const currentXpWidth = ctx.measureText("1000").width;
+	const currentXpWidth = ctx.measureText(points).width;
 
-	ctx.fillText("1000", 1260 - xpNeededWidth - currentXpWidth - 20, 250);
+	ctx.fillText(points, 1260 - xpNeededWidth - currentXpWidth - 20, 250);
 };
 
-const generateProgressBar = (ctx) => {
+const generateProgressBar = (
+	ctx,
+	{ points, xps }: userInfo & DiscordSettingsRankInterface,
+	currentLevelIndex: number,
+) => {
+	/* 	const percentage = Math.floor(
+		((xps[currentLevelIndex] - xps[currentLevelIndex - 1] / 100) / parseInt(points))) * 100,
+	); */
+
+	const percentage = Math.floor(
+		(parseInt(points) - (xps[currentLevelIndex - 1] || 0)) /
+			((xps[currentLevelIndex] - (xps[currentLevelIndex - 1] || 0)) / 100),
+	);
+
 	// Background level bar
 	for (let i = 0; i < 100; i++) {
 		ctx.beginPath();
@@ -95,7 +112,7 @@ const generateProgressBar = (ctx) => {
 		ctx.fill();
 	}
 	// Progress bar
-	for (let i = 0; i < 80; i++) {
+	for (let i = 0; i < percentage; i++) {
 		ctx.beginPath();
 		ctx.lineWidth = 42;
 		ctx.strokeStyle = "cyan";
@@ -129,14 +146,19 @@ const generateAvatar = async (ctx, c, { avatar }: userInfo) => {
 	ctx.drawImage(a, circle.x - hsx, circle.y - hsy, hsx * 2, hsy * 2);
 };
 
-const generateRankCard = async (userInfo: userInfo) => {
+const generateRankCard = async (userInfo: userInfo & DiscordSettingsRankInterface) => {
 	// Create canvas
 	const c = canvas.createCanvas(1342, 400);
 	const ctx = c.getContext("2d");
 
+	const currentLevelIndex =
+		userInfo?.xps?.findIndex(
+			(xp, index) => parseInt(userInfo?.points) >= xp && parseInt(userInfo.points) < userInfo?.xps[index + 1],
+		) + 1;
+
 	generateBackground(ctx, userInfo);
-	generateText(ctx, userInfo);
-	generateProgressBar(ctx);
+	generateText(ctx, userInfo, currentLevelIndex);
+	generateProgressBar(ctx, userInfo, currentLevelIndex);
 	await generateAvatar(ctx, c, userInfo);
 
 	const canvasData = await c.toBuffer("image/png");
