@@ -9,32 +9,55 @@
  *
  */
 import bot from "@app/core/token";
-import translate from "@translations/translate";
 import discord from "@routes/api/discord";
-/* import moment from "moment";
- */ import db from "@routes/api/database";
-import telegram from "@routes/api/discord";
+import type { DiscordSettingsRankInterface } from "@app/types/databases.type";
+import differenceInSeconds from "date-fns/differenceInSeconds";
+import db from "@routes/api/database";
 import logger from "@app/functions/utils/logger";
 
-const pointsToAwardToUsers = [];
+interface UserTimeInChannelData {
+	id: string;
+	joinTime: number;
+}
 
-const startTimer = (userId: string): void => {
-	console.log("start timer");
-	/* if(userAwards.includes(userId)) {
-		return;
-	} */
+let usersTimeInChannelData: UserTimeInChannelData[] = [];
+
+const userJoin = (userId: string): void => {
+	usersTimeInChannelData.push({ id: userId, joinTime: Date.now() });
+	logger.info(`User joined ${userId}`, "voiceDetection.ts:userJoin()");
 };
 
-const stopTimer = (userId: string, oldMember): void => {
-	console.log("stop timer");
+const userLeft = async (
+	userId: string,
+	{ minPointsVoiceChannel, maxPointsVoiceChannel }: DiscordSettingsRankInterface,
+): Promise<void> => {
+	logger.info(`User left ${userId}`, "voiceDetection.ts:userLeft()");
+	const userInChannel = usersTimeInChannelData.find((u) => u.id === userId);
 
-	const points = getPointsByTimeInChannel(oldMember.member.joinedTimestamp);
+	// Se l'utente esiste ed è stato nel canale per almeno 600 secondi (10 minuti)
+	if (userInChannel && differenceInSeconds(Date.now(), userInChannel.joinTime) > 600) {
+		const points = getPointsByTimeInChannel(userInChannel, minPointsVoiceChannel, maxPointsVoiceChannel);
+		logger.info(`ASSEGNANDO ALL'UTENTE ${userId} questi punti : ${points}`, "voiceDetection.ts:userLeft()");
+
+		const user = await db.rank.get({ id: userId });
+
+		if (user) {
+			await db.rank.update({ id: userId }, { ...user, points: (parseInt(user.points) + points).toString() });
+		}
+
+		usersTimeInChannelData = usersTimeInChannelData.filter((u) => u.id !== userId);
+	}
 };
 
-const getPointsByTimeInChannel = (timestamp: string): string => {
-	/* 	const d = moment(timestamp);
-	console.log(d); */
-	return "";
+const getPointsByTimeInChannel = (
+	user: UserTimeInChannelData,
+	minPointsVoiceChannel: number,
+	maxPointsVoiceChannel: number,
+): number => {
+	const pointAwarded =
+		Math.floor(Math.random() * (maxPointsVoiceChannel - minPointsVoiceChannel + 1)) + minPointsVoiceChannel;
+
+	return Math.floor(differenceInSeconds(Date.now(), user.joinTime) / 600) * pointAwarded;
 };
 
 /**
@@ -48,6 +71,7 @@ const voiceDetection = async (): Promise<void> => {
 		const newUserChannel = newMember.channel;
 		const oldUserChannel = oldMember.channel;
 		const userId = newMember?.member?.user?.id;
+		const settings = await db.settings.get({});
 
 		if (discord.api.message.getBotID(bot) === userId || !userId) {
 			logger.info(
@@ -57,14 +81,12 @@ const voiceDetection = async (): Promise<void> => {
 			return;
 		}
 
-		console.log(oldUserChannel);
-
 		if (oldUserChannel === null && newUserChannel !== null) {
-			startTimer(userId);
+			userJoin(userId);
 		}
 
 		if (oldUserChannel !== null && newUserChannel === null) {
-			stopTimer(userId, oldMember);
+			await userLeft(userId, settings.rank);
 		}
 	});
 };

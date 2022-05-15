@@ -25,7 +25,6 @@ const commandsHandler = async (): Promise<void> => {
 
 		if (!discord.api.message.isCommand(ctx.content)) {
 			await addPointsHandler(ctx);
-
 			return;
 		}
 

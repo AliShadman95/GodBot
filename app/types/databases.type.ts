@@ -144,6 +144,24 @@ export interface DiscordSettingsRankInterface {
 	 *
 	 */
 	messagePointCooldown: number;
+	/**
+	 * Discord Settings Rank Interface
+	 * =====================
+	 *
+	 *
+	 * @param { number } minPointsVoiceChannel - The minimum points awarded per minute in a voice channel
+	 *
+	 */
+	minPointsVoiceChannel: number;
+	/**
+	 * Discord Settings Rank Interface
+	 * =====================
+	 *
+	 *
+	 * @param { number } maxPointsVoiceChannel - The max points awarded per minute in voice channel
+	 *
+	 */
+	maxPointsVoiceChannel: number;
 }
 
 /**
