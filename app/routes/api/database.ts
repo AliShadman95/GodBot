@@ -10,14 +10,15 @@
  */
 import connection from "@app/functions/api/database/connection";
 import rank from "@app/functions/api/database/rank";
+import settings from "@app/functions/api/database/settings";
 /* import settings from "@app/functions/api/database/settings";
 import about from "@app/functions/api/database/about"; */
 
 const db = {
 	connection: connection,
 	rank: rank,
-	/* 	settings: settings,
-	about: about, */
+	settings: settings,
+	/* about: about,  */
 };
 
 export { db };

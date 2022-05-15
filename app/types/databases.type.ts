@@ -71,7 +71,7 @@ export interface DiscordSettingsRankInterface {
 	 * @param { string } gradientColor2 - second color of gradiant background
 	 *
 	 */
-	username?: string;
+	gradientColor2: string;
 	/**
 	 * Discord Settings Rank Interface
 	 * =====================
@@ -90,6 +90,60 @@ export interface DiscordSettingsRankInterface {
 	 *
 	 */
 	xps: number[];
+	/**
+	 * Discord Settings Rank Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } color1 - main color theme
+	 *
+	 */
+	color1: string;
+	/**
+	 * Discord Settings Rank Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } color2 - second color theme
+	 *
+	 */
+	color2: string;
+	/**
+	 * Discord Settings Rank Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } color3 - third color theme
+	 *
+	 */
+	color3: string;
+	/**
+	 * Discord Settings Rank Interface
+	 * =====================
+	 *
+	 *
+	 * @param { number } minPointsMessage - The minimum points awarded per message sent
+	 *
+	 */
+	minPointsMessage: number;
+	/**
+	 * Discord Settings Rank Interface
+	 * =====================
+	 *
+	 *
+	 * @param { number } maxPointsMessage - The max points awarded per message sent
+	 *
+	 */
+	maxPointsMessage: number;
+	/**
+	 * Discord Settings Rank Interface
+	 * =====================
+	 *
+	 *
+	 * @param { number } messagePointCooldown - The cooldown for getting points after a message
+	 *
+	 */
+	messagePointCooldown: number;
 }
 
 /**
@@ -151,5 +205,5 @@ export interface DiscordRankInterface {
 	 * @param { string } points - points of user
 	 *
 	 */
-	points?: string;
+	points: string;
 }

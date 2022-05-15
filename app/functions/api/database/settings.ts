@@ -9,31 +9,31 @@
  *
  */
 import { Schema, model } from "mongoose";
-/* import type { SettingsInterface } from "@app/types/databases.type.js";
- */ import { logger } from "@app/functions/utils/logger";
+import type { DiscordSettingsInterface } from "@app/types/databases.type.js";
+import { logger } from "@app/functions/utils/logger";
 
-/* const schema = new Schema<SettingsInterface>({
-	group_id: { type: Number, default: 0 },
-	language: { type: String, default: "en" },
+const schema = new Schema<DiscordSettingsInterface>({
+	rank: { type: Object, default: {} },
 });
 
-const query = model<SettingsInterface>("Settings", schema, "settings"); */
+const query = model<DiscordSettingsInterface>("Settings", schema, "settings");
 
-/**
+/*
+ *
  * Settings CRUD
  * =====================
  * Add settings to DB
  *
  * @param {SettingsInterface} settings - settings to add
  */
-/* const add = async (settings: SettingsInterface): Promise<void> => {
+const add = async (settings: DiscordSettingsInterface): Promise<void> => {
 	try {
 		const doc = new query(settings);
 		await doc.save();
 	} catch (error: any) {
 		logger.error(JSON.stringify(error || ""), "settings.ts:add()");
 	}
-}; */
+};
 
 /**
  * Settings CRUD
@@ -42,7 +42,7 @@ const query = model<SettingsInterface>("Settings", schema, "settings"); */
  *
  * @param {Record<string, number | string | boolean>} search - search condition e.g {id:"123"}
  */
-/* const remove = async (search: Record<string, number | string | boolean>): Promise<void> => {
+const remove = async (search: Record<string, number | string | boolean>): Promise<void> => {
 	try {
 		await query.findOneAndDelete(search, function (error: string) {
 			if (error) {
@@ -52,7 +52,7 @@ const query = model<SettingsInterface>("Settings", schema, "settings"); */
 	} catch (error: any) {
 		logger.error(JSON.stringify(error || ""), "settings.ts:remove()");
 	}
-}; */
+};
 
 /**
  * Settings CRUD
@@ -62,9 +62,9 @@ const query = model<SettingsInterface>("Settings", schema, "settings"); */
  * @param {Record<string, number | string | boolean>} search - search condition e.g {id:"123"}
  * @param {SettingsInterface} settings - settings info to update
  */
-/* const update = async (
+const update = async (
 	search: Record<string, number | string | boolean>,
-	settings: SettingsInterface,
+	settings: DiscordSettingsInterface,
 ): Promise<void> => {
 	try {
 		await query.findOneAndUpdate(search, settings, function (error: string) {
@@ -76,7 +76,7 @@ const query = model<SettingsInterface>("Settings", schema, "settings"); */
 		logger.error(JSON.stringify(error || ""), "settings.ts:update()");
 	}
 };
- */
+
 /**
  * Settings CRUD
  * =====================
@@ -86,7 +86,7 @@ const query = model<SettingsInterface>("Settings", schema, "settings"); */
  * @return {SettingsInterface[]} settings.
 
  */
-/* const get = async (search: Record<string, number | string | boolean>): Promise<SettingsInterface> => {
+const get = async (search: Record<string, number | string | boolean>): Promise<DiscordSettingsInterface> => {
 	try {
 		const settings = await query.findOne(search, { _id: 0, __v: 0 }, function (error: string) {
 			if (error) {
@@ -100,7 +100,6 @@ const query = model<SettingsInterface>("Settings", schema, "settings"); */
 	}
 	return new query().toJSON();
 };
- */
-/* export { get, update, remove, add };
+
+export { get, update, remove, add };
 export default { get, update, remove, add };
- */

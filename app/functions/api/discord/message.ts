@@ -14,6 +14,12 @@ const getUsername = (ctx: any): string => {
 	return username || "";
 };
 
+const getBotName = (ctx: any): string => {
+	const username = ctx?.username;
+
+	return username || "";
+};
+
 const getUserDiscriminator = (ctx: any): string => {
 	return ctx?.author?.discriminator;
 };
@@ -22,6 +28,13 @@ const getUserID = (ctx: any): string => {
 
 	return `${id}` || "0";
 };
+
+const getBotID = (ctx: any): string => {
+	const id = ctx?.id;
+
+	return `${id}` || "0";
+};
+
 const getUserAvatar = (ctx: any): string => {
 	return ctx?.author?.displayAvatarURL({ format: "jpg" });
 };
@@ -102,6 +115,10 @@ const isCommand = (command) => {
 	return command.startsWith("!");
 };
 
+const isBot = (ctx) => {
+	return ctx?.author?.bot;
+};
+
 export {
 	/* getFullUser, */
 	getUsername,
@@ -111,6 +128,7 @@ export {
 	getUserAvatar,
 	getUserDiscriminator,
 	send,
+	isBot,
 	/* getUserFirstName,
 	send,
 	
@@ -119,6 +137,8 @@ export {
 	getPhotoCaption,
 	getActionType, */
 	isCommand,
+	getBotName,
+	getBotID,
 };
 export default {
 	/* 	getFullUser, */
@@ -129,6 +149,7 @@ export default {
 	getText, */
 	getUserID,
 	send,
+	isBot,
 	/* 	getUserFirstName,
 	send,
 	pin,
@@ -137,4 +158,6 @@ export default {
 	getPhotoCaption,
 	getActionType, */
 	isCommand,
+	getBotName,
+	getBotID,
 };

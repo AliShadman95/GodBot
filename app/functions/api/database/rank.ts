@@ -100,7 +100,7 @@ const get = async (search: Record<string, number | string | boolean>): Promise<D
 					logger.error(JSON.stringify(error || ""), "rank.ts:get()");
 				}
 			});
-			return (await user) || new query().toJSON();
+			return (await user.toObject()) || new query().toJSON();
 		} else {
 			const users = await query.find(search, { _id: 0, __v: 0 }, function (error: string) {
 				if (error) {

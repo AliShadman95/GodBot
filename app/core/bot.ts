@@ -29,8 +29,10 @@ import logger from "@app/functions/utils/logger";
 
 	await db.connection.connectDB();
 
+	
 	await commands.commandsHandler();
 	await commands.launch();
+	await commands.voiceDetection();
 })();
 
 process.on("SIGINT", async function () {

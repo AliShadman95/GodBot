@@ -8,6 +8,7 @@ interface userInfo {
 	discriminator: string;
 	avatar: string;
 	points: string;
+	rank: number;
 }
 
 const generateBackground = (ctx, { isGradient, gradientColor1, gradientColor2 }: userInfo) => {
@@ -22,12 +23,12 @@ const generateBackground = (ctx, { isGradient, gradientColor1, gradientColor2 }:
 
 const generateText = (
 	ctx,
-	{ username, discriminator, xps, points }: userInfo & DiscordSettingsRankInterface,
+	{ username, discriminator, xps, points, color1, color2, color3, rank }: userInfo & DiscordSettingsRankInterface,
 	currentLevelIndex: number,
 ) => {
 	// Add our title text
 	ctx.font = "70px InterBold";
-	ctx.fillStyle = "cyan";
+	ctx.fillStyle = color1;
 
 	const numberLevelWidth = ctx.measureText(currentLevelIndex).width;
 
@@ -35,7 +36,7 @@ const generateText = (
 
 	// Add our title text
 	ctx.font = "40px InterBold";
-	ctx.fillStyle = "cyan";
+	ctx.fillStyle = color1;
 
 	const levelLabelWidth = ctx.measureText("LEVEL").width;
 
@@ -43,15 +44,15 @@ const generateText = (
 
 	// Add our title text
 	ctx.font = "70px InterBold";
-	ctx.fillStyle = "white";
+	ctx.fillStyle = color2;
 
-	const numberRankWidth = ctx.measureText("#1").width; // TODO inserire gestione ranking fra utenti
+	const numberRankWidth = ctx.measureText(`#${rank}`).width;
 
-	ctx.fillText("#1", 1270 - numberLevelWidth - levelLabelWidth - numberRankWidth - 40, 110);
+	ctx.fillText(`#${rank}`, 1270 - numberLevelWidth - levelLabelWidth - numberRankWidth - 40, 110);
 
 	// Add our title text
 	ctx.font = "40px InterBold";
-	ctx.fillStyle = "white";
+	ctx.fillStyle = color2;
 
 	const rankLabelWidth = ctx.measureText("RANK").width;
 
@@ -61,26 +62,26 @@ const generateText = (
 
 	// Add our title text
 	ctx.font = "58px InterBold";
-	ctx.fillStyle = "white";
+	ctx.fillStyle = color2;
 	ctx.fillText(username, 385, 250);
 
 	const usernameWidth = ctx.measureText(username).width;
 
 	ctx.font = "38px InterBold";
-	ctx.fillStyle = "grey";
+	ctx.fillStyle = color3;
 
 	ctx.fillText(`#${discriminator}`, 385 + usernameWidth + 12, 250);
 
 	// Xp To New Level
 	ctx.font = "38px InterBold";
-	ctx.fillStyle = "grey";
+	ctx.fillStyle = color3;
 
 	const xpNeededWidth = ctx.measureText(`/ ${xps[currentLevelIndex]} XP`).width;
 
 	ctx.fillText(`/ ${xps[currentLevelIndex]} XP`, 1260 - xpNeededWidth, 250);
 
 	ctx.font = "38px InterBold";
-	ctx.fillStyle = "white";
+	ctx.fillStyle = color2;
 
 	const currentXpWidth = ctx.measureText(points).width;
 
@@ -89,13 +90,9 @@ const generateText = (
 
 const generateProgressBar = (
 	ctx,
-	{ points, xps }: userInfo & DiscordSettingsRankInterface,
+	{ points, xps, color1, color2 }: userInfo & DiscordSettingsRankInterface,
 	currentLevelIndex: number,
 ) => {
-	/* 	const percentage = Math.floor(
-		((xps[currentLevelIndex] - xps[currentLevelIndex - 1] / 100) / parseInt(points))) * 100,
-	); */
-
 	const percentage = Math.floor(
 		(parseInt(points) - (xps[currentLevelIndex - 1] || 0)) /
 			((xps[currentLevelIndex] - (xps[currentLevelIndex - 1] || 0)) / 100),
@@ -105,8 +102,8 @@ const generateProgressBar = (
 	for (let i = 0; i < 100; i++) {
 		ctx.beginPath();
 		ctx.lineWidth = 42;
-		ctx.strokeStyle = "white";
-		ctx.fillStyle = "white";
+		ctx.strokeStyle = color2;
+		ctx.fillStyle = color2;
 		ctx.arc(400 + i * 8.65, 300, 8, 0, Math.PI * 2, true);
 		ctx.stroke();
 		ctx.fill();
@@ -115,8 +112,8 @@ const generateProgressBar = (
 	for (let i = 0; i < percentage; i++) {
 		ctx.beginPath();
 		ctx.lineWidth = 42;
-		ctx.strokeStyle = "cyan";
-		ctx.fillStyle = "cyan";
+		ctx.strokeStyle = color1;
+		ctx.fillStyle = color1;
 		ctx.arc(400 + i * 8.65, 300, 8, 0, Math.PI * 2, true);
 		ctx.stroke();
 		ctx.fill();

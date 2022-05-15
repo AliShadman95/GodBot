@@ -1,5 +1,5 @@
 // Level Generator
-	/* const d: number[] = [];
+/* const d: number[] = [];
 
 	for (let i = 1; i < 1001; i++) {
 		const multiplier = Math.ceil(i * (i * 15));
