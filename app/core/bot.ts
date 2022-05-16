@@ -1,23 +1,26 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import db from "@routes/api/database";
 import commands from "@app/routes/commands";
-/* import express from "express";
+import express from "express";
+import cors from "cors";
+const settings = require("@app/restApi/settings");
+require("dotenv").config();
 
 const app = express();
+const port = process.env.PORT || 8080;
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-const port = 3000;
+app.listen(port, () => console.log(`Hello world app listening on port ${port}!`));
 
-app.get("/", (req, res) => {
-	res.send("Hello World, from express");
-});
-
-app.listen(port, () => console.log(`Hello world app listening on port ${port}!`)); */
+app.use("/settings", settings);
 
 /**
  * Start bot
  * =====================
  *
- * @contributors: Patryk Rzucidło [@ptkdev] <support@ptkdev.io> (https://ptk.dev)
- *                Alì Shadman [@AliShadman95] (https://github.com/AliShadman95)
+ * Alì Shadman [@AliShadman95] (https://github.com/AliShadman95)
  *
  * @license: MIT License
  *
