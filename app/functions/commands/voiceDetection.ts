@@ -2,18 +2,19 @@
  * Grammy Telegram API Framework Hears
  * =====================
  *
- * @contributors: Patryk Rzucidło [@ptkdev] <support@ptkdev.io> (https://ptk.dev)
  *                Alì Shadman [@AliShadman95] (https://github.com/AliShadman95)
  *
  * @license: MIT License
  *
  */
+import { TextChannel } from "discord.js";
 import bot from "@app/core/token";
 import discord from "@routes/api/discord";
 import type { DiscordSettingsRankInterface } from "@app/types/databases.type";
 import differenceInSeconds from "date-fns/differenceInSeconds";
 import db from "@routes/api/database";
 import logger from "@app/functions/utils/logger";
+import isLevelUp from "@app/functions/common/isLevelUp";
 
 interface UserTimeInChannelData {
 	id: string;
@@ -28,24 +29,43 @@ const userJoin = (userId: string): void => {
 };
 
 const userLeft = async (
-	userId: string,
-	{ minPointsVoiceChannel, maxPointsVoiceChannel }: DiscordSettingsRankInterface,
+	member: any,
+	{
+		minPointsVoiceChannel,
+		maxPointsVoiceChannel,
+		xps,
+		displayLevelUpMessage,
+		levelUpChannelId,
+		levelUpMessage,
+	}: DiscordSettingsRankInterface,
 ): Promise<void> => {
-	logger.info(`User left ${userId}`, "voiceDetection.ts:userLeft()");
-	const userInChannel = usersTimeInChannelData.find((u) => u.id === userId);
+	logger.info(`User left ${member.id}`, "voiceDetection.ts:userLeft()");
+	const userInChannel = usersTimeInChannelData.find((u) => u.id === member.id);
 
 	// Se l'utente esiste ed è stato nel canale per almeno 600 secondi (10 minuti)
 	if (userInChannel && differenceInSeconds(Date.now(), userInChannel.joinTime) > 600) {
 		const points = getPointsByTimeInChannel(userInChannel, minPointsVoiceChannel, maxPointsVoiceChannel);
-		logger.info(`ASSEGNANDO ALL'UTENTE ${userId} questi punti : ${points}`, "voiceDetection.ts:userLeft()");
+		logger.info(`ASSEGNANDO ALL'UTENTE ${member.id} questi punti : ${points}`, "voiceDetection.ts:userLeft()");
 
-		const user = await db.rank.get({ id: userId });
+		let user = await db.rank.get({ id: member.id });
 
-		if (user) {
-			await db.rank.update({ id: userId }, { ...user, points: (parseInt(user.points) + points).toString() });
+		if (user.id !== "0") {
+			await db.rank.update({ id: member.id }, { ...user, points: (parseInt(user.points) + points).toString() });
+		} else {
+			await db.rank.add({ ...member, points: points.toString() });
+			user = await db.rank.get({ id: member.id });
 		}
 
-		usersTimeInChannelData = usersTimeInChannelData.filter((u) => u.id !== userId);
+		usersTimeInChannelData = usersTimeInChannelData.filter((u) => u.id !== member.id);
+
+		const levelUp = isLevelUp(xps, user.points, points);
+
+		if (displayLevelUpMessage && levelUp !== -1) {
+			const channel = bot.channels.cache.get(levelUpChannelId) as TextChannel;
+			channel.send(
+				levelUpMessage.replace("{user}", user.username || "").replace("{livello}", levelUp.toString() || ""),
+			);
+		}
 	}
 };
 
@@ -73,6 +93,14 @@ const voiceDetection = async (): Promise<void> => {
 		const userId = newMember?.member?.user?.id;
 		const settings = await db.settings.get({});
 
+		const afkChannel = bot.channels.cache.get(settings?.rank?.afkChannelId);
+
+		// TODO unificare i due if qui sotto una volta capito se è stabile
+		if (newUserChannel?.id === afkChannel?.id) {
+			logger.info(`USER JOINED AFK, NO POINTS CALCULATED`, "voiceDetection.ts:voiceDetection()");
+			return;
+		}
+
 		if (discord.api.message.getBotID(bot) === userId || !userId) {
 			logger.info(
 				`BOT HAS JOINED VOICE CHANEL OR USERID IS NULL, RETURNING`,
@@ -86,7 +114,7 @@ const voiceDetection = async (): Promise<void> => {
 		}
 
 		if (oldUserChannel !== null && newUserChannel === null) {
-			await userLeft(userId, settings.rank);
+			await userLeft(newMember.member.user, settings.rank);
 		}
 	});
 };

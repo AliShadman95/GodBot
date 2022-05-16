@@ -162,6 +162,42 @@ export interface DiscordSettingsRankInterface {
 	 *
 	 */
 	maxPointsVoiceChannel: number;
+	/**
+	 * Discord Settings Rank Interface
+	 * =====================
+	 *
+	 *
+	 * @param { boolean } displayLevelUpMessage - If the bot should display a message when the user levels up
+	 *
+	 */
+	displayLevelUpMessage: boolean;
+	/**
+	 * Discord Settings Rank Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } levelUpMessage - The message to display when the user levels up
+	 *
+	 */
+	levelUpMessage: string;
+	/**
+	 * Discord Settings Rank Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } levelUpChannelId - The channel id where the level up message should be displayed
+	 *
+	 */
+	levelUpChannelId: string;
+	/**
+	 * Discord Settings Rank Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } afkChannelId - The channel id of the afk channel
+	 *
+	 */
+	afkChannelId: string;
 }
 
 /**

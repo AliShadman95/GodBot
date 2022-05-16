@@ -1,6 +1,9 @@
+import { TextChannel } from "discord.js";
+import bot from "@app/core/token";
 import db from "@routes/api/database";
 import discord from "@routes/api/discord";
 import logger from "@app/functions/utils/logger";
+import isLevelUp from "@app/functions/common/isLevelUp";
 
 // Array that detect if user can get point
 let cooldowns: string[] = [];
@@ -37,8 +40,24 @@ const addPointsHandler = async (ctx) => {
 	}
 
 	await db.rank.update({ id: userId }, { ...user, points: (parseInt(user.points) + pointAwarded).toString() });
+	disablePoints(userId, settings?.rank?.messagePointCooldown);
 
-	disablePoints(userId, settings?.rank.messagePointCooldown);
+	const levelUp = isLevelUp(settings?.rank?.xps, user.points, pointAwarded);
+	if (settings?.rank?.displayLevelUpMessage && levelUp !== -1) {
+		const channel = bot.channels.cache.get(settings?.rank?.levelUpChannelId) as TextChannel;
+		channel.send(
+			settings?.rank?.levelUpMessage
+				.replace("{user}", user.username || "")
+				.replace("{livello}", levelUp.toString() || ""),
+		);
+		discord.api.message.send(
+			ctx,
+			settings?.rank?.levelUpMessage
+				.replace("{user}", user.username || "")
+				.replace("{livello}", levelUp.toString() || ""),
+			"",
+		);
+	}
 };
 
 export default addPointsHandler;
