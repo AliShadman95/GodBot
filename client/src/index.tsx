@@ -27,6 +27,14 @@ import reportWebVitals from 'reportWebVitals';
 // Initialize languages
 import './locales/i18n';
 
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});
+
 // Observe loading of Inter (to remove 'Inter', remove the <link> tag in
 // the index.html file and this observer)
 const openSansObserver = new FontFaceObserver('Inter', {});
@@ -43,7 +51,9 @@ ReactDOM.render(
   <Provider store={store}>
     <HelmetProvider>
       <React.StrictMode>
-        <App />
+        <ThemeProvider theme={darkTheme}>
+          <App />
+        </ThemeProvider>
       </React.StrictMode>
     </HelmetProvider>
   </Provider>,

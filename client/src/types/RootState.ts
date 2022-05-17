@@ -1,4 +1,5 @@
 import { ThemeState } from 'styles/theme/slice/types';
+import { DashboardState } from 'app/pages/Dashboard/slice/types';
 // [IMPORT NEW CONTAINERSTATE ABOVE] < Needed for generating containers seamlessly
 
 /* 
@@ -9,5 +10,6 @@ import { ThemeState } from 'styles/theme/slice/types';
 */
 export interface RootState {
   theme?: ThemeState;
+  dashboard?: DashboardState;
   // [INSERT NEW REDUCER KEY ABOVE] < Needed for generating containers seamlessly
 }

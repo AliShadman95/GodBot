@@ -40,6 +40,7 @@ import logger from "@app/functions/utils/logger";
 process.on("SIGINT", async function () {
 	// on CTRL-C
 	await db.connection.disconnectDB();
+	process.exit(1);
 });
 
 process.once("SIGUSR2", async function () {
