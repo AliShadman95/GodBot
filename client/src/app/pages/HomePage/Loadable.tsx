@@ -4,8 +4,8 @@
 
 import * as React from 'react';
 import { lazyLoad } from 'utils/loadable';
-import { LoadingIndicator } from 'app/components/LoadingIndicator';
-import styled from 'styled-components/macro';
+/* import { LoadingIndicator } from 'app/components/LoadingIndicator';
+ */ import styled from 'styled-components/macro';
 
 const LoadingWrapper = styled.div`
   width: 100%;
@@ -19,10 +19,6 @@ export const HomePage = lazyLoad(
   () => import('./index'),
   module => module.HomePage,
   {
-    fallback: (
-      <LoadingWrapper>
-        <LoadingIndicator />
-      </LoadingWrapper>
-    ),
+    fallback: <LoadingWrapper>{/* <LoadingIndicator /> */}</LoadingWrapper>,
   },
 );
