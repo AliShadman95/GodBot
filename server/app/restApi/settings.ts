@@ -11,7 +11,6 @@ router.use(function timeLog(req, res, next) {
 // define the home page route
 router.get("/", async function (req, res) {
 	const settings = await db.settings.get({});
-	console.log(settings);
 	res.json(settings);
 });
 

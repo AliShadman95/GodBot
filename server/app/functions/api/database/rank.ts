@@ -16,7 +16,7 @@ const schema = new Schema<DiscordRankInterface>({
 	bot: { type: Boolean, default: false },
 	username: { type: String, default: "" },
 	avatar: { type: String, default: "" },
-	points: { type: String, default: 0 },
+	points: { type: String, default: "0" },
 });
 
 const query = model<DiscordRankInterface>("Rank", schema, "ranks");
@@ -95,7 +95,7 @@ const update = async (search: Record<string, number | string | boolean>, user: D
 const get = async (search: Record<string, number | string | boolean>): Promise<DiscordRankInterface> => {
 	try {
 		if (Object.keys(search).length > 0) {
-			const user = await query.findOne(search, { _id: 0, __v: 0 }, function (error: string) {
+			const user = await query.findOne(search, { _id: 0, __v: 0 }, {}, function (error: string) {
 				if (error) {
 					logger.error(JSON.stringify(error || ""), "rank.ts:get()");
 				}
