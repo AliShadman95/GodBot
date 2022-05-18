@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { Switch, Route, useRouteMatch, Redirect } from 'react-router-dom';
 
 import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
@@ -11,17 +12,16 @@ import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import Badge from '@mui/material/Badge';
-import Container from '@mui/material/Container';
+/* import Badge from '@mui/material/Badge';
+ */ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import { MainListItems } from '../ListItems';
+/* import NotificationsIcon from '@mui/icons-material/Notifications';
+ */ import { MainListItems } from '../ListItems';
 import Rank from '../Ranks/Rank';
 import Settings from '../Ranks/Settings';
-import Deposits from '../Deposits';
 import { useDashboardSlice } from './slice/index';
 
 function Copyright(props: any) {
@@ -92,42 +92,21 @@ const Drawer = styled(MuiDrawer, {
   },
 }));
 
-function DashboardContent() {
+export default function Dashboard() {
   const dispatch = useDispatch();
   const { actions } = useDashboardSlice();
+  let { path } = useRouteMatch();
 
   const [open, setOpen] = React.useState(true);
-  const [currentRoute, setCurrentRoute] = React.useState('ranks');
-
-  const changeRoute = (route: string) => {
-    if (route !== currentRoute) {
-      setCurrentRoute(route);
-    }
-  };
 
   const toggleDrawer = () => {
     setOpen(!open);
   };
 
-  const fetchData = () => {
-    dispatch(actions.getSettingsAction('hello'));
-  };
-
-  const routeHandler = () => {
-    switch (currentRoute) {
-      case 'ranks':
-        return <Rank />;
-      case 'give-xp':
-        return <Deposits />;
-      case 'ranks/settings':
-        return <Settings />;
-      default:
-        return <Rank />;
-    }
-  };
-
   React.useEffect(() => {
-    fetchData();
+    dispatch(actions.getSettingsAction());
+    dispatch(actions.getVoiceChannelsAction());
+    dispatch(actions.getTextChannelsAction());
   }, []);
 
   return (
@@ -160,11 +139,11 @@ function DashboardContent() {
           >
             Dashboard
           </Typography>
-          <IconButton color="inherit">
+          {/*  <IconButton color="inherit">
             <Badge badgeContent={4} color="secondary">
               <NotificationsIcon />
             </Badge>
-          </IconButton>
+          </IconButton> */}
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
@@ -182,7 +161,7 @@ function DashboardContent() {
         </Toolbar>
         <Divider />
         <List component="nav">
-          <MainListItems changeRoute={changeRoute} />
+          <MainListItems />
         </List>
       </Drawer>
       <Box
@@ -198,10 +177,18 @@ function DashboardContent() {
         }}
       >
         <Toolbar />
-        <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+        <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={12} lg={12}>
-              {routeHandler()}
+              <Switch>
+                <Redirect exact from={`${path}`} to={`${path}/rank`} />
+                <Route path={`${path}/rank`}>
+                  <Rank />
+                </Route>
+                <Route path={`${path}/settings`}>
+                  <Settings />
+                </Route>
+              </Switch>
             </Grid>
           </Grid>
 
@@ -210,8 +197,4 @@ function DashboardContent() {
       </Box>
     </Box>
   );
-}
-
-export default function Dashboard() {
-  return <DashboardContent />;
 }

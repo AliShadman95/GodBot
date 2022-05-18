@@ -92,7 +92,6 @@ const get = async (search: Record<string, number | string | boolean>): Promise<D
 				logger.error(JSON.stringify(error || ""), "settings.ts:get()");
 			}
 		});
-		console.log(settings, search, "here");
 		return (await settings) || new query().toJSON();
 	} catch (error: any) {
 		logger.error(JSON.stringify(error || ""), "settings.ts:get()");

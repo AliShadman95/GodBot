@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { useHistory, useRouteMatch, Link } from 'react-router-dom';
+
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
@@ -11,7 +13,12 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
 import Settings from '@mui/icons-material/Settings';
 import Divider from '@mui/material/Divider';
 
-export const MainListItems = ({ changeRoute }) => {
+export const MainListItems = () => {
+  const history = useHistory();
+  let { path, url } = useRouteMatch();
+
+  console.log(url, path);
+
   return (
     <React.Fragment>
       <ListSubheader component="div" inset>
@@ -19,7 +26,7 @@ export const MainListItems = ({ changeRoute }) => {
       </ListSubheader>
       <ListItemButton
         onClick={() => {
-          changeRoute('ranks');
+          history.push(`${url}/rank`);
         }}
       >
         <ListItemIcon>
@@ -29,7 +36,7 @@ export const MainListItems = ({ changeRoute }) => {
       </ListItemButton>
       <ListItemButton
         onClick={() => {
-          changeRoute('give-xp');
+          history.push(`${url}/give-xp`);
         }}
       >
         <ListItemIcon>
@@ -39,7 +46,7 @@ export const MainListItems = ({ changeRoute }) => {
       </ListItemButton>
       <ListItemButton
         onClick={() => {
-          changeRoute('remove-xp');
+          history.push(`${url}/remove-xp`);
         }}
       >
         <ListItemIcon>
@@ -49,7 +56,7 @@ export const MainListItems = ({ changeRoute }) => {
       </ListItemButton>
       <ListItemButton
         onClick={() => {
-          changeRoute('levels');
+          history.push(`${url}/levels`);
         }}
       >
         <ListItemIcon>
@@ -57,9 +64,10 @@ export const MainListItems = ({ changeRoute }) => {
         </ListItemIcon>
         <ListItemText primary="!levels" />
       </ListItemButton>
+
       <ListItemButton
         onClick={() => {
-          changeRoute('ranks/settings');
+          history.push(`${url}/settings`);
         }}
       >
         <ListItemIcon>
