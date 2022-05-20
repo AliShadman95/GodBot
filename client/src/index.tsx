@@ -7,6 +7,7 @@
 
 import 'react-app-polyfill/ie11';
 import 'react-app-polyfill/stable';
+import CssBaseline from '@mui/material/CssBaseline';
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
@@ -29,9 +30,20 @@ import './locales/i18n';
 
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
-const darkTheme = createTheme({
+let theme = createTheme({
   palette: {
     mode: 'dark',
+    primary: {
+      main: '#63f58b',
+      dark: '#3aaf59',
+    },
+    secondary: {
+      main: '#f50057',
+    },
+    background: {
+      paper: '#1f2129',
+      default: '#262934',
+    },
   },
 });
 
@@ -51,7 +63,8 @@ ReactDOM.render(
   <Provider store={store}>
     <HelmetProvider>
       <React.StrictMode>
-        <ThemeProvider theme={darkTheme}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
           <App />
         </ThemeProvider>
       </React.StrictMode>

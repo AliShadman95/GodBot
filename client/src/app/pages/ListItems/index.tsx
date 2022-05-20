@@ -17,8 +17,6 @@ export const MainListItems = () => {
   const history = useHistory();
   let { path, url } = useRouteMatch();
 
-  console.log(url, path);
-
   return (
     <React.Fragment>
       <ListSubheader component="div" inset>

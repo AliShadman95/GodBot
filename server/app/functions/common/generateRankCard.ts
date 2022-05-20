@@ -14,7 +14,7 @@ interface userInfo {
 const generateBackground = (ctx, { isGradient, gradientColor1, gradientColor2 }: userInfo) => {
 	// Add gradient - we use createLinearGradient to do this
 	const grd = ctx.createLinearGradient(0, 853, 1352, 0);
-	grd.addColorStop(0, isGradient ? gradientColor1 : "#0a0a0a");
+	grd.addColorStop(0, gradientColor1);
 	isGradient && grd.addColorStop(1, gradientColor2 || "#0a0a0a");
 	ctx.fillStyle = grd;
 	// Fill our gradient

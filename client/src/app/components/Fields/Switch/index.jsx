@@ -4,16 +4,18 @@ import { Controller } from 'react-hook-form';
 const SwitchField = ({ name, label, control, defaultValue, ...props }) => {
   return (
     <FormControl {...props}>
-      <Controller
-        render={({ field }) => (
-          <FormControlLabel
-            control={<Switch defaultChecked={defaultValue} {...field} />}
-            label={label}
+      <FormControlLabel
+        control={
+          <Controller
+            render={({ field: { value, ...field } }) => (
+              <Switch {...field} checked={!!value} />
+            )}
+            name={name}
+            control={control}
+            defaultValue={defaultValue}
           />
-        )}
-        name={name}
-        control={control}
-        defaultValue={defaultValue}
+        }
+        label={label}
       />
     </FormControl>
   );

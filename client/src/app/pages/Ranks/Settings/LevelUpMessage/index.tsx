@@ -7,6 +7,7 @@ import {
   useMediaQuery,
   MenuItem,
   Grid,
+  Divider,
 } from '@mui/material';
 import SelectField from '../../../../components/Fields/Select';
 import Input from '../../../../components/Fields/Input';
@@ -18,10 +19,11 @@ export default function LevelUpMessage({
   watch,
   defaultValues,
   textChannels,
+  getValues,
 }) {
   const theme = useTheme();
   const isNotMobile = useMediaQuery('(min-width:650px)');
-  const displayLevelUpMessageField = watch('displayLevelUpMessage');
+  const displayLevelUpMessageField = getValues('displayLevelUpMessage');
 
   return (
     <React.Fragment>
@@ -57,7 +59,7 @@ export default function LevelUpMessage({
             </Grid>
           </Grid>
         </div>
-
+        <Divider sx={{ my: 1 }} />
         <Grid container spacing={3}>
           <Grid item xs={12} md={6} lg={6}>
             <FormControl fullWidth>

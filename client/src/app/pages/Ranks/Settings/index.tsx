@@ -13,7 +13,6 @@ import { useDashboardSlice } from '../../Dashboard/slice/index';
 import { useForm } from 'react-hook-form';
 import LevelUpMessage from './LevelUpMessage';
 import { useSelector, useDispatch } from 'react-redux';
-
 import Title from '../../Title';
 
 export default function Settings() {
@@ -29,7 +28,7 @@ export default function Settings() {
   const textChannels = useSelector(selectTextChannels);
   const [thereAreChanges, setThereAreChanges] = React.useState(false);
 
-  const { control, handleSubmit, watch, reset } = useForm({
+  const { control, handleSubmit, watch, reset, getValues } = useForm({
     defaultValues: settings?.rank,
   });
 
@@ -42,19 +41,22 @@ export default function Settings() {
   }, [loadingUpdate]);
 
   React.useEffect(() => {
-    console.log(settings, formData);
     if (
       Object.keys(settings).length > 0 &&
       Object.keys(formData).length > 0 &&
-      !_.isEqual(formData, settings?.rank)
+      !_.isEqual({ ...settings.rank, ...formData }, settings?.rank)
     ) {
-      console.log('setting this');
       setThereAreChanges(true);
     }
   }, [formData]);
 
   const onSubmit = data => {
-    dispatch(actions.updateSettingsAction({ ...settings, rank: data }));
+    dispatch(
+      actions.updateSettingsAction({
+        ...settings,
+        rank: { ...settings.rank, ...data },
+      }),
+    );
   };
 
   return (
@@ -75,11 +77,12 @@ export default function Settings() {
               watch={watch}
               defaultValues={settings?.rank}
               textChannels={textChannels}
+              getValues={getValues}
             />
 
             <AlertChanges
               open={thereAreChanges}
-              reset={reset}
+              reset={() => reset(settings?.rank)}
               setIsOpen={setThereAreChanges}
               loading={loadingUpdate}
             />

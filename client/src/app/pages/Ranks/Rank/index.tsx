@@ -1,98 +1,90 @@
 import * as React from 'react';
 import { useTheme } from '@mui/material/styles';
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
+import { Typography, CircularProgress } from '@mui/material';
+import _ from 'lodash';
+import AlertChanges from 'app/components/AlertChanges';
 
 import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  Label,
-  ResponsiveContainer,
-} from 'recharts';
+  selectSettings,
+  selectTextChannels,
+  selectLoadingUpdate,
+  selectLoading,
+} from '../../Dashboard/slice/selectors';
+import { useDashboardSlice } from '../../Dashboard/slice/index';
+import { useForm } from 'react-hook-form';
+import { useSelector, useDispatch } from 'react-redux';
+import Card from './Card';
 import Title from '../../Title';
-
-// Generate Sales Data
-function createData(time: string, amount?: number) {
-  return { time, amount };
-}
-
-const data = [
-  createData('00:00', 0),
-  createData('03:00', 300),
-  createData('06:00', 600),
-  createData('09:00', 800),
-  createData('12:00', 1500),
-  createData('15:00', 2000),
-  createData('18:00', 2400),
-  createData('21:00', 2400),
-  createData('24:00', undefined),
-];
 
 export default function Ranks() {
   const theme = useTheme();
+  const dispatch = useDispatch();
+  const { actions } = useDashboardSlice();
+  const settings = useSelector(selectSettings);
+  const loadingUpdate = useSelector(selectLoadingUpdate);
+  const loading = useSelector(selectLoading);
+
+  /*   const [thereAreChanges, setThereAreChanges] = React.useState(false);
+   */
+  const { control, handleSubmit, watch, reset, getValues } = useForm({
+    defaultValues: settings?.rank,
+  });
+
+  /* const formData = watch();
+
+  React.useEffect(() => {
+    if (thereAreChanges && !loadingUpdate) {
+      setThereAreChanges(false);
+    }
+  }, [loadingUpdate]);
+
+  React.useEffect(() => {
+    if (
+      Object.keys(settings).length > 0 &&
+      Object.keys(formData).length > 0 &&
+      !_.isEqual({ ...settings.rank, ...formData }, settings?.rank)
+    ) {
+      setThereAreChanges(true);
+    }
+  }, [formData]);
+ */
+  const onSubmit = data => {
+    dispatch(
+      actions.updateSettingsAction({
+        ...settings,
+        rank: { ...settings.rank, ...data },
+      }),
+    );
+  };
 
   return (
     <React.Fragment>
-      <div style={{ marginBottom: '3em' }}>
-        <Title>Livellamento</Title>
-        <Typography component="p" color="main" gutterBottom>
-          Comando che mostra il livellamento di un utente.
-        </Typography>
-      </div>
-
-      <Paper
-        sx={{
-          p: 2,
-          display: 'flex',
-          flexDirection: 'column',
-          height: 240,
-        }}
-      >
-        <Title>Livellare</Title>
-        {/*  <ResponsiveContainer>
-       
-            <LineChart
-            data={data}
-            margin={{
-              top: 16,
-              right: 16,
-              bottom: 0,
-              left: 24,
-            }}
-          >
-            <XAxis
-              dataKey="time"
-              stroke={theme.palette.text.secondary}
-              style={theme.typography.body2}
+      {loading || !settings || Object.keys(settings).length <= 0 ? (
+        <CircularProgress />
+      ) : (
+        <React.Fragment>
+          <div style={{ marginBottom: '3em' }}>
+            <Title>Livellamento</Title>
+            <Typography component="p" color="main" gutterBottom>
+              Comando che mostra il livellamento di un utente.
+            </Typography>
+          </div>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Card
+              settings={settings}
+              control={control}
+              reset={reset}
+              watch={watch}
             />
-            <YAxis
-              stroke={theme.palette.text.secondary}
-              style={theme.typography.body2}
-            >
-              <Label
-                angle={270}
-                position="left"
-                style={{
-                  textAnchor: 'middle',
-                  fill: theme.palette.text.primary,
-                  ...theme.typography.body1,
-                }}
-              >
-                Sales ($)
-              </Label>
-            </YAxis>
-            <Line
-              isAnimationActive={false}
-              type="monotone"
-              dataKey="amount"
-              stroke={theme.palette.primary.main}
-              dot={false}
-            />
-          </LineChart>
-        </ResponsiveContainer> */}
-      </Paper>
+            {/*   <AlertChanges
+              open={thereAreChanges}
+              reset={reset}
+              setIsOpen={setThereAreChanges}
+              loading={loadingUpdate}
+            /> */}
+          </form>
+        </React.Fragment>
+      )}
     </React.Fragment>
   );
 }
