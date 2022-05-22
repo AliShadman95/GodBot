@@ -71,11 +71,12 @@ const userLeft = async (
 
 const getPointsByTimeInChannel = (
 	user: UserTimeInChannelData,
-	minPointsVoiceChannel: number,
-	maxPointsVoiceChannel: number,
+	minPointsVoiceChannel: string,
+	maxPointsVoiceChannel: string,
 ): number => {
 	const pointAwarded =
-		Math.floor(Math.random() * (maxPointsVoiceChannel - minPointsVoiceChannel + 1)) + minPointsVoiceChannel;
+		Math.floor(Math.random() * (parseInt(maxPointsVoiceChannel) - (parseInt(minPointsVoiceChannel) + 1))) +
+		parseInt(minPointsVoiceChannel);
 
 	return Math.floor(differenceInSeconds(Date.now(), user.joinTime) / 600) * pointAwarded;
 };

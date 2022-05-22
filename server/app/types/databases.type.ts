@@ -149,19 +149,19 @@ export interface DiscordSettingsRankInterface {
 	 * =====================
 	 *
 	 *
-	 * @param { number } minPointsVoiceChannel - The minimum points awarded per minute in a voice channel
+	 * @param { string } minPointsVoiceChannel - The minimum points awarded per minute in a voice channel
 	 *
 	 */
-	minPointsVoiceChannel: number;
+	minPointsVoiceChannel: string;
 	/**
 	 * Discord Settings Rank Interface
 	 * =====================
 	 *
 	 *
-	 * @param { number } maxPointsVoiceChannel - The max points awarded per minute in voice channel
+	 * @param { string } maxPointsVoiceChannel - The max points awarded per minute in voice channel
 	 *
 	 */
-	maxPointsVoiceChannel: number;
+	maxPointsVoiceChannel: string;
 	/**
 	 * Discord Settings Rank Interface
 	 * =====================

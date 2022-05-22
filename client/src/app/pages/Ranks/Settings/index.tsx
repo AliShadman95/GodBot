@@ -14,6 +14,7 @@ import { useForm } from 'react-hook-form';
 import LevelUpMessage from './LevelUpMessage';
 import GestioneLivelli from './GestioneLivelli';
 import MessagePoints from './MessagePoints';
+import VoicePoints from './VoicePoints';
 import { useSelector, useDispatch } from 'react-redux';
 import Title from '../../Title';
 import { levelGenerator } from 'utils/utils';
@@ -106,8 +107,18 @@ export default function Settings() {
                 defaultValues={settings?.rank}
               />
             </Box>
-            <Box>
+            <Box marginBottom="3em">
               <MessagePoints
+                control={control}
+                watch={watch}
+                defaultValues={settings?.rank}
+                textChannels={textChannels}
+                getValues={getValues}
+                errors={formState.errors}
+              />
+            </Box>
+            <Box>
+              <VoicePoints
                 control={control}
                 watch={watch}
                 defaultValues={settings?.rank}

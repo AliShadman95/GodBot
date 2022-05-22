@@ -21,6 +21,7 @@ import { MainListItems } from '../ListItems';
 import Rank from '../Ranks/Rank';
 import Settings from '../Ranks/Settings';
 import { useDashboardSlice } from './slice/index';
+import Title from '../Title';
 
 function Copyright(props: any) {
   return (
@@ -31,8 +32,8 @@ function Copyright(props: any) {
       {...props}
     >
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link color="inherit" href="/">
+        God Bot
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -153,6 +154,11 @@ export default function Dashboard() {
             px: [1],
           }}
         >
+          <Grid container sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Grid item>
+              <Title>GOD BOT</Title>
+            </Grid>
+          </Grid>
           <IconButton onClick={toggleDrawer}>
             <ChevronLeftIcon />
           </IconButton>

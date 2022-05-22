@@ -7,6 +7,7 @@ import {
   Alert,
   AlertTitle,
   CircularProgress,
+  Grid,
 } from '@mui/material';
 
 export default function AlertChanges({ open, setIsOpen, reset, loading }) {
@@ -17,39 +18,44 @@ export default function AlertChanges({ open, setIsOpen, reset, loading }) {
         bottom: 0,
         marginTop: '2em',
         marginBottom: '2em',
+        zIndex: 434343,
       }}
     >
       <Collapse in={open}>
         <Alert
           severity="info"
           action={
-            <React.Fragment>
-              <Button
-                color="secondary"
-                size="small"
-                variant="contained"
-                sx={{ margin: '1em' }}
-                onClick={() => {
-                  reset();
-                  setIsOpen(false);
-                }}
-              >
-                Cancella
-              </Button>
-              <Button
-                color="primary"
-                size="small"
-                variant="contained"
-                sx={{ margin: '1em' }}
-                type="submit"
-              >
-                {loading ? (
-                  <CircularProgress color="inherit" size={20} />
-                ) : (
-                  'Salva'
-                )}
-              </Button>
-            </React.Fragment>
+            <Grid container>
+              <Grid item>
+                <Button
+                  color="secondary"
+                  size="small"
+                  variant="contained"
+                  sx={{ margin: '1em' }}
+                  onClick={() => {
+                    reset();
+                    setIsOpen(false);
+                  }}
+                >
+                  Cancella
+                </Button>
+              </Grid>
+              <Grid item>
+                <Button
+                  color="primary"
+                  size="small"
+                  variant="contained"
+                  sx={{ margin: '1em' }}
+                  type="submit"
+                >
+                  {loading ? (
+                    <CircularProgress color="inherit" size={20} />
+                  ) : (
+                    'Salva'
+                  )}
+                </Button>
+              </Grid>
+            </Grid>
           }
         >
           <AlertTitle>Modifiche rilevate</AlertTitle>
