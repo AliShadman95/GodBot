@@ -261,3 +261,54 @@ export interface DiscordRankInterface {
 	 */
 	points: string;
 }
+
+/**
+ * Discord User Interface
+ * =====================
+ *
+ *
+ *
+ * @param { string } id - discord id
+ * @param { string } username - user username from discord
+ * @param { string } password - Password for the user
+ * @param { string } role - The role of the user
+ *
+ */
+export interface DiscordUsersInferface {
+	/**
+	 * Discord Users Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } id - user id
+	 *
+	 */
+	id: string;
+	/**
+	 * Discord Users Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } username - user username
+	 *
+	 */
+	username: string;
+	/**
+	 * Discord Users Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } password - user password
+	 *
+	 */
+	password: string;
+	/**
+	 * Discord Users Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } role - The role of the user
+	 *
+	 */
+	role: string;
+}
