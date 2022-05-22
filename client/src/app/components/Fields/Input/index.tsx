@@ -7,10 +7,15 @@ const Input = ({
   label,
   control,
   defaultValue,
-  multiline,
-  rows,
+  multiline = false,
+  rows = 0,
+  type = 'text',
   required = false,
-  helperText,
+  helperText = '',
+  min = 0,
+  max = 0,
+  rules = {},
+  error = false,
   ...props
 }) => {
   return (
@@ -22,13 +27,17 @@ const Input = ({
             multiline={multiline}
             rows={rows}
             required={required}
+            type={type}
             helperText={helperText}
+            InputProps={{ inputProps: { min, max } }}
+            error={error}
             {...field}
           />
         )}
         name={name}
         control={control}
         defaultValue={defaultValue}
+        rules={rules}
       />
     </FormControl>
   );

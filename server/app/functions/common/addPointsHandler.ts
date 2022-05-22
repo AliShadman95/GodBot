@@ -28,9 +28,12 @@ const addPointsHandler = async (ctx) => {
 
 	const user = await db.rank.get({ id: userId });
 	const settings = await db.settings.get({});
+	console.log(parseInt(settings?.rank.maxPointsMessage), parseInt(settings?.rank.minPointsMessage));
 	const pointAwarded =
-		Math.floor(Math.random() * (settings?.rank.maxPointsMessage - settings?.rank.minPointsMessage + 1)) +
-		settings?.rank.minPointsMessage;
+		Math.floor(
+			Math.random() *
+				(parseInt(settings?.rank.maxPointsMessage) - (parseInt(settings?.rank.minPointsMessage) + 1)),
+		) + parseInt(settings?.rank.minPointsMessage);
 
 	logger.info(`Getting points for user ${userId}, points: ${pointAwarded} `, "addPointHandler.ts:disablePoints()");
 
@@ -40,7 +43,7 @@ const addPointsHandler = async (ctx) => {
 	}
 
 	await db.rank.update({ id: userId }, { ...user, points: (parseInt(user.points) + pointAwarded).toString() });
-	disablePoints(userId, settings?.rank?.messagePointCooldown);
+	disablePoints(userId, parseInt(settings?.rank?.messagePointCooldown));
 
 	const levelUp = isLevelUp(settings?.rank?.xps, user.points, pointAwarded);
 	if (settings?.rank?.displayLevelUpMessage && levelUp !== -1) {

@@ -13,6 +13,7 @@ import { useDashboardSlice } from '../../Dashboard/slice/index';
 import { useForm } from 'react-hook-form';
 import LevelUpMessage from './LevelUpMessage';
 import GestioneLivelli from './GestioneLivelli';
+import MessagePoints from './MessagePoints';
 import { useSelector, useDispatch } from 'react-redux';
 import Title from '../../Title';
 import { levelGenerator } from 'utils/utils';
@@ -30,11 +31,16 @@ export default function Settings() {
   const textChannels = useSelector(selectTextChannels);
   const [thereAreChanges, setThereAreChanges] = React.useState(false);
 
-  const { control, handleSubmit, watch, reset, getValues } = useForm({
-    defaultValues: settings?.rank,
-  });
+  const { control, handleSubmit, watch, reset, getValues, formState } = useForm(
+    {
+      defaultValues: settings?.rank,
+      mode: 'onChange',
+    },
+  );
 
   const formData = watch();
+
+  console.log(formState.errors);
 
   React.useEffect(() => {
     if (thereAreChanges && !loadingUpdate) {
@@ -54,6 +60,7 @@ export default function Settings() {
 
   const onSubmit = data => {
     let xps = settings.rank.xps;
+
     if (settings?.rank.levelMultiplier !== data.levelMultiplier) {
       xps = levelGenerator(data.levelMultiplier);
     }
@@ -61,7 +68,11 @@ export default function Settings() {
     dispatch(
       actions.updateSettingsAction({
         ...settings,
-        rank: { ...settings.rank, ...data, ...{ xps } },
+        rank: {
+          ...settings.rank,
+          ...data,
+          ...{ xps },
+        },
       }),
     );
   };
@@ -88,13 +99,21 @@ export default function Settings() {
                 getValues={getValues}
               />
             </Box>
-            <Box>
+            <Box marginBottom="3em">
               <GestioneLivelli
+                control={control}
+                watch={watch}
+                defaultValues={settings?.rank}
+              />
+            </Box>
+            <Box>
+              <MessagePoints
                 control={control}
                 watch={watch}
                 defaultValues={settings?.rank}
                 textChannels={textChannels}
                 getValues={getValues}
+                errors={formState.errors}
               />
             </Box>
             <AlertChanges

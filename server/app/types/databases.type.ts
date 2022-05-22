@@ -122,28 +122,28 @@ export interface DiscordSettingsRankInterface {
 	 * =====================
 	 *
 	 *
-	 * @param { number } minPointsMessage - The minimum points awarded per message sent
+	 * @param { string } minPointsMessage - The minimum points awarded per message sent
 	 *
 	 */
-	minPointsMessage: number;
+	minPointsMessage: string;
 	/**
 	 * Discord Settings Rank Interface
 	 * =====================
 	 *
 	 *
-	 * @param { number } maxPointsMessage - The max points awarded per message sent
+	 * @param { string } maxPointsMessage - The max points awarded per message sent
 	 *
 	 */
-	maxPointsMessage: number;
+	maxPointsMessage: string;
 	/**
 	 * Discord Settings Rank Interface
 	 * =====================
 	 *
 	 *
-	 * @param { number } messagePointCooldown - The cooldown for getting points after a message
+	 * @param { string } messagePointCooldown - The cooldown for getting points after a message
 	 *
 	 */
-	messagePointCooldown: number;
+	messagePointCooldown: string;
 	/**
 	 * Discord Settings Rank Interface
 	 * =====================
