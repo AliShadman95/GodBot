@@ -40,7 +40,7 @@ export const MainListItems = () => {
         <ListItemIcon>
           <HandshakeIcon />
         </ListItemIcon>
-        <ListItemText primary="!givexp" />
+        <ListItemText primary="!givexp (WIP)" />
       </ListItemButton>
       <ListItemButton
         onClick={() => {
@@ -50,7 +50,7 @@ export const MainListItems = () => {
         <ListItemIcon>
           <PlaylistRemoveIcon />
         </ListItemIcon>
-        <ListItemText primary="!remove-xp" />
+        <ListItemText primary="!remove-xp (WIP)" />
       </ListItemButton>
       <ListItemButton
         onClick={() => {
@@ -60,7 +60,7 @@ export const MainListItems = () => {
         <ListItemIcon>
           <BarChartIcon />
         </ListItemIcon>
-        <ListItemText primary="!levels" />
+        <ListItemText primary="!levels (WIP)" />
       </ListItemButton>
 
       <ListItemButton
@@ -81,19 +81,19 @@ export const MainListItems = () => {
         <ListItemIcon>
           <AssignmentIcon />
         </ListItemIcon>
-        <ListItemText primary="Current month" />
+        <ListItemText primary="!daily (WIP)" />
       </ListItemButton>
       <ListItemButton>
         <ListItemIcon>
           <AssignmentIcon />
         </ListItemIcon>
-        <ListItemText primary="Last quarter" />
+        <ListItemText primary="!shop (WIP)" />
       </ListItemButton>
       <ListItemButton>
         <ListItemIcon>
           <AssignmentIcon />
         </ListItemIcon>
-        <ListItemText primary="Year-end sale" />
+        <ListItemText primary="!settings (WIP)" />
       </ListItemButton>
     </React.Fragment>
   );

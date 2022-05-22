@@ -9,6 +9,8 @@ import {
   Grid,
   Divider,
   Box,
+  Button,
+  CircularProgress,
 } from '@mui/material';
 import Title from '../../../Title';
 import SwitchField from 'app/components/Fields/Switch';
@@ -47,19 +49,26 @@ const CustomBox = ({ color, onClick, isOpen, setColor, disabled = false }) => {
     </React.Fragment>
   );
 };
-const Card = ({ settings, control, reset, watch }) => {
+const Card = ({
+  settings,
+  control,
+  reset,
+  watch,
+  loadingUpdate,
+  color1,
+  color2,
+  color3,
+  gradientColor1,
+  gradientColor2,
+  setColor1,
+  setColor2,
+  setColor3,
+  setGradientColor1,
+  setGradientColor2,
+}) => {
   let canvasRef = useRef<HTMLCanvasElement>(null);
 
   const isNotMobile = useMediaQuery('(min-width:650px)');
-  const [color1, setColor1] = useState(settings.rank.color1 || 'white');
-  const [color2, setColor2] = useState(settings.rank.color2 || 'white');
-  const [color3, setColor3] = useState(settings.rank.color3 || 'white');
-  const [gradientColor1, setGradientColor1] = useState(
-    settings.rank.gradientColor1 || 'white',
-  );
-  const [gradientColor2, setGradientColor2] = useState(
-    settings.rank.gradientColor2 || 'white',
-  );
 
   const [openPicker, setOpenPicker] = useState('');
 
@@ -89,7 +98,7 @@ const Card = ({ settings, control, reset, watch }) => {
         p: 2,
         display: 'flex',
         flexDirection: 'column',
-        height: isNotMobile ? 500 : 630,
+        height: isNotMobile ? 500 : 750,
       }}
     >
       <div style={{ marginBottom: '2em' }}>
@@ -137,7 +146,7 @@ const Card = ({ settings, control, reset, watch }) => {
           </Typography>
 
           <Grid container>
-            <Grid item xs={2} md={4} lg={3}>
+            <Grid item xs={4} md={4} lg={3}>
               <CustomBox
                 color={color1}
                 isOpen={openPicker === 'color1'}
@@ -147,7 +156,7 @@ const Card = ({ settings, control, reset, watch }) => {
                 setColor={setColor1}
               />
             </Grid>
-            <Grid item xs={2} md={4} lg={3}>
+            <Grid item xs={4} md={4} lg={3}>
               <CustomBox
                 color={color2}
                 isOpen={openPicker === 'color2'}
@@ -157,7 +166,7 @@ const Card = ({ settings, control, reset, watch }) => {
                 setColor={setColor2}
               />
             </Grid>
-            <Grid item xs={2} md={4} lg={3}>
+            <Grid item xs={4} md={4} lg={3}>
               <CustomBox
                 color={color3}
                 isOpen={openPicker === 'color3'}
@@ -175,7 +184,7 @@ const Card = ({ settings, control, reset, watch }) => {
           </Typography>
 
           <Grid container>
-            <Grid item xs={2} md={4} lg={3}>
+            <Grid item xs={4} md={4} lg={3}>
               <CustomBox
                 color={gradientColor1}
                 isOpen={openPicker === 'gradientColor1'}
@@ -187,7 +196,7 @@ const Card = ({ settings, control, reset, watch }) => {
                 setColor={setGradientColor1}
               />
             </Grid>
-            <Grid item xs={2} md={4} lg={3}>
+            <Grid item xs={4} md={4} lg={3}>
               <CustomBox
                 color={gradientColor2}
                 isOpen={openPicker === 'gradientColor2'}
@@ -202,6 +211,40 @@ const Card = ({ settings, control, reset, watch }) => {
               />
             </Grid>
           </Grid>
+        </Grid>
+
+        <Grid item xs={12} md={4} lg={2} sx={{ my: 2 }} display="flex">
+          <Box display="flex" alignItems="flex-end" maxHeight={'7em'}>
+            <Button
+              color="secondary"
+              size="small"
+              variant="contained"
+              sx={{ margin: '0.5em' }}
+              onClick={() => {
+                reset();
+                setColor1(settings.rank.color1 || 'white');
+                setColor2(settings.rank.color2 || 'white');
+                setColor3(settings.rank.color3 || 'white');
+                setGradientColor1(settings.rank.gradientColor1 || 'white');
+                setGradientColor2(settings.rank.gradientColor2 || 'white');
+              }}
+            >
+              Cancella
+            </Button>
+            <Button
+              color="primary"
+              size="small"
+              variant="contained"
+              sx={{ margin: '0.5em' }}
+              type="submit"
+            >
+              {loadingUpdate ? (
+                <CircularProgress color="inherit" size={20} />
+              ) : (
+                'Salva'
+              )}
+            </Button>
+          </Box>
         </Grid>
       </Grid>
     </Paper>

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useTheme } from '@mui/material/styles';
-import { Typography, CircularProgress } from '@mui/material';
+import { Typography, CircularProgress, Box } from '@mui/material';
 import AlertChanges from 'app/components/AlertChanges';
 import _ from 'lodash';
 import {
@@ -12,8 +12,10 @@ import {
 import { useDashboardSlice } from '../../Dashboard/slice/index';
 import { useForm } from 'react-hook-form';
 import LevelUpMessage from './LevelUpMessage';
+import GestioneLivelli from './GestioneLivelli';
 import { useSelector, useDispatch } from 'react-redux';
 import Title from '../../Title';
+import { levelGenerator } from 'utils/utils';
 
 export default function Settings() {
   const theme = useTheme();
@@ -51,10 +53,15 @@ export default function Settings() {
   }, [formData]);
 
   const onSubmit = data => {
+    let xps = settings.rank.xps;
+    if (settings?.rank.levelMultiplier !== data.levelMultiplier) {
+      xps = levelGenerator(data.levelMultiplier);
+    }
+
     dispatch(
       actions.updateSettingsAction({
         ...settings,
-        rank: { ...settings.rank, ...data },
+        rank: { ...settings.rank, ...data, ...{ xps } },
       }),
     );
   };
@@ -72,14 +79,24 @@ export default function Settings() {
             </Typography>
           </div>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <LevelUpMessage
-              control={control}
-              watch={watch}
-              defaultValues={settings?.rank}
-              textChannels={textChannels}
-              getValues={getValues}
-            />
-
+            <Box marginBottom="3em">
+              <LevelUpMessage
+                control={control}
+                watch={watch}
+                defaultValues={settings?.rank}
+                textChannels={textChannels}
+                getValues={getValues}
+              />
+            </Box>
+            <Box>
+              <GestioneLivelli
+                control={control}
+                watch={watch}
+                defaultValues={settings?.rank}
+                textChannels={textChannels}
+                getValues={getValues}
+              />
+            </Box>
             <AlertChanges
               open={thereAreChanges}
               reset={() => reset(settings?.rank)}

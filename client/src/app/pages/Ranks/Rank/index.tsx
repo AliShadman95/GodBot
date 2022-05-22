@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { useTheme } from '@mui/material/styles';
 import { Typography, CircularProgress } from '@mui/material';
 import _ from 'lodash';
@@ -24,11 +24,27 @@ export default function Ranks() {
   const loadingUpdate = useSelector(selectLoadingUpdate);
   const loading = useSelector(selectLoading);
 
+  const [color1, setColor1] = useState('white');
+  const [color2, setColor2] = useState('white');
+  const [color3, setColor3] = useState('white');
+  const [gradientColor1, setGradientColor1] = useState('white');
+  const [gradientColor2, setGradientColor2] = useState('white');
+
   /*   const [thereAreChanges, setThereAreChanges] = React.useState(false);
    */
-  const { control, handleSubmit, watch, reset, getValues } = useForm({
+  const { control, handleSubmit, watch, reset } = useForm({
     defaultValues: settings?.rank,
   });
+
+  React.useEffect(() => {
+    if (settings && Object.keys(settings).length > 0) {
+      setColor1(settings.rank.color1);
+      setColor2(settings.rank.color2);
+      setColor3(settings.rank.color3);
+      setGradientColor1(settings.rank.gradientColor1);
+      setGradientColor2(settings.rank.gradientColor2);
+    }
+  }, [settings]);
 
   /* const formData = watch();
 
@@ -52,7 +68,15 @@ export default function Ranks() {
     dispatch(
       actions.updateSettingsAction({
         ...settings,
-        rank: { ...settings.rank, ...data },
+        rank: {
+          ...settings.rank,
+          ...data,
+          color1,
+          color2,
+          color3,
+          gradientColor1,
+          gradientColor2,
+        },
       }),
     );
   };
@@ -75,6 +99,17 @@ export default function Ranks() {
               control={control}
               reset={reset}
               watch={watch}
+              loadingUpdate={loadingUpdate}
+              color1={color1}
+              color2={color2}
+              color3={color3}
+              gradientColor1={gradientColor1}
+              gradientColor2={gradientColor2}
+              setColor1={setColor1}
+              setColor2={setColor2}
+              setColor3={setColor3}
+              setGradientColor1={setGradientColor1}
+              setGradientColor2={setGradientColor2}
             />
             {/*   <AlertChanges
               open={thereAreChanges}
