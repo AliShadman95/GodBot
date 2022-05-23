@@ -13,7 +13,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import FontFaceObserver from 'fontfaceobserver';
-
+import { AuthenticationProvider } from 'app/pages/AuthenticationProvider';
 // Use consistent styling
 import 'sanitize.css/sanitize.css';
 
@@ -65,7 +65,9 @@ ReactDOM.render(
       <React.StrictMode>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <App />
+          <AuthenticationProvider>
+            <App />
+          </AuthenticationProvider>
         </ThemeProvider>
       </React.StrictMode>
     </HelmetProvider>

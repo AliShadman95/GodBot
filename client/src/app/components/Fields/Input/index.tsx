@@ -6,7 +6,7 @@ const Input = ({
   name,
   label,
   control,
-  defaultValue,
+  defaultValue = null,
   multiline = false,
   rows = 0,
   type = 'text',
@@ -16,6 +16,8 @@ const Input = ({
   max = 0,
   rules = {},
   error = false,
+  autoFocus = false,
+  autoComplete = 'off',
   ...props
 }) => {
   return (
@@ -31,6 +33,8 @@ const Input = ({
             helperText={helperText}
             InputProps={{ inputProps: { min, max } }}
             error={error}
+            autoFocus={autoFocus}
+            autoComplete={autoComplete}
             {...field}
           />
         )}

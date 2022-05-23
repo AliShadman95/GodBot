@@ -1,5 +1,6 @@
 import { ThemeState } from 'styles/theme/slice/types';
 import { DashboardState } from 'app/pages/Dashboard/slice/types';
+import { AuthenticationProviderState } from 'app/pages/AuthenticationProvider/slice/types';
 // [IMPORT NEW CONTAINERSTATE ABOVE] < Needed for generating containers seamlessly
 
 /* 
@@ -11,5 +12,6 @@ import { DashboardState } from 'app/pages/Dashboard/slice/types';
 export interface RootState {
   theme?: ThemeState;
   dashboard?: DashboardState;
+  authenticationProvider?: AuthenticationProviderState;
   // [INSERT NEW REDUCER KEY ABOVE] < Needed for generating containers seamlessly
 }
