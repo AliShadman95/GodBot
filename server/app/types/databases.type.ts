@@ -211,7 +211,9 @@ export interface DiscordSettingsRankInterface {
  * @param { boolean } bot - is user a bot
  * @param { string } username - user username from discord
  * @param { string } avatar - avatar code from discord
- * @param { number } points - points of user
+ * @param { string } points - points of user
+ * @param { number } messageAwarded - points awarded per message
+ * @param { number } secondsInVoiceChanel - seconds in voice channel
  *
  */
 export interface DiscordRankInterface {
@@ -260,6 +262,24 @@ export interface DiscordRankInterface {
 	 *
 	 */
 	points: string;
+	/**
+	 * Discord Rank Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } messageAwarded - message that was awarded
+	 *
+	 */
+	messageAwarded: number;
+	/**
+	 * Discord Rank Interface
+	 * =====================
+	 *
+	 *
+	 * @param { number } secondsInVoiceChat - seconds in voice channel
+	 *
+	 */
+	secondsInVoiceChat: number;
 }
 
 /**

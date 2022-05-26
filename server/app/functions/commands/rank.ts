@@ -14,7 +14,7 @@ const rank = async (ctx): Promise<void> => {
 	const users = await db.rank.getAll();
 
 	if (!users.find((u) => u.id === discord.api.message.getUserID(ctx))) {
-		await db.rank.add({ ...ctx.author, points: 0 });
+		await db.rank.add({ ...ctx.author, points: "0", messageAwarded: 0, secondsInVoiceChat: 0 });
 	}
 
 	const user = await db.rank.get({ id: discord.api.message.getUserID(ctx) });

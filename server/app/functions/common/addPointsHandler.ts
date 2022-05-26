@@ -28,7 +28,7 @@ const addPointsHandler = async (ctx) => {
 
 	const user = await db.rank.get({ id: userId });
 	const settings = await db.settings.get({});
-	console.log(parseInt(settings?.rank.maxPointsMessage), parseInt(settings?.rank.minPointsMessage));
+
 	const pointAwarded =
 		Math.floor(
 			Math.random() *
@@ -37,12 +37,20 @@ const addPointsHandler = async (ctx) => {
 
 	logger.info(`Getting points for user ${userId}, points: ${pointAwarded} `, "addPointHandler.ts:disablePoints()");
 
-	if (!user) {
-		await db.rank.add({ ...ctx.author, points: pointAwarded });
+	if (user.id === "0") {
+		await db.rank.add({ ...ctx.author, points: pointAwarded, messageAwarded: 1, secondsInVoiceChat: 0 });
 		return;
 	}
 
-	await db.rank.update({ id: userId }, { ...user, points: (parseInt(user.points) + pointAwarded).toString() });
+	await db.rank.update(
+		{ id: userId },
+		{
+			...user,
+			points: (parseInt(user.points) + pointAwarded).toString(),
+			messageAwarded: (user.messageAwarded += 1),
+		},
+	);
+
 	disablePoints(userId, parseInt(settings?.rank?.messagePointCooldown));
 
 	const levelUp = isLevelUp(settings?.rank?.xps, user.points, pointAwarded);

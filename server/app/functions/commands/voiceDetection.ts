@@ -50,9 +50,27 @@ const userLeft = async (
 		let user = await db.rank.get({ id: member.id });
 
 		if (user.id !== "0") {
-			await db.rank.update({ id: member.id }, { ...user, points: (parseInt(user.points) + points).toString() });
+			await db.rank.update(
+				{ id: member.id },
+				{
+					...user,
+					points: (parseInt(user.points) + points).toString(),
+					secondsInVoiceChat: (user.secondsInVoiceChat += differenceInSeconds(
+						Date.now(),
+						userInChannel.joinTime,
+					)),
+				},
+			);
 		} else {
-			await db.rank.add({ ...member, points: points.toString() });
+			await db.rank.add({
+				...member,
+				points: points.toString(),
+				messageAwarded: 0,
+				secondsInVoiceChat: (user.secondsInVoiceChat += differenceInSeconds(
+					Date.now(),
+					userInChannel.joinTime,
+				)),
+			});
 			user = await db.rank.get({ id: member.id });
 		}
 

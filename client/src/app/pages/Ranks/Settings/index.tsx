@@ -41,8 +41,6 @@ export default function Settings() {
 
   const formData = watch();
 
-  console.log(formState.errors);
-
   React.useEffect(() => {
     if (thereAreChanges && !loadingUpdate) {
       setThereAreChanges(false);
@@ -50,10 +48,16 @@ export default function Settings() {
   }, [loadingUpdate]);
 
   React.useEffect(() => {
+    let xps = settings?.rank?.xps;
+
+    if (settings?.rank?.levelMultiplier !== formData?.levelMultiplier) {
+      xps = levelGenerator(formData.levelMultiplier);
+    }
+
     if (
       Object.keys(settings).length > 0 &&
       Object.keys(formData).length > 0 &&
-      !_.isEqual({ ...settings.rank, ...formData }, settings?.rank)
+      !_.isEqual({ ...settings.rank, ...formData, ...{ xps } }, settings?.rank)
     ) {
       setThereAreChanges(true);
     }
