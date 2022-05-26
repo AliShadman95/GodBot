@@ -1,10 +1,37 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Login } from '../Login';
+import { CircularProgress } from '@mui/material';
+import { getToken } from 'utils/api';
+import { useAuthenticationProviderSlice } from './slice';
+import { useDispatch, useSelector } from 'react-redux';
+import AlertInfo from '../Alert';
+import { selectAuthenticationProvider } from './slice/selectors';
 
 export const AuthenticationProvider = ({ children }) => {
-  const isLogged = false;
+  const dispatch = useDispatch();
+  const { actions } = useAuthenticationProviderSlice();
+  const { loading } = useSelector(selectAuthenticationProvider);
 
-  if (!isLogged) return <Login />;
+  const token = getToken();
 
-  return children;
+  useEffect(() => {
+    dispatch(actions.verifyTokenAction());
+  }, []);
+
+  if (token) {
+    return children;
+  }
+  return (
+    <React.Fragment>
+      {loading ? (
+        <CircularProgress color="inherit" size={20} />
+      ) : (
+        <React.Fragment>
+          {' '}
+          <AlertInfo />
+          <Login />
+        </React.Fragment>
+      )}
+    </React.Fragment>
+  );
 };

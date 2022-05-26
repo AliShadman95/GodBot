@@ -13,6 +13,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Input from 'app/components/Fields/Input';
 import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import { useAuthenticationProviderSlice } from '../AuthenticationProvider/slice';
 
 function Copyright(props: any) {
   return (
@@ -33,10 +35,14 @@ function Copyright(props: any) {
 }
 
 export function Login() {
+  const dispatch = useDispatch();
+
+  const { actions } = useAuthenticationProviderSlice();
+
   const { control, handleSubmit } = useForm({});
 
   const onSubmit = data => {
-    console.log(data);
+    dispatch(actions.retrieveTokenAction(data));
   };
 
   return (

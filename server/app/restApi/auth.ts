@@ -22,7 +22,7 @@ router.post("/login", async function (req, res) {
 		const user = await db.users.get({ username });
 
 		if (user.id === "0") {
-			return res.status(404).send("User not found");
+			return res.status(401).send("Utente non trovato");
 		}
 
 		const isPasswordValid = password === user.password;
@@ -30,7 +30,7 @@ router.post("/login", async function (req, res) {
 		if (!isPasswordValid) {
 			return res.status(401).send({
 				accessToken: null,
-				message: "Invalid Password!",
+				message: "Password non valida",
 			});
 		}
 

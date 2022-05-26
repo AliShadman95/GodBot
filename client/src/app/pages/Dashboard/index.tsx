@@ -3,7 +3,7 @@ import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { useDispatch } from 'react-redux';
 import { Switch, Route, useRouteMatch, Redirect } from 'react-router-dom';
-
+import LogoutIcon from '@mui/icons-material/Logout';
 import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
@@ -22,6 +22,7 @@ import Rank from '../Ranks/Rank';
 import Settings from '../Ranks/Settings';
 import { useDashboardSlice } from './slice/index';
 import Title from '../Title';
+import { useAuthenticationProviderSlice } from '../AuthenticationProvider/slice';
 
 function Copyright(props: any) {
   return (
@@ -94,6 +95,7 @@ const Drawer = styled(MuiDrawer, {
 export default function Dashboard() {
   const dispatch = useDispatch();
   const { actions } = useDashboardSlice();
+  const { actions: authActions } = useAuthenticationProviderSlice();
   let { path } = useRouteMatch();
 
   const [open, setOpen] = React.useState(true);
@@ -138,11 +140,14 @@ export default function Dashboard() {
           >
             Dashboard
           </Typography>
-          {/*  <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton> */}
+          <IconButton
+            color="inherit"
+            onClick={() => {
+              dispatch(authActions.logoutAction());
+            }}
+          >
+            <LogoutIcon />
+          </IconButton>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>

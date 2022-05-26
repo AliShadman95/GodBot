@@ -6,7 +6,7 @@ const Input = ({
   name,
   label,
   control,
-  defaultValue = null,
+  defaultValue = '',
   multiline = false,
   rows = 0,
   type = 'text',

@@ -1,19 +1,14 @@
 import { call, put, all, takeLatest } from 'redux-saga/effects';
 import { dashboardActions } from '../slice/index';
-
+import { poweredFetch } from 'utils/api';
 function* getSettings(dispatch) {
-  console.log(process.env.REACT_APP_SERVER_URL);
   yield put(dashboardActions.getSettingsLoading());
-  const response = yield call(
-    fetch,
-    `http://${process.env.REACT_APP_SERVER_URL}/settings`,
-    {
-      method: 'GET',
-    },
-  );
+  const response = yield call(poweredFetch, {
+    url: `http://${process.env.REACT_APP_SERVER_URL}/settings`,
+    method: 'GET',
+  });
   if (response.status === 200) {
-    const data = yield response.json();
-    yield put(dashboardActions.getSettingsSuccess(data));
+    yield put(dashboardActions.getSettingsSuccess(response.data));
   } else {
     yield put(
       dashboardActions.getSettingsError({ status: response.status, response }),
@@ -23,18 +18,14 @@ function* getSettings(dispatch) {
 
 function* updateSettings({ payload }) {
   yield put(dashboardActions.updateSettingsLoading());
-  const response = yield call(
-    fetch,
-    `http://${process.env.REACT_APP_SERVER_URL}/settings`,
-    {
-      method: 'PUT',
-      body: JSON.stringify(payload),
-      headers: { 'Content-Type': 'application/json' },
-    },
-  );
+  const response = yield call(poweredFetch, {
+    method: 'PUT',
+    url: `http://${process.env.REACT_APP_SERVER_URL}/settings`,
+    data: JSON.stringify(payload),
+    headers: { 'Content-Type': 'application/json' },
+  });
   if (response.status === 200) {
-    const data = yield response.json();
-    yield put(dashboardActions.updateSettingsSuccess(data));
+    yield put(dashboardActions.updateSettingsSuccess(response.data));
   } else {
     yield put(
       dashboardActions.updateSettingsError({
@@ -48,15 +39,15 @@ function* updateSettings({ payload }) {
 function* getVoiceChannels(dispatch) {
   yield put(dashboardActions.getVoiceChannelsLoading());
   const response = yield call(
-    fetch,
-    `http://${process.env.REACT_APP_SERVER_URL}/settings/voiceChannels`,
+    poweredFetch,
+
     {
+      url: `http://${process.env.REACT_APP_SERVER_URL}/settings/voiceChannels`,
       method: 'GET',
     },
   );
   if (response.status === 200) {
-    const data = yield response.json();
-    yield put(dashboardActions.getVoiceChannelsSuccess(data));
+    yield put(dashboardActions.getVoiceChannelsSuccess(response.data));
   } else {
     yield put(
       dashboardActions.getVoiceChannelsError({
@@ -69,16 +60,12 @@ function* getVoiceChannels(dispatch) {
 
 function* getTextChannels(dispatch) {
   yield put(dashboardActions.getTextChannelsLoading());
-  const response = yield call(
-    fetch,
-    `http://${process.env.REACT_APP_SERVER_URL}/settings/textChannels`,
-    {
-      method: 'GET',
-    },
-  );
+  const response = yield call(poweredFetch, {
+    url: `http://${process.env.REACT_APP_SERVER_URL}/settings/textChannels`,
+    method: 'GET',
+  });
   if (response.status === 200) {
-    const data = yield response.json();
-    yield put(dashboardActions.getTextChannelsSuccess(data));
+    yield put(dashboardActions.getTextChannelsSuccess(response.data));
   } else {
     yield put(
       dashboardActions.getTextChannelsError({

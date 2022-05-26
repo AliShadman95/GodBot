@@ -35,6 +35,10 @@ const slice = createSlice({
       state.userRole = '';
       state.username = '';
     },
+    verifyTokenAction(state) {},
+    verifyTokenLoading(state) {},
+    verifyTokenSuccess(state) {},
+    verifyTokenError(state) {},
   },
 });
 

@@ -1,3 +1,4 @@
+import axios from 'axios';
 const TOKEN_LABEL = 'token';
 const USER_ROLE_LABEL = 'userRole';
 const USERNAME_LABEL = 'username';
@@ -35,9 +36,10 @@ export const deleteUsername = () =>
   window.localStorage.removeItem(USERNAME_LABEL);
 
 export function getBaseHeaders(headers = {}, isBodyFormData) {
+  const token = getToken();
   const completeHeaders = {
     Accept: 'application/json',
-    Authorization: `Bearer ${getToken()}`,
+    ...(token && { Authorization: `Bearer ${token}` }),
     ...headers,
   };
 
@@ -47,8 +49,8 @@ export function getBaseHeaders(headers = {}, isBodyFormData) {
   return completeHeaders;
 }
 
-export function poweredFetch(url, { headers, ...options }, retries = 1) {
-  const isBodyFormData = options.body instanceof FormData;
+export function poweredFetch({ headers = {}, ...options }) {
+  const isBodyFormData = options.data instanceof FormData;
   const finalOptions = {
     headers: {
       ...getBaseHeaders(headers, isBodyFormData),
@@ -56,12 +58,15 @@ export function poweredFetch(url, { headers, ...options }, retries = 1) {
     ...options,
   };
 
-  return fetch(url, finalOptions);
+  return axios(finalOptions).then(checkAuthorized).catch(checkAuthorized);
 }
 
-export function checkAuthorized(response, retries = 1) {
-  if (response.status === 401) {
-    /*  window.localStorage.clear(); */
+export function checkAuthorized(response) {
+  if (
+    response.status === 401 ||
+    response.status === 403 ||
+    response.status === 404
+  ) {
     Object.keys(localStorage).forEach(k => {
       if (k !== 'columnsSizes') {
         window.localStorage.removeItem(k);
