@@ -2,6 +2,7 @@ import { ThemeState } from 'styles/theme/slice/types';
 import { DashboardState } from 'app/pages/Dashboard/slice/types';
 import { AuthenticationProviderState } from 'app/pages/AuthenticationProvider/slice/types';
 import { AlertState } from 'app/pages/Alert/slice/types';
+import { LeaderboardState } from 'app/pages/Leaderboard/slice/types';
 // [IMPORT NEW CONTAINERSTATE ABOVE] < Needed for generating containers seamlessly
 
 /* 
@@ -15,5 +16,6 @@ export interface RootState {
   dashboard?: DashboardState;
   authenticationProvider?: AuthenticationProviderState;
   alert?: AlertState;
+  leaderboard?: LeaderboardState;
   // [INSERT NEW REDUCER KEY ABOVE] < Needed for generating containers seamlessly
 }

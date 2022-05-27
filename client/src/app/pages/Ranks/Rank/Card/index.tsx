@@ -65,6 +65,7 @@ const Card = ({
   setColor3,
   setGradientColor1,
   setGradientColor2,
+  thereAreChanges,
 }) => {
   let canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -237,6 +238,7 @@ const Card = ({
               variant="contained"
               sx={{ margin: '0.5em' }}
               type="submit"
+              disabled={!thereAreChanges}
             >
               {loadingUpdate ? (
                 <CircularProgress color="inherit" size={20} />

@@ -40,7 +40,7 @@ export const MainListItems = () => {
         <ListItemIcon>
           <HandshakeIcon />
         </ListItemIcon>
-        <ListItemText primary="!givexp (WIP)" />
+        <ListItemText primary="!givexp" />
       </ListItemButton>
       <ListItemButton
         onClick={() => {
@@ -50,17 +50,7 @@ export const MainListItems = () => {
         <ListItemIcon>
           <PlaylistRemoveIcon />
         </ListItemIcon>
-        <ListItemText primary="!remove-xp (WIP)" />
-      </ListItemButton>
-      <ListItemButton
-        onClick={() => {
-          history.push(`${url}/levels`);
-        }}
-      >
-        <ListItemIcon>
-          <BarChartIcon />
-        </ListItemIcon>
-        <ListItemText primary="!levels (WIP)" />
+        <ListItemText primary="!remove-xp" />
       </ListItemButton>
 
       <ListItemButton
@@ -77,19 +67,19 @@ export const MainListItems = () => {
       <ListSubheader component="div" inset>
         Economy
       </ListSubheader>
-      <ListItemButton>
+      <ListItemButton disabled>
         <ListItemIcon>
           <AssignmentIcon />
         </ListItemIcon>
         <ListItemText primary="!daily (WIP)" />
       </ListItemButton>
-      <ListItemButton>
+      <ListItemButton disabled>
         <ListItemIcon>
           <AssignmentIcon />
         </ListItemIcon>
         <ListItemText primary="!shop (WIP)" />
       </ListItemButton>
-      <ListItemButton>
+      <ListItemButton disabled>
         <ListItemIcon>
           <AssignmentIcon />
         </ListItemIcon>

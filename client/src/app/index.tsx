@@ -12,6 +12,7 @@ import { Switch, Route, BrowserRouter, Redirect } from 'react-router-dom';
 /* import { GlobalStyle } from '../styles/global-styles';
  */
 import Dashboard from './pages/Dashboard';
+import Leaderboard from './pages/Leaderboard';
 import { NotFoundPage } from './pages/NotFoundPage/Loadable';
 
 export function App() {
@@ -23,6 +24,11 @@ export function App() {
         <Route
           path={process.env.PUBLIC_URL + '/dashboard'}
           component={Dashboard}
+        />
+
+        <Route
+          path={process.env.PUBLIC_URL + '/leaderboard/:id'}
+          component={Leaderboard}
         />
 
         <Route component={NotFoundPage} />

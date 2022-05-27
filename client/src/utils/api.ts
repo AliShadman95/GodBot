@@ -65,13 +65,17 @@ export function checkAuthorized(response) {
   if (
     response.status === 401 ||
     response.status === 403 ||
-    response.status === 404
+    response.status === 404 ||
+    response?.response?.status === 401 ||
+    response?.response?.status === 403 ||
+    response?.response?.status === 404
   ) {
     Object.keys(localStorage).forEach(k => {
       if (k !== 'columnsSizes') {
         window.localStorage.removeItem(k);
       }
     });
+
     window.location.href = '/';
   }
   return response;

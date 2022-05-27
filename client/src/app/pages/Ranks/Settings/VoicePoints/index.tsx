@@ -7,16 +7,18 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
+  MenuItem,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Input from '../../../../components/Fields/Input';
 import Title from '../../../Title';
+import SelectField from '../../../../components/Fields/Select';
 
 export default function VoicePoints({
   control,
   watch,
   defaultValues,
-  textChannels,
+  voiceChannels,
   getValues,
   errors,
 }) {
@@ -81,6 +83,31 @@ export default function VoicePoints({
                       : ''
                   }
                 />
+              </FormControl>
+            </Grid>
+          </Grid>
+          <Divider sx={{ my: 2 }} />
+          <Grid container spacing={3}>
+            <Grid item xs={12} md={6} lg={6}>
+              <FormControl fullWidth>
+                <SelectField
+                  name="afkChannelId"
+                  labelid="afkChannelId"
+                  id="afkChannelId"
+                  variant="outlined"
+                  margin="normal"
+                  label="Canale AFK"
+                  defaultValue={defaultValues?.afkChannelId}
+                  control={control}
+                  rules={{ required: true }}
+                  required
+                >
+                  {voiceChannels.map(channel => (
+                    <MenuItem key={channel.id} value={channel.id}>
+                      {channel.name}
+                    </MenuItem>
+                  ))}
+                </SelectField>
               </FormControl>
             </Grid>
           </Grid>

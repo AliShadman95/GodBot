@@ -10,9 +10,7 @@ function* getSettings(dispatch) {
   if (response.status === 200) {
     yield put(dashboardActions.getSettingsSuccess(response.data));
   } else {
-    yield put(
-      dashboardActions.getSettingsError({ status: response.status, response }),
-    );
+    yield put(dashboardActions.getSettingsError(response.data));
   }
 }
 
@@ -27,12 +25,7 @@ function* updateSettings({ payload }) {
   if (response.status === 200) {
     yield put(dashboardActions.updateSettingsSuccess(response.data));
   } else {
-    yield put(
-      dashboardActions.updateSettingsError({
-        status: response.status,
-        response,
-      }),
-    );
+    yield put(dashboardActions.updateSettingsError(response.data));
   }
 }
 
@@ -49,12 +42,7 @@ function* getVoiceChannels(dispatch) {
   if (response.status === 200) {
     yield put(dashboardActions.getVoiceChannelsSuccess(response.data));
   } else {
-    yield put(
-      dashboardActions.getVoiceChannelsError({
-        status: response.status,
-        response,
-      }),
-    );
+    yield put(dashboardActions.getVoiceChannelsError(response.data));
   }
 }
 
@@ -67,12 +55,7 @@ function* getTextChannels(dispatch) {
   if (response.status === 200) {
     yield put(dashboardActions.getTextChannelsSuccess(response.data));
   } else {
-    yield put(
-      dashboardActions.getTextChannelsError({
-        status: response.status,
-        response,
-      }),
-    );
+    yield put(dashboardActions.getTextChannelsError(response.data));
   }
 }
 

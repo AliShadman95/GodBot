@@ -14,18 +14,13 @@ import {
   poweredFetch,
 } from 'utils/api';
 
-function login(payload) {
+async function login(payload) {
   try {
-    return poweredFetch({
-      method: 'POST',
-      url: `http://${process.env.REACT_APP_SERVER_URL}/auth/login`,
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      data: JSON.stringify(payload),
-    });
-  } catch ({ response }) {
+    return await axios.post(
+      `http://${process.env.REACT_APP_SERVER_URL}/auth/login`,
+      payload,
+    );
+  } catch (response) {
     return response;
   }
 }
@@ -34,7 +29,6 @@ export function* authentication({ payload }) {
   yield put(authenticationProviderActions.retrieveTokenLoading());
   const { username, password } = payload;
   const response = yield call(login, { username, password });
-  console.log({ response });
   if (response.status === 200) {
     const { accessToken, role } = response.data;
     setUsername(username);

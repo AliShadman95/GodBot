@@ -30,8 +30,8 @@ export default function Ranks() {
   const [gradientColor1, setGradientColor1] = useState('white');
   const [gradientColor2, setGradientColor2] = useState('white');
 
-  /*   const [thereAreChanges, setThereAreChanges] = React.useState(false);
-   */
+  const [thereAreChanges, setThereAreChanges] = React.useState(false);
+
   const { control, handleSubmit, watch, reset } = useForm({
     defaultValues: settings?.rank,
   });
@@ -46,7 +46,7 @@ export default function Ranks() {
     }
   }, [settings]);
 
-  /* const formData = watch();
+  const formData = watch();
 
   React.useEffect(() => {
     if (thereAreChanges && !loadingUpdate) {
@@ -58,12 +58,23 @@ export default function Ranks() {
     if (
       Object.keys(settings).length > 0 &&
       Object.keys(formData).length > 0 &&
-      !_.isEqual({ ...settings.rank, ...formData }, settings?.rank)
+      !_.isEqual(
+        {
+          ...settings.rank,
+          ...formData,
+          color1,
+          color2,
+          color3,
+          gradientColor1,
+          gradientColor2,
+        },
+        settings?.rank,
+      )
     ) {
       setThereAreChanges(true);
     }
   }, [formData]);
- */
+
   const onSubmit = data => {
     dispatch(
       actions.updateSettingsAction({
@@ -110,13 +121,8 @@ export default function Ranks() {
               setColor3={setColor3}
               setGradientColor1={setGradientColor1}
               setGradientColor2={setGradientColor2}
+              thereAreChanges={thereAreChanges}
             />
-            {/*   <AlertChanges
-              open={thereAreChanges}
-              reset={reset}
-              setIsOpen={setThereAreChanges}
-              loading={loadingUpdate}
-            /> */}
           </form>
         </React.Fragment>
       )}

@@ -8,6 +8,7 @@ import {
   selectTextChannels,
   selectLoadingUpdate,
   selectLoading,
+  selectVoiceChannels,
 } from '../../Dashboard/slice/selectors';
 import { useDashboardSlice } from '../../Dashboard/slice/index';
 import { useForm } from 'react-hook-form';
@@ -30,6 +31,7 @@ export default function Settings() {
   const loading = useSelector(selectLoading);
 
   const textChannels = useSelector(selectTextChannels);
+  const voiceChannels = useSelector(selectVoiceChannels);
   const [thereAreChanges, setThereAreChanges] = React.useState(false);
 
   const { control, handleSubmit, watch, reset, getValues, formState } = useForm(
@@ -126,7 +128,7 @@ export default function Settings() {
                 control={control}
                 watch={watch}
                 defaultValues={settings?.rank}
-                textChannels={textChannels}
+                voiceChannels={voiceChannels}
                 getValues={getValues}
                 errors={formState.errors}
               />

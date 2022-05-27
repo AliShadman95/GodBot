@@ -3,7 +3,6 @@ import config from "@app/configs/auth.config";
 
 const verifyToken = (req, res, next) => {
 	let token = req.headers["authorization"];
-	console.log(token, req.headers);
 	if (!token) {
 		return res.status(403).send({ message: "No token provided!" });
 	}

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Login } from '../Login';
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, Grid } from '@mui/material';
 import { getToken } from 'utils/api';
 import { useAuthenticationProviderSlice } from './slice';
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,13 +18,29 @@ export const AuthenticationProvider = ({ children }) => {
     dispatch(actions.verifyTokenAction());
   }, []);
 
+  console.log('token', token);
+
   if (token) {
     return children;
   }
+
   return (
     <React.Fragment>
       {loading ? (
-        <CircularProgress color="inherit" size={20} />
+        <Grid
+          container
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            minHeight: '100vh',
+            alignItems: 'center',
+          }}
+        >
+          <Grid item>
+            {' '}
+            <CircularProgress size={80} />
+          </Grid>
+        </Grid>
       ) : (
         <React.Fragment>
           {' '}

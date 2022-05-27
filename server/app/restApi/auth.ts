@@ -2,22 +2,20 @@ import express from "express";
 import bot from "@app/core/token";
 const router = express.Router();
 import db from "@routes/api/database";
-import { DiscordUsersInferface } from "@app/types/databases.type";
 import jwt from "jsonwebtoken";
+import logger from "@app/functions/utils/logger";
 import config from "@app/configs/auth.config";
 
 // middleware that is specific to this router
 router.use(function timeLog(req, res, next) {
 	console.log("Time: ", Date.now());
+	logger.info(`Time: ${Date.now()}`, "auth.ts:timeLog()");
 	next();
 });
 
 router.post("/login", async function (req, res) {
 	try {
-		/* const settings = req.body as DiscordSettingsInterface;
-		await db.settings.update({}, settings); */
 		const { username, password } = req.body;
-		console.log(req.body);
 
 		const user = await db.users.get({ username });
 
@@ -28,21 +26,18 @@ router.post("/login", async function (req, res) {
 		const isPasswordValid = password === user.password;
 
 		if (!isPasswordValid) {
-			return res.status(401).send({
-				accessToken: null,
-				message: "Password non valida",
-			});
+			return res.status(401).send("Password non valida");
 		}
 
 		const token = jwt.sign({ id: user.id }, config.secret, {
-			expiresIn: 86400, // 24 hours
+			expiresIn: 604800, // 24 hours = 86400 , 1 week = 604800
 		});
 
 		const { password: userPassword, ...rest } = user;
 
 		res.status(200).send({ ...rest, accessToken: token });
 	} catch (e) {
-		console.log(e);
+		logger.error(JSON.stringify(e), "auth.ts:/login()");
 		res.send("Errore di login");
 	}
 });

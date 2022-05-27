@@ -1,0 +1,64 @@
+import { createSlice } from 'utils/@reduxjs/toolkit';
+import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
+import { leaderboardSaga } from './saga';
+import { LeaderboardState } from './types';
+
+export const initialState: LeaderboardState = {
+  users: [],
+  settings: {},
+  loading: false,
+  error: undefined,
+};
+
+const slice = createSlice({
+  name: 'leaderboard',
+  initialState,
+  reducers: {
+    getSettingsAction: state => {},
+    getSettingsLoading: state => {
+      state.loading = true;
+    },
+    getSettingsSuccess: (state, action) => {
+      state.loading = false;
+      state.settings = action.payload;
+    },
+    getSettingsError: (state, action) => {
+      state.error = action.payload;
+      state.loading = false;
+    },
+    getUsersAction: state => {},
+    getUsersLoading: state => {
+      state.loading = true;
+    },
+    getUsersSuccess: (state, action) => {
+      state.loading = false;
+      state.users = action.payload.sort(
+        (a, b) => parseInt(b.points) - parseInt(a.points),
+      );
+    },
+    getUsersError: (state, action) => {
+      state.error = action.payload;
+      state.loading = false;
+    },
+  },
+});
+
+export const { actions: leaderboardActions } = slice;
+
+export const useLeaderboardSlice = () => {
+  useInjectReducer({ key: slice.name, reducer: slice.reducer });
+  useInjectSaga({ key: slice.name, saga: leaderboardSaga });
+  return { actions: slice.actions };
+};
+
+/**
+ * Example Usage:
+ *
+ * export function MyComponentNeedingThisSlice() {
+ *  const { actions } = useLeaderboardSlice();
+ *
+ *  const onButtonClick = (evt) => {
+ *    dispatch(actions.someAction());
+ *   };
+ * }
+ */
