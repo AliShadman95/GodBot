@@ -22,15 +22,29 @@ const commandsHandler = async (): Promise<void> => {
 		if (discord.api.message.isBot(ctx)) {
 			return;
 		}
-
 		if (!discord.api.message.isCommand(ctx.content)) {
 			await addPointsHandler(ctx);
 			return;
 		}
+	});
 
-		switch (ctx.content) {
-			case "!rank":
+	bot.on("interactionCreate", async (ctx): Promise<void> => {
+		if (discord.api.message.isBot(ctx) || !ctx.isCommand()) {
+			return;
+		}
+
+		const command = ctx.commandName;
+
+		// Single commands
+		switch (command) {
+			case "rank":
 				commands.rank(ctx);
+				break;
+			case "givexp":
+				commands.giveXp(ctx);
+				break;
+			case "removexp":
+				commands.removeXp(ctx);
 				break;
 			default:
 				break;

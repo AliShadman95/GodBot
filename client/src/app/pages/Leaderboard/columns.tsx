@@ -1,4 +1,6 @@
-import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
+import React from 'react';
+
+import { GridRenderCellParams } from '@mui/x-data-grid';
 import { Typography, Box, Avatar, CircularProgress } from '@mui/material';
 
 export const rows = (users, settings) => {
@@ -26,7 +28,7 @@ export const rows = (users, settings) => {
   });
 };
 
-export const columns: GridColDef[] = [
+export const columns = isAdmin => [
   {
     field: 'badge',
     headerName: '',
@@ -64,7 +66,12 @@ export const columns: GridColDef[] = [
       />
     ),
   },
-  { field: 'username', headerName: '', flex: 4, minWidth: 150 },
+  {
+    field: 'username',
+    headerName: '',
+    flex: 4,
+    minWidth: 150,
+  },
   { field: 'messageAwarded', headerName: 'MESSAGGI', flex: 0.6, minWidth: 100 },
   {
     field: 'minutesInVoiceChannel',

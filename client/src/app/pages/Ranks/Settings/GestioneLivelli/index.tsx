@@ -11,17 +11,13 @@ import {
   AccordionDetails,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-
 import SliderField from 'app/components/Fields/Slider';
-import Title from '../../../Title';
+import Title from 'app/components/Title';
 import {
   SliderGestioneLivelliMapperToFe,
   SliderGestioneLivelliMapperToDb,
 } from 'utils/utils';
 export default function GestioneLivelli({ control, watch, defaultValues }) {
-  const isNotMobile = useMediaQuery('(min-width:650px)');
-  const levelMultiplierField = watch('levelMultiplier');
-
   return (
     <React.Fragment>
       <Accordion defaultExpanded>
@@ -36,7 +32,6 @@ export default function GestioneLivelli({ control, watch, defaultValues }) {
           <div style={{ marginBottom: '1em' }}>
             <Grid container>
               <Grid item xs={7} md={10}>
-                {/*    <Title>Gestione XP</Title> */}
                 <Typography component="p" color="main" gutterBottom>
                   Cambia la difficoltà di livellamento modificando l'XP
                   necessaria per ottenere un nuovo livello.

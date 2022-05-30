@@ -10,11 +10,13 @@
 
 import message from "@app/functions/api/discord/message";
 import bot from "@app/functions/api/discord/bot";
+import interactions from "@app/functions/api/discord/interactions";
 
 const discord = {
 	api: {
 		message: message,
 		bot: bot,
+		interactions: interactions,
 	},
 };
 

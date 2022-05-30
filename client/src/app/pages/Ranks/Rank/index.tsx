@@ -2,11 +2,8 @@ import React, { useState } from 'react';
 import { useTheme } from '@mui/material/styles';
 import { Typography, CircularProgress } from '@mui/material';
 import _ from 'lodash';
-import AlertChanges from 'app/components/AlertChanges';
-
 import {
   selectSettings,
-  selectTextChannels,
   selectLoadingUpdate,
   selectLoading,
 } from '../../Dashboard/slice/selectors';
@@ -14,7 +11,7 @@ import { useDashboardSlice } from '../../Dashboard/slice/index';
 import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
 import Card from './Card';
-import Title from '../../Title';
+import Title from 'app/components/Title';
 
 export default function Ranks() {
   const theme = useTheme();

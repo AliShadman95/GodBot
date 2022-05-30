@@ -112,7 +112,7 @@ const pin = async (
 }; */
 
 const isCommand = (command) => {
-	return command.startsWith("!");
+	return command.startsWith("!") || command.startsWith("/");
 };
 
 const isBot = (ctx) => {

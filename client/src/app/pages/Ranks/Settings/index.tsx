@@ -17,7 +17,7 @@ import GestioneLivelli from './GestioneLivelli';
 import MessagePoints from './MessagePoints';
 import VoicePoints from './VoicePoints';
 import { useSelector, useDispatch } from 'react-redux';
-import Title from '../../Title';
+import Title from 'app/components/Title';
 import { levelGenerator } from 'utils/utils';
 
 export default function Settings() {

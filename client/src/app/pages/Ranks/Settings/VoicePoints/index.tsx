@@ -10,9 +10,9 @@ import {
   MenuItem,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import Input from '../../../../components/Fields/Input';
-import Title from '../../../Title';
-import SelectField from '../../../../components/Fields/Select';
+import Input from 'app/components/Fields/Input';
+import Title from 'app/components/Title';
+import SelectField from 'app/components/Fields/Select';
 
 export default function VoicePoints({
   control,

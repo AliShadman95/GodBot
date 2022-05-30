@@ -12,7 +12,7 @@ import {
   Button,
   CircularProgress,
 } from '@mui/material';
-import Title from '../../../Title';
+import Title from 'app/components/Title';
 import SwitchField from 'app/components/Fields/Switch';
 import {
   generateAvatar,

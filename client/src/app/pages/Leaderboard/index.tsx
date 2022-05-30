@@ -1,25 +1,15 @@
 import React, { useEffect } from 'react';
 import {
-  Typography,
   Box,
-  AppBar,
-  Container,
-  Toolbar,
-  IconButton,
-  Menu,
-  MenuItem,
   Button,
-  Tooltip,
-  Paper,
-  Grid,
-  CircularProgress,
+  Dialog,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  DialogActions,
+  ButtonGroup,
 } from '@mui/material';
-import AdbIcon from '@mui/icons-material/Adb';
-import MenuIcon from '@mui/icons-material/Menu';
-import LogoutIcon from '@mui/icons-material/Logout';
-import { rows, columns } from './columns';
-import { DataGrid, itIT } from '@mui/x-data-grid';
-import { useForm } from 'react-hook-form';
+import { isAdmin as isAdminFunc } from 'utils/api';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLeaderboardSlice } from './slice';
 import {
@@ -27,8 +17,10 @@ import {
   selectLeaderboardSettings,
   selectLeaderboardUsers,
 } from './slice/selectors';
-
-const pages = ['Dashboard'];
+import SecondaryNavBar from '../SecondaryNavBar';
+import Table from './Table';
+import { GridSelectionModel } from '@mui/x-data-grid';
+import { SliderValueLabelUnstyled } from '@mui/base';
 
 export default function Leaderboard() {
   const dispatch = useDispatch();
@@ -39,174 +31,96 @@ export default function Leaderboard() {
     dispatch(actions.getUsersAction());
   }, []);
 
+  const isAdmin = isAdminFunc();
   const users = useSelector(selectLeaderboardUsers);
   const settings = useSelector(selectLeaderboardSettings);
   const loading = useSelector(selectLeaderboardLoading);
 
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-    null,
-  );
+  // 0 = none, 1 = Some, 2 = All
+  const [openDialog, setOpenDialog] = React.useState('0');
 
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElNav(event.currentTarget);
+  const handleClickOpenDialog = value => {
+    setOpenDialog(value);
   };
 
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
+  const handleCloseDialog = () => {
+    setOpenDialog('0');
   };
+  const [selectionModel, setSelectionModel] =
+    React.useState<GridSelectionModel>([]);
 
   return (
     <React.Fragment>
-      <AppBar position="static">
-        <Container maxWidth="xl">
-          <Toolbar disableGutters>
-            <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-            <Typography
-              variant="h6"
-              noWrap
-              component="a"
-              href="/"
-              sx={{
-                mr: 2,
-                display: { xs: 'none', md: 'flex' },
-                fontFamily: 'monospace',
-                fontWeight: 700,
-                letterSpacing: '.3rem',
-                color: 'inherit',
-                textDecoration: 'none',
-              }}
-            >
-              GODBOT
-            </Typography>
-
-            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleOpenNavMenu}
-                color="inherit"
-              >
-                <MenuIcon />
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorElNav}
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'left',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'left',
-                }}
-                open={Boolean(anchorElNav)}
-                onClose={handleCloseNavMenu}
-                sx={{
-                  display: { xs: 'block', md: 'none' },
-                }}
-              >
-                {pages.map(page => (
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">{page}</Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
-            </Box>
-            <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-            <Typography
-              variant="h5"
-              noWrap
-              component="a"
-              href=""
-              sx={{
-                mr: 2,
-                display: { xs: 'flex', md: 'none' },
-                flexGrow: 1,
-                fontFamily: 'monospace',
-                fontWeight: 700,
-                letterSpacing: '.3rem',
-                color: 'inherit',
-                textDecoration: 'none',
-              }}
-            >
-              GODBOT
-            </Typography>
-            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-              {pages.map(page => (
-                <Button
-                  key={page}
-                  onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: 'white', display: 'block' }}
-                >
-                  {page}
-                </Button>
-              ))}
-            </Box>
-
-            <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Logout">
-                <IconButton
-                  onClick={() => {
-                    console.log('SHOULD LOGOUT');
-                  }}
-                  sx={{ p: 0 }}
-                >
-                  <LogoutIcon />
-                </IconButton>
-              </Tooltip>
-            </Box>
-          </Toolbar>
-        </Container>
-      </AppBar>
-      {!loading ? (
-        <Paper sx={{ marginLeft: '2em', marginRight: '2em' }}>
-          <div
-            style={{
-              height: 400,
-              width: '100%',
-              marginTop: '7em',
-            }}
-          >
-            <div style={{ display: 'flex', height: '100%' }}>
-              <div style={{ flexGrow: 1 }}>
-                <DataGrid
-                  rows={rows(users, settings)}
-                  columns={columns}
-                  localeText={
-                    itIT.components.MuiDataGrid.defaultProps.localeText
-                  }
-                  sx={{
-                    '.MuiDataGrid-columnSeparator': {
-                      display: 'none',
-                    },
-                    '&.MuiDataGrid-root': {
-                      border: 'none',
-                    },
-                  }}
-                />
-              </div>
-            </div>
-          </div>
-        </Paper>
-      ) : (
-        <Grid
-          container
+      <SecondaryNavBar />
+      {isAdmin && (
+        <Box
           sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            minHeight: '100vh',
-            alignItems: 'center',
+            flexGrow: 0,
+            marginTop: '3em',
+            marginLeft: '2em',
+            marginRight: '2em',
           }}
         >
-          <Grid item>
-            {' '}
-            <CircularProgress size={80} />
-          </Grid>
-        </Grid>
+          <ButtonGroup
+            color="secondary"
+            variant="text"
+            aria-label="text button group"
+          >
+            <Button
+              onClick={() => handleClickOpenDialog('2')}
+              color="secondary"
+            >
+              Reset tutti gli xp
+            </Button>
+            <Button
+              onClick={() => handleClickOpenDialog('1')}
+              disabled={selectionModel.length <= 0}
+              color="secondary"
+            >
+              Reset gli xp selezioanti
+            </Button>
+          </ButtonGroup>
+        </Box>
       )}
+
+      <Table
+        settings={settings}
+        loading={loading}
+        setSelectionModel={setSelectionModel}
+        selectionModel={selectionModel}
+        users={users}
+        isAdmin={isAdmin}
+      />
+
+      <Dialog
+        open={openDialog !== '0'}
+        onClose={handleCloseDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">Conferma</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Sei sicuro di volere resettare l'exp?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog} color="secondary">
+            Annulla
+          </Button>
+          <Button
+            onClick={() => {
+              openDialog === '1'
+                ? dispatch(actions.resetRanksAction(selectionModel))
+                : dispatch(actions.resetAllRanksAction());
+              handleCloseDialog();
+            }}
+            autoFocus
+          >
+            Conferma
+          </Button>
+        </DialogActions>
+      </Dialog>
     </React.Fragment>
   );
 }

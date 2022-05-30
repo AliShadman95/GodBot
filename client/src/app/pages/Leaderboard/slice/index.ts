@@ -40,6 +40,28 @@ const slice = createSlice({
       state.error = action.payload;
       state.loading = false;
     },
+    resetRanksAction: (state, action) => {},
+    resetRanksLoading: state => {
+      state.loading = true;
+    },
+    resetRanksSuccess: (state, action) => {
+      state.loading = false;
+    },
+    resetRanksError: (state, action) => {
+      state.error = action.payload;
+      state.loading = false;
+    },
+    resetAllRanksAction: state => {},
+    resetAllRanksLoading: state => {
+      state.loading = true;
+    },
+    resetAllRanksSuccess: (state, action) => {
+      state.loading = false;
+    },
+    resetAllRanksError: (state, action) => {
+      state.error = action.payload;
+      state.loading = false;
+    },
   },
 });
 

@@ -15,4 +15,15 @@ router.get("/", async function (req, res) {
 	res.json(users);
 });
 
+router.put("/resetRanks", async function (req, res) {
+	await db.rank.updateMany({ id: { $in: req.body } }, { $set: { points: "0" } });
+	res.json("Update Successful");
+});
+
+router.put("/resetAllRanks", async function (req, res) {
+	const users = await db.rank.getAll();
+	await db.rank.updateMany({ id: { $in: users.map((u) => u.id) } }, { $set: { points: "0" } });
+	res.json("Update Successful");
+});
+
 module.exports = router;

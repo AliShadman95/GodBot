@@ -133,3 +133,5 @@ npm-debug.log
 #########
 /LICENSE copy.md
 /README copy.md
+
+.env

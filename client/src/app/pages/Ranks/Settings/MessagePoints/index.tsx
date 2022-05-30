@@ -12,11 +12,11 @@ import {
   AccordionSummary,
   AccordionDetails,
 } from '@mui/material';
-import SelectField from '../../../../components/Fields/Select';
+import SelectField from 'app/components/Fields/Select';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import Input from '../../../../components/Fields/Input';
+import Input from 'app/components/Fields/Input';
 import SwitchField from 'app/components/Fields/Switch';
-import Title from '../../../Title';
+import Title from 'app/components/Title';
 
 export default function MessagePoints({
   control,

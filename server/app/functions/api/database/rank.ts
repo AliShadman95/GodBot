@@ -87,6 +87,31 @@ const update = async (search: Record<string, number | string | boolean>, user: D
 
 /*
  *
+ * Ranks CRUD
+ * =====================
+ * Update many users from DB
+ *
+ * @param {Record<string, number | string | boolean | Record>} inM - List of users to update
+ * @param {Record<string, number | string | boolean>} set - the field to change
+ * */
+
+const updateMany = async (
+	inM: Record<string, number | string | boolean | any>,
+	set: Record<string, number | string | boolean | any>,
+): Promise<void> => {
+	try {
+		await query.updateMany(inM, set, { multi: true }, function (error: string) {
+			if (error) {
+				logger.error(error || "");
+			}
+		});
+	} catch (error: any) {
+		logger.error(JSON.stringify(error || ""), "ranks.ts:updateMany()");
+	}
+};
+
+/*
+ *
  * Users CRUD
  * =====================
  * Get user from DB
@@ -141,5 +166,5 @@ const getAll = async (): Promise<DiscordRankInterface[]> => {
 	return new query().toJSON();
 };
 
-export { get, update, remove, add, getAll };
-export default { get, update, remove, add, getAll };
+export { get, update, remove, add, getAll, updateMany };
+export default { get, update, remove, add, getAll, updateMany };
