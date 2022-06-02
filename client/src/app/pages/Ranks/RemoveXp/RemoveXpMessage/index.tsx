@@ -12,17 +12,11 @@ import {
 import SelectField from 'app/components/Fields/Select';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Input from 'app/components/Fields/Input';
-import SwitchField from 'app/components/Fields/Switch';
 import Title from 'app/components/Title';
+import { isAdmin as isAdminFunc } from 'utils/api';
 
-export default function LevelUpMessage({
-  control,
-  watch,
-  defaultValues,
-  textChannels,
-  getValues,
-}) {
-  const displayLevelUpMessageField = getValues('displayLevelUpMessage');
+export default function RemoveXpMessage({ control, defaultValues, roles }) {
+  const isAdmin = isAdminFunc();
 
   return (
     <React.Fragment>
@@ -32,7 +26,7 @@ export default function LevelUpMessage({
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Title>Messaggio nuovo livello</Title>
+          <Title>Messaggio comando /removexp</Title>
         </AccordionSummary>
         <AccordionDetails>
           <div style={{ marginBottom: '1em' }}>
@@ -40,22 +34,9 @@ export default function LevelUpMessage({
               <Grid item xs={7} md={10}>
                 {/*   <Title>Livellamento</Title> */}
                 <Typography component="p" color="main" gutterBottom>
-                  Ogni volta che un utente raggiunge un nuovo livello, il bot
+                  Ogni volta che un utente usa il comando /removexp, il bot
                   potrà mandare un messaggio personalizzato.
                 </Typography>
-              </Grid>
-
-              <Grid item xs={5} md={2}>
-                <SwitchField
-                  name="displayLevelUpMessage"
-                  labelid="displayLevelUpMessage"
-                  id="displayLevelUpMessage"
-                  variant="outlined"
-                  /* margin="normal" */
-                  label={displayLevelUpMessageField ? 'Attivo' : 'Disattivo'}
-                  defaultValue={defaultValues.displayLevelUpMessage}
-                  control={control}
-                />
               </Grid>
             </Grid>
           </div>
@@ -64,42 +45,41 @@ export default function LevelUpMessage({
             <Grid item xs={12} md={6} lg={6}>
               <FormControl fullWidth>
                 <SelectField
-                  name="levelUpChannelId"
-                  labelid="levelUpChannelId"
-                  id="levelUpChannelId"
+                  name="removeXpEnabledRoles"
+                  labelid="removeXpEnabledRoles"
+                  id="removeXpEnabledRoles"
                   variant="outlined"
                   margin="normal"
                   label="Canale"
-                  defaultValue={defaultValues?.levelUpChannelId}
+                  defaultValue={defaultValues?.removeXpEnabledRoles}
                   control={control}
-                  rules={{ required: true }}
-                  required
+                  multiple
+                  disabled={!isAdmin}
                 >
-                  {textChannels.map(channel => (
-                    <MenuItem key={channel.id} value={channel.id}>
-                      # {channel.name}
+                  {roles.map(role => (
+                    <MenuItem key={role.id} value={role.id}>
+                      {role.name}
                     </MenuItem>
                   ))}
                 </SelectField>
 
                 <Input
-                  id="levelUpMessage"
-                  name="levelUpMessage"
+                  id="removeXpMessage"
+                  name="removeXpMessage"
                   label="Messaggio"
                   margin="normal"
                   control={control}
-                  defaultValue={defaultValues.levelUpMessage}
+                  defaultValue={defaultValues.removeXpMessage}
                   rules={{ required: true }}
                   rows={4}
                   multiline
                   helperText={
-                    "Usare {user} e {livello} per inserire il nome dell'utente e il livello raggiunto"
+                    "Usare {user} e {punti} per inserire il nome dell'utente e il punteggio"
                   }
                 />
               </FormControl>
             </Grid>
           </Grid>
-          {/*   </Paper> */}
         </AccordionDetails>
       </Accordion>
     </React.Fragment>

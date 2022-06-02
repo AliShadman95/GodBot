@@ -21,6 +21,7 @@ export const selectTextChannels = createSelector(
   [selectSlice],
   state => state.textChannels,
 );
+export const selectRoles = createSelector([selectSlice], state => state.roles);
 
 export const selectLoading = createSelector(
   [selectSlice],

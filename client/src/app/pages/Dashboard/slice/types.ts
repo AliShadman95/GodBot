@@ -5,4 +5,5 @@ export interface DashboardState {
   error: any;
   voiceChannels: any[];
   textChannels: any[];
+  roles: any[];
 }

@@ -29,14 +29,12 @@ const commandsHandler = async (): Promise<void> => {
 	});
 
 	bot.on("interactionCreate", async (ctx): Promise<void> => {
-		if (discord.api.message.isBot(ctx) || !ctx.isCommand()) {
+		if (discord.api.interactions.isBot(ctx) || !ctx.isCommand()) {
 			return;
 		}
 
-		const command = ctx.commandName;
-
 		// Single commands
-		switch (command) {
+		switch (ctx.commandName) {
 			case "rank":
 				commands.rank(ctx);
 				break;
@@ -45,6 +43,9 @@ const commandsHandler = async (): Promise<void> => {
 				break;
 			case "removexp":
 				commands.removeXp(ctx);
+				break;
+			case "leaderboard":
+				commands.leaderboard(ctx);
 				break;
 			default:
 				break;

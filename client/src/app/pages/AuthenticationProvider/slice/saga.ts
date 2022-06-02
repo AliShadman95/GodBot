@@ -12,6 +12,7 @@ import {
   getUsername,
   getToken,
   poweredFetch,
+  getUserRole,
 } from 'utils/api';
 
 async function login(payload) {
@@ -66,6 +67,8 @@ export function* verifiyLoginSaga() {
   const username = getUsername();
   if (username) {
     const token = getToken();
+    const userRole = getUserRole();
+
     const response = yield call(poweredFetch, {
       method: 'GET',
       url: `http://${process.env.REACT_APP_SERVER_URL}/settings`,
@@ -75,9 +78,15 @@ export function* verifiyLoginSaga() {
       },
     });
     if (response.status === 200) {
-      yield put(authenticationProviderActions.verifyTokenSuccess());
+      yield put(
+        authenticationProviderActions.verifyTokenSuccess({
+          username,
+          token,
+          role: userRole,
+        }),
+      );
     } else {
-      yield put(authenticationProviderActions.verifyTokenError());
+      yield put(authenticationProviderActions.verifyTokenError(response.data));
       yield put(authenticationProviderActions.logoutAction());
     }
   }

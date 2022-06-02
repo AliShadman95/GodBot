@@ -8,6 +8,7 @@ export const initialState: DashboardState = {
   settings: {},
   voiceChannels: [],
   textChannels: [],
+  roles: [],
   loading: false,
   error: undefined,
   loadingUpdate: false,
@@ -50,6 +51,18 @@ const slice = createSlice({
       state.textChannels = action.payload;
     },
     getTextChannelsError: (state, action) => {
+      state.error = action.payload;
+      state.loading = false;
+    },
+    getRolesAction: state => {},
+    getRolesLoading: state => {
+      state.loading = true;
+    },
+    getRolesSuccess: (state, action) => {
+      state.loading = false;
+      state.roles = action.payload;
+    },
+    getRolesError: (state, action) => {
       state.error = action.payload;
       state.loading = false;
     },

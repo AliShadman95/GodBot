@@ -3,6 +3,8 @@ import bot from "@app/core/token";
 const router = express.Router();
 import db from "@routes/api/database";
 import { DiscordSettingsInterface } from "@app/types/databases.type";
+import configs from "@app/configs/config";
+import discord from "@routes/api/discord";
 
 // middleware that is specific to this router
 router.use(function timeLog(req, res, next) {
@@ -50,6 +52,15 @@ router.get("/textChannels", async function (req, res) {
 		});
 
 	res.json(channels);
+});
+
+router.get("/roles", async function (req, res) {
+	const guild = await discord.api.guild.getGuild();
+	const roles = guild.roles.cache.map((role) => {
+		return { id: role.id, name: role.name };
+	});
+
+	res.json(roles);
 });
 
 module.exports = router;

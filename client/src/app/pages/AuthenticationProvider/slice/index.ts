@@ -36,9 +36,19 @@ const slice = createSlice({
       state.username = '';
     },
     verifyTokenAction(state) {},
-    verifyTokenLoading(state) {},
-    verifyTokenSuccess(state) {},
-    verifyTokenError(state) {},
+    verifyTokenLoading(state) {
+      state.loading = true;
+    },
+    verifyTokenSuccess(state, action: PayloadAction<any>) {
+      state.loading = false;
+      state.token = action.payload.token;
+      state.userRole = action.payload.role;
+      state.username = action.payload.username;
+    },
+    verifyTokenError(state, action: PayloadAction<any>) {
+      state.loading = false;
+      state.error = action.payload;
+    },
   },
 });
 

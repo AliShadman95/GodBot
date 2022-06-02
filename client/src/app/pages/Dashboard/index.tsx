@@ -8,6 +8,8 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Rank from '../Ranks/Rank';
 import Settings from '../Ranks/Settings';
+import GiveXp from '../Ranks/GiveXp';
+import RemoveXp from '../Ranks/RemoveXp';
 import { useDashboardSlice } from './slice/index';
 import PrimaryNavBar from '../PrimaryNavBar';
 import Copyright from 'app/components/Copyright';
@@ -21,6 +23,7 @@ export default function Dashboard() {
     dispatch(actions.getSettingsAction());
     dispatch(actions.getVoiceChannelsAction());
     dispatch(actions.getTextChannelsAction());
+    dispatch(actions.getRolesAction());
   }, []);
 
   return (
@@ -46,6 +49,12 @@ export default function Dashboard() {
                 </Route>
                 <Route path={`${path}/settings`}>
                   <Settings />
+                </Route>
+                <Route path={`${path}/give-xp`}>
+                  <GiveXp />
+                </Route>
+                <Route path={`${path}/remove-xp`}>
+                  <RemoveXp />
                 </Route>
               </Switch>
             </Grid>

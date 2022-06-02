@@ -19,9 +19,10 @@ export default function VoicePoints({
   watch,
   defaultValues,
   voiceChannels,
-  getValues,
   errors,
 }) {
+  const minPointsVoiceChannel = watch('minPointsVoiceChannel');
+
   return (
     <React.Fragment>
       <Accordion defaultExpanded>
@@ -55,8 +56,8 @@ export default function VoicePoints({
                   control={control}
                   defaultValue={defaultValues.minPointsVoiceChannel}
                   type="number"
-                  min={0}
-                  max={10}
+                  min={1}
+                  max={5}
                   rules={{ required: true, min: 1, max: 5 }}
                   error={errors.minPointsVoiceChannel}
                   helperText={
@@ -73,13 +74,19 @@ export default function VoicePoints({
                   control={control}
                   defaultValue={defaultValues.maxPointsVoiceChannel}
                   type="number"
-                  min={1}
-                  max={20}
-                  rules={{ required: true, min: 2, max: 10 }}
+                  min={parseInt(minPointsVoiceChannel) + 1}
+                  max={10}
+                  rules={{
+                    required: true,
+                    min: parseInt(minPointsVoiceChannel) + 1,
+                    max: 10,
+                  }}
                   error={errors.maxPointsVoiceChannel}
                   helperText={
                     errors.maxPointsVoiceChannel
-                      ? 'TI GIURO! (Il minimo è 2 e il massimo è 10)'
+                      ? `TI GIURO! (Il minimo è ${
+                          parseInt(minPointsVoiceChannel) + 1
+                        } e il massimo è 10)`
                       : ''
                   }
                 />

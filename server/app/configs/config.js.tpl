@@ -2,8 +2,10 @@ module.exports = {
 	telegram: {
 		// from @botfather on telegram
 		token: process.env.BOT_TOKEN || "1234:asdfghjkl",
+		test_guild_id: process.env.TEST_GUILD_ID || "3232",
+	client_id: process.env.CLIENT_ID || "3232",
 	},
-
+	frontend: { url: process.env.FRONTEND_URL || "http://localhost:3006" },
 	mode: "poll", // or webhook
 	webhook: {
 		url: process.env.BOT_WEBHOOK_URL || "https://sample.host.com:8443",
@@ -13,7 +15,7 @@ module.exports = {
 	},
 
 	// mongodb
-	database: { URL: process.env.MONGODB || "mongodb://localhost:27017/aboutmeinfodb" },
+	database: { URL: process.env.MONGODB || "mongodb://localhost:27017/mongourl" },
 
 	// Debug
 	debug: process.env.DEBUG || true,

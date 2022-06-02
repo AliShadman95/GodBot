@@ -79,6 +79,7 @@ export function Login() {
             id="password"
             name="password"
             label="Password"
+            type="password"
             margin="normal"
             fullWidth
             control={control}
@@ -86,10 +87,7 @@ export function Login() {
             autoComplete="current-password"
             required
           />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
+
           <Button
             type="submit"
             fullWidth

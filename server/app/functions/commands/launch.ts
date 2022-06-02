@@ -46,6 +46,7 @@ const launch = async (): Promise<void> => {
 		});
 		logger.info("Successfully reloaded application (/) commands.", "launch.ts:launch()");
 	} catch (error) {
+		console.log(error);
 		logger.error("Error in creating slash commands", "launch.ts:launch()");
 	}
 };

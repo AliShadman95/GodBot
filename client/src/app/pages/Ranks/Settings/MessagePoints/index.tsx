@@ -1,34 +1,24 @@
 import * as React from 'react';
-import { useTheme } from '@mui/material/styles';
 import {
-  Paper,
   Typography,
   FormControl,
-  useMediaQuery,
-  MenuItem,
   Grid,
   Divider,
   Accordion,
   AccordionSummary,
   AccordionDetails,
 } from '@mui/material';
-import SelectField from 'app/components/Fields/Select';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Input from 'app/components/Fields/Input';
-import SwitchField from 'app/components/Fields/Switch';
 import Title from 'app/components/Title';
 
 export default function MessagePoints({
   control,
   watch,
   defaultValues,
-  textChannels,
-  getValues,
   errors,
 }) {
-  const theme = useTheme();
-  const isNotMobile = useMediaQuery('(min-width:650px)');
-  const displayLevelUpMessageField = getValues('displayLevelUpMessage');
+  const minPointsMessage = watch('minPointsMessage');
 
   return (
     <React.Fragment>
@@ -41,18 +31,9 @@ export default function MessagePoints({
           <Title>Punti chat testuale</Title>
         </AccordionSummary>
         <AccordionDetails>
-          {/*    <Paper
-            sx={{
-              p: 2,
-              display: 'flex',
-              flexDirection: 'column',
-              height: isNotMobile ? 450 : 550,
-            }}
-          > */}
           <div style={{ marginBottom: '1em' }}>
             <Grid container>
               <Grid item xs={7} md={10}>
-                {/*   <Title>Livellamento</Title> */}
                 <Typography component="p" color="main" gutterBottom>
                   Ogni volta che un utente scrive un messaggio, l'utente potrà
                   ricevere punti.
@@ -72,7 +53,7 @@ export default function MessagePoints({
                   control={control}
                   defaultValue={defaultValues.minPointsMessage}
                   type="number"
-                  min={0}
+                  min={1}
                   max={10}
                   rules={{ required: true, min: 1, max: 10 }}
                   error={errors.minPointsMessage}
@@ -90,13 +71,19 @@ export default function MessagePoints({
                   control={control}
                   defaultValue={defaultValues.maxPointsMessage}
                   type="number"
-                  min={1}
-                  max={20}
-                  rules={{ required: true, min: 2, max: 30 }}
+                  min={parseInt(minPointsMessage) + 1}
+                  max={30}
+                  rules={{
+                    required: true,
+                    min: parseInt(minPointsMessage) + 1,
+                    max: 30,
+                  }}
                   error={errors.maxPointsMessage}
                   helperText={
                     errors.maxPointsMessage
-                      ? 'TI GIURO! (Il minimo è 2 e il massimo è 30)'
+                      ? `TI GIURO! (Il minimo è ${
+                          parseInt(minPointsMessage) + 1
+                        } e il massimo è 30)`
                       : ''
                   }
                 />
@@ -115,20 +102,19 @@ export default function MessagePoints({
                   control={control}
                   defaultValue={defaultValues.messagePointCooldown}
                   type="number"
-                  min={10}
-                  max={120}
-                  rules={{ required: true, min: 10, max: 120 }}
+                  min={60}
+                  max={300}
+                  rules={{ required: true, min: 60, max: 300 }}
                   error={errors.messagePointCooldown}
                   helperText={
                     errors.messagePointCooldown
-                      ? 'TI GIURO! (Il minimo è 10 e il massimo è 120)'
+                      ? 'TI GIURO! (Il minimo è 60 e il massimo è 300)'
                       : ''
                   }
                 />
               </FormControl>
             </Grid>
           </Grid>
-          {/*   </Paper> */}
         </AccordionDetails>
       </Accordion>
     </React.Fragment>

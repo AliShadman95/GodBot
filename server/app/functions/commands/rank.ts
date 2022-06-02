@@ -7,7 +7,6 @@ import { generateRankCard } from "@app/functions/common/generateRankCard";
  * =====================
  * Current rank of user or of specified user.
  *
- * @param message
  * @param ctx
  */
 const rank = async (ctx): Promise<void> => {

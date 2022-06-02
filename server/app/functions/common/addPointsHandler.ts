@@ -61,13 +61,6 @@ const addPointsHandler = async (ctx) => {
 				.replace("{user}", user.username || "")
 				.replace("{livello}", levelUp.toString() || ""),
 		);
-		discord.api.message.send(
-			ctx,
-			settings?.rank?.levelUpMessage
-				.replace("{user}", user.username || "")
-				.replace("{livello}", levelUp.toString() || ""),
-			"",
-		);
 	}
 };
 

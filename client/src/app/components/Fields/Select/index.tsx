@@ -9,6 +9,8 @@ const SelectField = ({
   control,
   defaultValue,
   children,
+  multiple = false,
+  helperText = '',
   ...props
 }) => {
   const labelId = `${name}-label`;
@@ -17,7 +19,12 @@ const SelectField = ({
       <InputLabel id={labelId}>{label}</InputLabel>
       <Controller
         render={({ field }) => (
-          <Select labelId={labelId} label={label} {...field}>
+          <Select
+            labelId={labelId}
+            label={label}
+            {...field}
+            multiple={multiple}
+          >
             {children}
           </Select>
         )}

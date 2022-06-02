@@ -59,12 +59,26 @@ function* getTextChannels(dispatch) {
   }
 }
 
+function* getRoles(dispatch) {
+  yield put(dashboardActions.getRolesLoading());
+  const response = yield call(poweredFetch, {
+    url: `http://${process.env.REACT_APP_SERVER_URL}/settings/roles`,
+    method: 'GET',
+  });
+  if (response.status === 200) {
+    yield put(dashboardActions.getRolesSuccess(response.data));
+  } else {
+    yield put(dashboardActions.getRolesError(response.data));
+  }
+}
+
 export function* dashboardSaga() {
   try {
     yield all([
       takeLatest(dashboardActions.getSettingsAction, getSettings),
       takeLatest(dashboardActions.getVoiceChannelsAction, getVoiceChannels),
       takeLatest(dashboardActions.getTextChannelsAction, getTextChannels),
+      takeLatest(dashboardActions.getRolesAction, getRoles),
       takeLatest(dashboardActions.updateSettingsAction, updateSettings),
     ]);
   } catch (error) {

@@ -198,6 +198,42 @@ export interface DiscordSettingsRankInterface {
 	 *
 	 */
 	afkChannelId: string;
+	/**
+	 * Discord Settings Rank Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } giveXpMessage - The message to display when the user use the givexp command
+	 *
+	 */
+	giveXpMessage: string;
+	/**
+	 * Discord Settings Rank Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } removeXpMessage - The message to display when the user use the removexp command
+	 *
+	 */
+	removeXpMessage: string;
+	/**
+	 * Discord Settings Rank Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string[] } giveXpEnabledRoles - The list of roles that can use the givexp command
+	 *
+	 */
+	giveXpEnabledRoles: string[];
+	/**
+	 * Discord Settings Rank Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string[] } removeXpEnabledRoles - The list of roles that can use the removexp command
+	 *
+	 */
+	removeXpEnabledRoles: string[];
 }
 
 /**

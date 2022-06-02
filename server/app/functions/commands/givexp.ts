@@ -1,40 +1,49 @@
 import discord from "@routes/api/discord";
 import db from "@routes/api/database";
-import { generateRankCard } from "@app/functions/common/generateRankCard";
+import bot from "@app/core/token";
+import configs from "@app/configs/config";
 
 /**
  * command: !givexp
  * =====================
  * Give xp to user.
  *
- * @param message
  * @param ctx
  */
 const giveXp = async (ctx): Promise<void> => {
-	console.log("calling givexp");
+	const selectedUser = ctx.options.getUser("utente") || ctx.user;
+	const selectedPoints = ctx.options.getInteger("punti");
 
-	const typedUsername = ctx.content.split(" ")[1];
-	const typedPoints = ctx.content.split(" ")[2];
+	const settings = await db.settings.get({});
 
-	if (!typedUsername) {
-		discord.api.message.send(ctx, "Inserire un utente valido (Es. !givexp pippo 10)", "");
+	const guild = await discord.api.guild.getGuild();
+	const guildMember = guild.members.cache.get(selectedUser.id);
+	const hasRole = guildMember?.roles.cache.some((role) => settings?.rank?.giveXpEnabledRoles.includes(role.id));
+
+	if (!hasRole) {
+		discord.api.interactions.send(ctx, "Non hai il permesso per usare questo comando!", "");
 		return;
 	}
-	if (!typedPoints) {
-		discord.api.message.send(ctx, "Inserire dei punti (Es. !givexp pippo 10)", "");
-		return;
-	}
 
-	const user = await db.rank.get({ username: typedUsername });
+	let user = await db.rank.get({ username: selectedUser.username });
 
 	if (user.id === "0") {
-		discord.api.message.send(ctx, "Utente non trovato", "");
-		return;
+		await db.rank.add({ ...selectedUser, points: "0", messageAwarded: 0, secondsInVoiceChat: 0 });
+		user = await db.rank.get({ username: selectedUser.username });
 	}
 
 	await db.rank.update(
-		{ username: typedUsername },
-		{ ...user, points: (parseInt(user.points) + parseInt(typedPoints)).toString() },
+		{ username: selectedUser.username },
+		{ ...user, points: (parseInt(user.points) + parseInt(selectedPoints)).toString() },
+	);
+
+	discord.api.interactions.send(
+		ctx,
+		settings?.rank?.giveXpMessage
+			.replace("{user}", selectedUser.username)
+			.replace("{punti}", (parseInt(user.points) + parseInt(selectedPoints)).toString()),
+
+		"",
 	);
 };
 

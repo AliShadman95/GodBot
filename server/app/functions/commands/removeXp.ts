@@ -1,6 +1,5 @@
 import discord from "@routes/api/discord";
 import db from "@routes/api/database";
-import { generateRankCard } from "@app/functions/common/generateRankCard";
 
 /**
  * command: !removexp
@@ -11,29 +10,52 @@ import { generateRankCard } from "@app/functions/common/generateRankCard";
  * @param ctx
  */
 const removeXp = async (ctx): Promise<void> => {
-	/* const users = await db.rank.getAll();
+	const selectedUser = ctx.options.getUser("utente") || ctx.user;
+	const selectedPoints = ctx.options.getInteger("punti");
 
-	if (!users.find((u) => u.id === discord.api.message.getUserID(ctx))) {
-		await db.rank.add({ ...ctx.author, points: "0", messageAwarded: 0, secondsInVoiceChat: 0 });
+	const settings = await db.settings.get({});
+
+	const guild = await discord.api.guild.getGuild();
+	const guildMember = guild.members.cache.get(selectedUser.id);
+	const hasRole = guildMember?.roles.cache.some((role) => settings?.rank?.giveXpEnabledRoles.includes(role.id));
+
+	if (!hasRole) {
+		discord.api.interactions.send(ctx, "Non hai il permesso per usare questo comando!", "");
+		return;
 	}
 
-	const user = await db.rank.get({ id: discord.api.message.getUserID(ctx) });
-	const settings = await db.settings.get({});
-	const allUsers = await db.rank.getAll();
+	let user = await db.rank.get({ username: selectedUser.username });
 
-	const card = await generateRankCard({
-		...settings?.rank,
-		username: discord.api.message.getUsername(ctx),
-		discriminator: discord.api.message.getUserDiscriminator(ctx),
-		avatar: discord.api.message.getUserAvatar(ctx),
-		points: user?.points || "0", // TODO Change user points to 0
-		rank:
-			allUsers
-				.sort((a, b) => parseInt(b.points) - parseInt(a.points))
-				.findIndex((u) => u.id === discord.api.message.getUserID(ctx)) + 1,
-	});
+	if (user.id === "0") {
+		await db.rank.add({ ...selectedUser, points: "0", messageAwarded: 0, secondsInVoiceChat: 0 });
+		user = await db.rank.get({ username: selectedUser.username });
+	}
 
-	discord.api.message.send(ctx, "", card); */
+	await db.rank.update(
+		{ username: selectedUser.username },
+		{
+			...user,
+			points: (parseInt(user.points) - parseInt(selectedPoints) <= 0
+				? 0
+				: parseInt(user.points) - parseInt(selectedPoints)
+			).toString(),
+		},
+	);
+
+	discord.api.interactions.send(
+		ctx,
+		settings?.rank?.removeXpMessage
+			.replace("{user}", selectedUser.username)
+			.replace(
+				"{punti}",
+				(parseInt(user.points) - parseInt(selectedPoints) <= 0
+					? 0
+					: parseInt(user.points) - parseInt(selectedPoints)
+				).toString(),
+			),
+
+		"",
+	);
 };
 
 export { removeXp };
