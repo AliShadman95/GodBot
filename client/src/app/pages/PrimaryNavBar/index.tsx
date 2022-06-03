@@ -10,7 +10,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { Divider, List, Toolbar, Grid, Typography } from '@mui/material';
 import { MainListItems } from '../ListItems';
 import { useAuthenticationProviderSlice } from '../AuthenticationProvider/slice';
-import AdbIcon from '@mui/icons-material/Adb';
+import Logo from 'app/components/Logo';
 
 const drawerWidth: number = 240;
 
@@ -122,7 +122,8 @@ export default function PrimaryNavBar() {
         >
           <Grid container sx={{ display: 'flex', justifyContent: 'center' }}>
             <Grid item sx={{ display: 'flex', justifyContent: 'center' }}>
-              <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+              <Logo />
+              {/*  <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
               <Typography
                 variant="subtitle1"
                 noWrap

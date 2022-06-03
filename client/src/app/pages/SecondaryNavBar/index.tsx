@@ -16,6 +16,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useAuthenticationProviderSlice } from '../AuthenticationProvider/slice';
 import { useDispatch } from 'react-redux';
+import Logo from 'app/components/Logo';
 
 const pages = ['Dashboard'];
 
@@ -39,7 +40,8 @@ export default function SecondaryNavBar() {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          <Logo />
+
           <Typography
             variant="h6"
             noWrap
@@ -94,7 +96,8 @@ export default function SecondaryNavBar() {
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          <Logo isXs />
+          {/*   <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} /> */}
           <Typography
             variant="h5"
             noWrap
