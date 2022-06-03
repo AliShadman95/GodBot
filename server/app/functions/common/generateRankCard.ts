@@ -11,7 +11,7 @@ interface userInfo {
 	rank: number;
 }
 
-const generateBackground = (ctx, { isGradient, gradientColor1, gradientColor2 }: userInfo) => {
+const generateBackground = (ctx, { isGradient, gradientColor1, gradientColor2 }: userInfo): void => {
 	// Add gradient - we use createLinearGradient to do this
 	const grd = ctx.createLinearGradient(0, 853, 1352, 0);
 	grd.addColorStop(0, gradientColor1);
@@ -25,7 +25,7 @@ const generateText = (
 	ctx,
 	{ username, discriminator, xps, points, color1, color2, color3, rank }: userInfo & DiscordSettingsRankInterface,
 	currentLevelIndex: number,
-) => {
+): void => {
 	// Add our title text
 	ctx.font = "70px InterBold";
 	ctx.fillStyle = color1;
@@ -92,7 +92,7 @@ const generateProgressBar = (
 	ctx,
 	{ points, xps, color1, color2 }: userInfo & DiscordSettingsRankInterface,
 	currentLevelIndex: number,
-) => {
+): void => {
 	const percentage = Math.floor(
 		(parseInt(points) - (xps[currentLevelIndex - 1] || 0)) /
 			((xps[currentLevelIndex] - (xps[currentLevelIndex - 1] || 0)) / 100),
@@ -120,7 +120,7 @@ const generateProgressBar = (
 	}
 };
 
-const generateAvatar = async (ctx, c, { avatar }: userInfo) => {
+const generateAvatar = async (ctx, c, { avatar }: userInfo): Promise<void> => {
 	const circle = {
 		x: c.width / 7,
 		y: c.height / 2,
@@ -143,7 +143,7 @@ const generateAvatar = async (ctx, c, { avatar }: userInfo) => {
 	ctx.drawImage(a, circle.x - hsx, circle.y - hsy, hsx * 2, hsy * 2);
 };
 
-const generateRankCard = async (userInfo: userInfo & DiscordSettingsRankInterface) => {
+const generateRankCard = async (userInfo: userInfo & DiscordSettingsRankInterface): Promise<Buffer> => {
 	// Create canvas
 	const c = canvas.createCanvas(1342, 400);
 	const ctx = c.getContext("2d");

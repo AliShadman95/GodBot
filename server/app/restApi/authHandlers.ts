@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import config from "@app/configs/auth.config";
 
-const verifyToken = (req, res, next) => {
+const verifyToken = (req, res, next): undefined => {
 	let token = req.headers["authorization"];
 	if (!token) {
 		return res.status(403).send({ message: "No token provided!" });

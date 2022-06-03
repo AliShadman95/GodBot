@@ -2,7 +2,7 @@
  * Version
  * =====================
  *
- *                Alì Shadman [@AliShadman95] (https://github.com/AliShadman95)
+ *  Alì Shadman [@AliShadman95] (https://github.com/AliShadman95)
  *
  * @license: MIT License
  *

@@ -8,7 +8,7 @@ import isLevelUp from "@app/functions/common/isLevelUp";
 // Array that detect if user can get point
 let cooldowns: string[] = [];
 
-const disablePoints = async (userId: string, cooldown: number) => {
+const disablePoints = async (userId: string, cooldown: number): Promise<void> => {
 	cooldowns.push(userId);
 	logger.info(`disablin now the ability to get point for user ${userId} `, "addPointHandler.ts:disablePoints()");
 
@@ -19,7 +19,7 @@ const disablePoints = async (userId: string, cooldown: number) => {
 	}, cooldown * 1000);
 };
 
-const addPointsHandler = async (ctx) => {
+const addPointsHandler = async (ctx): Promise<void> => {
 	const userId = discord.api.message.getUserID(ctx);
 
 	if (cooldowns.includes(userId)) {

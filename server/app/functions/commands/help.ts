@@ -1,7 +1,4 @@
 import discord from "@routes/api/discord";
-import db from "@routes/api/database";
-import bot from "@app/core/token";
-import configs from "@app/configs/config";
 import { MessageEmbed, MessageActionRow, MessageSelectMenu } from "discord.js";
 
 /**

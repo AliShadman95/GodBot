@@ -7,13 +7,12 @@ import logger from "@app/functions/utils/logger";
 import config from "@app/configs/auth.config";
 
 // middleware that is specific to this router
-router.use(function timeLog(req, res, next) {
-	console.log("Time: ", Date.now());
+router.use(function timeLog(req: express.Request, res: express.Response, next) {
 	logger.info(`Time: ${Date.now()}`, "auth.ts:timeLog()");
 	next();
 });
 
-router.post("/login", async function (req, res) {
+router.post("/login", async function (req: express.Request, res: express.Response): Promise<void> {
 	try {
 		const { username, password } = req.body;
 
@@ -42,7 +41,7 @@ router.post("/login", async function (req, res) {
 	}
 });
 
-router.get("/voiceChannels", async function (req, res) {
+router.get("/voiceChannels", async function (req: express.Request, res: express.Response): Promise<void> {
 	const channels = bot.channels?.cache
 		?.filter((c) => c.type === "GUILD_VOICE")
 		.map((channel) => {
@@ -54,7 +53,7 @@ router.get("/voiceChannels", async function (req, res) {
 	res.json(channels);
 });
 
-router.get("/textChannels", async function (req, res) {
+router.get("/textChannels", async function (req: express.Request, res: express.Response): Promise<void> {
 	const channels = bot.channels?.cache
 		?.filter((c) => c.type === "GUILD_TEXT")
 		.map((channel) => {

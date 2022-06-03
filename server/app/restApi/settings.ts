@@ -3,21 +3,20 @@ import bot from "@app/core/token";
 const router = express.Router();
 import db from "@routes/api/database";
 import { DiscordSettingsInterface } from "@app/types/databases.type";
-import configs from "@app/configs/config";
 import discord from "@routes/api/discord";
-
+import logger from "@app/functions/utils/logger";
 // middleware that is specific to this router
-router.use(function timeLog(req, res, next) {
-	console.log("Time: ", Date.now());
+router.use(function timeLog(req: express.Request, res: express.Response, next): void {
+	logger.info(`Time: ${Date.now()}`, "settings.ts:timeLog()");
 	next();
 });
 // define the home page route
-router.get("/", async function (req, res) {
+router.get("/", async function (req: express.Request, res: express.Response): Promise<void> {
 	const settings = await db.settings.get({});
 	res.json(settings);
 });
 
-router.put("/", async function (req, res) {
+router.put("/", async function (req: express.Request, res: express.Response): Promise<void> {
 	try {
 		const settings = req.body as DiscordSettingsInterface;
 		await db.settings.update({}, settings);
@@ -30,7 +29,7 @@ router.put("/", async function (req, res) {
 	}
 });
 
-router.get("/voiceChannels", async function (req, res) {
+router.get("/voiceChannels", async function (req: express.Request, res: express.Response): Promise<void> {
 	const channels = bot.channels?.cache
 		?.filter((c) => c.type === "GUILD_VOICE")
 		.map((channel) => {
@@ -42,7 +41,7 @@ router.get("/voiceChannels", async function (req, res) {
 	res.json(channels);
 });
 
-router.get("/textChannels", async function (req, res) {
+router.get("/textChannels", async function (req: express.Request, res: express.Response): Promise<void> {
 	const channels = bot.channels?.cache
 		?.filter((c) => c.type === "GUILD_TEXT")
 		.map((channel) => {
@@ -54,7 +53,7 @@ router.get("/textChannels", async function (req, res) {
 	res.json(channels);
 });
 
-router.get("/roles", async function (req, res) {
+router.get("/roles", async function (req: express.Request, res: express.Response): Promise<void> {
 	const guild = await discord.api.guild.getGuild();
 	const roles = guild.roles.cache.map((role) => {
 		return { id: role.id, name: role.name };

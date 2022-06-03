@@ -2,18 +2,15 @@
  * Grammy Telegram API Framework Hears
  * =====================
  *
- * @contributors: Patryk Rzucidło [@ptkdev] <support@ptkdev.io> (https://ptk.dev)
- *                Alì Shadman [@AliShadman95] (https://github.com/AliShadman95)
+ * Alì Shadman [@AliShadman95] (https://github.com/AliShadman95)
  *
  * @license: MIT License
  *
  */
 import bot from "@app/core/token";
-import translate from "@translations/translate";
 import discord from "@routes/api/discord";
 import differenceInSeconds from "date-fns/differenceInSeconds";
-import db from "@routes/api/database";
-import telegram from "@routes/api/discord";
+
 import logger from "@app/functions/utils/logger";
 
 interface UserTimeInChannelData {

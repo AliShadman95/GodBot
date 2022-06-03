@@ -1,5 +1,5 @@
 /**
- * Wrapper discord api (message)
+ * Wrapper discord api (interactions)
  * =====================
  *
  *
