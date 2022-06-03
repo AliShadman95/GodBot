@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useTheme } from '@mui/material/styles';
 import { Typography, CircularProgress } from '@mui/material';
 import _ from 'lodash';
 import {
@@ -14,7 +13,6 @@ import Card from './Card';
 import Title from 'app/components/Title';
 
 export default function Ranks() {
-  const theme = useTheme();
   const dispatch = useDispatch();
   const { actions } = useDashboardSlice();
   const settings = useSelector(selectSettings);

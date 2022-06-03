@@ -3,7 +3,7 @@ export const generateBackground = (
   gradientColor1,
   gradientColor2,
   isGradientField,
-) => {
+): void => {
   // Add gradient - we use createLinearGradient to do this
   ctx.restore();
 
@@ -15,7 +15,7 @@ export const generateBackground = (
   ctx.fillRect(0, 0, 1342, 853);
 };
 
-export const generateText = (ctx, color1, color2, color3) => {
+export const generateText = (ctx, color1, color2, color3): void => {
   ctx.restore();
   // Add our title text
   ctx.font = '70px Inter';
@@ -92,7 +92,7 @@ export const generateText = (ctx, color1, color2, color3) => {
   ctx.fillText(500, 1260 - xpNeededWidth - currentXpWidth - 20, 250);
 };
 
-export const generateProgressBar = (ctx, color1, color2) => {
+export const generateProgressBar = (ctx, color1, color2): void => {
   // Background level bar
   for (let i = 0; i < 100; i++) {
     ctx.beginPath();
@@ -115,7 +115,7 @@ export const generateProgressBar = (ctx, color1, color2) => {
   }
 };
 
-export const generateAvatar = (ctx, c) => {
+export const generateAvatar = (ctx, c): void => {
   const circle = {
     x: c.width / 7,
     y: c.height / 2,

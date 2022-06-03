@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useHistory, useRouteMatch, Link } from 'react-router-dom';
+import { useHistory, useRouteMatch } from 'react-router-dom';
 
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -8,14 +8,13 @@ import ListSubheader from '@mui/material/ListSubheader';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import HandshakeIcon from '@mui/icons-material/Handshake';
 import PlaylistRemoveIcon from '@mui/icons-material/PlaylistRemove';
-import BarChartIcon from '@mui/icons-material/BarChart';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import Settings from '@mui/icons-material/Settings';
 import Divider from '@mui/material/Divider';
 
 export const MainListItems = () => {
   const history = useHistory();
-  let { path, url } = useRouteMatch();
+  const { url } = useRouteMatch();
 
   return (
     <React.Fragment>

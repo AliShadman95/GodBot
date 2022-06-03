@@ -1,6 +1,7 @@
 import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import { Controller } from 'react-hook-form';
+import PropTypes from 'prop-types';
 
 const Input = ({
   name,
@@ -47,3 +48,21 @@ const Input = ({
   );
 };
 export default Input;
+
+Input.propTypes = {
+  name: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  control: PropTypes.object.isRequired,
+  defaultValue: PropTypes.string,
+  multiline: PropTypes.bool,
+  rows: PropTypes.number,
+  type: PropTypes.string,
+  required: PropTypes.bool,
+  helperText: PropTypes.string,
+  min: PropTypes.number,
+  max: PropTypes.number,
+  rules: PropTypes.object,
+  error: PropTypes.bool,
+  autoFocus: PropTypes.bool,
+  autoComplete: PropTypes.string,
+};

@@ -1,17 +1,5 @@
 import React from 'react';
-import {
-  Box,
-  Button,
-  Paper,
-  Grid,
-  CircularProgress,
-  Dialog,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  DialogActions,
-  ButtonGroup,
-} from '@mui/material';
+import { Paper, Grid, CircularProgress } from '@mui/material';
 import { DataGrid, itIT } from '@mui/x-data-grid';
 
 import { rows, columns } from '../columns';

@@ -1,5 +1,6 @@
 import { Slider, FormControl } from '@mui/material';
 import { Controller } from 'react-hook-form';
+import PropTypes from 'prop-types';
 
 const SliderField = ({
   name,
@@ -38,3 +39,12 @@ const SliderField = ({
   );
 };
 export default SliderField;
+
+SliderField.propTypes = {
+  name: PropTypes.string.isRequired,
+  control: PropTypes.object.isRequired,
+  defaultValue: PropTypes.string,
+  marks: PropTypes.object,
+  dbMapper: PropTypes.func,
+  feMapper: PropTypes.func,
+};

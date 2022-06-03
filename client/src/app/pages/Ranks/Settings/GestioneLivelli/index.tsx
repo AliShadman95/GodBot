@@ -1,9 +1,7 @@
 import * as React from 'react';
 import {
-  Paper,
   Typography,
   FormControl,
-  useMediaQuery,
   Grid,
   Divider,
   Accordion,
@@ -17,7 +15,10 @@ import {
   SliderGestioneLivelliMapperToFe,
   SliderGestioneLivelliMapperToDb,
 } from 'utils/utils';
-export default function GestioneLivelli({ control, watch, defaultValues }) {
+export default function GestioneLivelli({
+  control,
+  defaultValues,
+}): React.ReactElement {
   return (
     <React.Fragment>
       <Accordion defaultExpanded>

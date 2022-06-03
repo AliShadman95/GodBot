@@ -20,7 +20,7 @@ export default function VoicePoints({
   defaultValues,
   voiceChannels,
   errors,
-}) {
+}): React.ReactElement {
   const minPointsVoiceChannel = watch('minPointsVoiceChannel');
 
   return (

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useTheme } from '@mui/material/styles';
 import { Typography, CircularProgress, Box } from '@mui/material';
 import AlertChanges from 'app/components/AlertChanges';
 import _ from 'lodash';
@@ -8,7 +7,6 @@ import {
   selectRoles,
   selectLoadingUpdate,
   selectLoading,
-  selectVoiceChannels,
 } from '../../Dashboard/slice/selectors';
 import { useDashboardSlice } from '../../Dashboard/slice/index';
 import { useForm } from 'react-hook-form';
@@ -25,7 +23,7 @@ export default function GiveXp() {
   const roles = useSelector(selectRoles);
   const [thereAreChanges, setThereAreChanges] = React.useState(false);
 
-  const { control, handleSubmit, watch, reset, getValues } = useForm({
+  const { control, handleSubmit, watch, reset } = useForm({
     defaultValues: settings?.rank,
     mode: 'onChange',
   });

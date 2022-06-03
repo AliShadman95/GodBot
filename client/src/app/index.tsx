@@ -8,9 +8,6 @@
 
 import * as React from 'react';
 import { Switch, Route, BrowserRouter, Redirect } from 'react-router-dom';
-
-/* import { GlobalStyle } from '../styles/global-styles';
- */
 import Dashboard from './pages/Dashboard';
 import Leaderboard from './pages/Leaderboard';
 import { NotFoundPage } from './pages/NotFoundPage/Loadable';

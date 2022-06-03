@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { GridRenderCellParams } from '@mui/x-data-grid';
 import { Typography, Box, Avatar, CircularProgress } from '@mui/material';
 

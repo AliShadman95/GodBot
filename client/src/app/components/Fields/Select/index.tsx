@@ -2,6 +2,7 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { Controller } from 'react-hook-form';
+import PropTypes from 'prop-types';
 
 const SelectField = ({
   name,
@@ -36,3 +37,12 @@ const SelectField = ({
   );
 };
 export default SelectField;
+
+SelectField.propTypes = {
+  name: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  control: PropTypes.object.isRequired,
+  defaultValue: PropTypes.string,
+  multiple: PropTypes.bool,
+  helperText: PropTypes.string,
+};

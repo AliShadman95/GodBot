@@ -1,4 +1,5 @@
 import { Box } from '@mui/material';
+import PropTypes from 'prop-types';
 
 const Logo = ({ isXs = false }) => {
   return (
@@ -20,3 +21,7 @@ const Logo = ({ isXs = false }) => {
 };
 
 export default Logo;
+
+Logo.propTypes = {
+  isXs: PropTypes.bool,
+};

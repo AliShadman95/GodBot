@@ -1,5 +1,4 @@
-import * as React from 'react';
-
+import PropTypes from 'prop-types';
 import {
   Collapse,
   Box,
@@ -65,3 +64,10 @@ export default function AlertChanges({ open, setIsOpen, reset, loading }) {
     </Box>
   );
 }
+
+AlertChanges.propTypes = {
+  open: PropTypes.bool,
+  setIsOpen: PropTypes.func,
+  reset: PropTypes.func,
+  loading: PropTypes.bool,
+};

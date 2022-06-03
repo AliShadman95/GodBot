@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useTheme } from '@mui/material/styles';
 import { Typography, CircularProgress, Box } from '@mui/material';
 import AlertChanges from 'app/components/AlertChanges';
 import _ from 'lodash';
@@ -99,7 +98,6 @@ export default function Settings() {
             <Box marginBottom="3em">
               <LevelUpMessage
                 control={control}
-                watch={watch}
                 defaultValues={settings?.rank}
                 textChannels={textChannels}
                 getValues={getValues}
@@ -108,7 +106,6 @@ export default function Settings() {
             <Box marginBottom="3em">
               <GestioneLivelli
                 control={control}
-                watch={watch}
                 defaultValues={settings?.rank}
               />
             </Box>

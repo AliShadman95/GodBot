@@ -1,5 +1,6 @@
 import { Switch, FormControlLabel, FormControl } from '@mui/material';
 import { Controller } from 'react-hook-form';
+import PropTypes from 'prop-types';
 
 const SwitchField = ({ name, label, control, defaultValue, ...props }) => {
   return (
@@ -21,3 +22,10 @@ const SwitchField = ({ name, label, control, defaultValue, ...props }) => {
   );
 };
 export default SwitchField;
+
+SwitchField.propTypes = {
+  name: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  control: PropTypes.object.isRequired,
+  defaultValue: PropTypes.bool,
+};

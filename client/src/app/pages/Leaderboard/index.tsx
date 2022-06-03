@@ -20,7 +20,6 @@ import {
 import SecondaryNavBar from '../SecondaryNavBar';
 import Table from './Table';
 import { GridSelectionModel } from '@mui/x-data-grid';
-import { SliderValueLabelUnstyled } from '@mui/base';
 
 export default function Leaderboard() {
   const dispatch = useDispatch();

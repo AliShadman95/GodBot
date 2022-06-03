@@ -17,11 +17,10 @@ import Title from 'app/components/Title';
 
 export default function LevelUpMessage({
   control,
-  watch,
   defaultValues,
   textChannels,
   getValues,
-}) {
+}): React.ReactElement {
   const displayLevelUpMessageField = getValues('displayLevelUpMessage');
 
   return (
@@ -38,7 +37,6 @@ export default function LevelUpMessage({
           <div style={{ marginBottom: '1em' }}>
             <Grid container>
               <Grid item xs={7} md={10}>
-                {/*   <Title>Livellamento</Title> */}
                 <Typography component="p" color="main" gutterBottom>
                   Ogni volta che un utente raggiunge un nuovo livello, il bot
                   potrà mandare un messaggio personalizzato.
@@ -99,7 +97,6 @@ export default function LevelUpMessage({
               </FormControl>
             </Grid>
           </Grid>
-          {/*   </Paper> */}
         </AccordionDetails>
       </Accordion>
     </React.Fragment>

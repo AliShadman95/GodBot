@@ -1,13 +1,5 @@
 import * as React from 'react';
-import {
-  Collapse,
-  Box,
-  Button,
-  Alert,
-  IconButton,
-  Grid,
-  Typography,
-} from '@mui/material';
+import { Collapse, Box, Alert, IconButton, Grid } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectAlert } from './slice/selectors';
 import { useAlertSlice } from './slice/index';
