@@ -41,7 +41,7 @@ const launch = async (): Promise<void> => {
 	try {
 		logger.info("Started refreshing application (/) commands", "launch.ts:launch()");
 
-		await rest.put(Routes.applicationGuildCommands(configs.discord.client_id, configs.discord.test_guild_id), {
+		await rest.put(Routes.applicationGuildCommands(configs.discord.client_id, configs.discord.guild_id), {
 			body: commands,
 		});
 		logger.info("Successfully reloaded application (/) commands.", "launch.ts:launch()");

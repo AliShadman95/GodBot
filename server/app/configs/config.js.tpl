@@ -1,9 +1,8 @@
 module.exports = {
 	telegram: {
-		// from @botfather on telegram
 		token: process.env.BOT_TOKEN || "1234:asdfghjkl",
-		test_guild_id: process.env.TEST_GUILD_ID || "3232",
-	client_id: process.env.CLIENT_ID || "3232",
+		guild_id: process.env.GUILD_ID || "3232",
+	    client_id: process.env.CLIENT_ID || "3232",
 	},
 	frontend: { url: process.env.FRONTEND_URL || "http://localhost:3006" },
 	mode: "poll", // or webhook
