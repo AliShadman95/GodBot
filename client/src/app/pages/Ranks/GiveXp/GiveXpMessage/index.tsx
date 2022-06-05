@@ -32,7 +32,7 @@ export default function GiveXpMessage({ control, defaultValues, roles }) {
         <AccordionDetails>
           <div style={{ marginBottom: '1em' }}>
             <Grid container>
-              <Grid item xs={7} md={10}>
+              <Grid item xs={12} md={10}>
                 <Typography component="p" color="main" gutterBottom>
                   Ogni volta che un utente usa il comando /givexp, il bot potrà
                   mandare un messaggio personalizzato.

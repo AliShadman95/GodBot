@@ -18,8 +18,6 @@ export const AuthenticationProvider = ({ children }) => {
     dispatch(actions.verifyTokenAction());
   }, []);
 
-  console.log('token', token);
-
   if (token) {
     return children;
   }

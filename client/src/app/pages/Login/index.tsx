@@ -34,8 +34,11 @@ export function Login() {
           alignItems: 'center',
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-          <LockOutlinedIcon />
+        <Avatar
+          sx={{ m: 1 }}
+          src="https://cdn-icons-png.flaticon.com/512/2534/2534504.png"
+        >
+          {/*  <LockOutlinedIcon /> */}
         </Avatar>
         <Typography component="h1" variant="h5">
           Sign in

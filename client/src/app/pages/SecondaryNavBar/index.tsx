@@ -16,11 +16,13 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { useAuthenticationProviderSlice } from '../AuthenticationProvider/slice';
 import { useDispatch } from 'react-redux';
 import Logo from 'app/components/Logo';
+import { useHistory } from 'react-router-dom';
 
 const pages = ['Dashboard'];
 
 export default function SecondaryNavBar() {
   const dispatch = useDispatch();
+  let history = useHistory();
 
   const { actions } = useAuthenticationProviderSlice();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -89,14 +91,18 @@ export default function SecondaryNavBar() {
               }}
             >
               {pages.map(page => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                <MenuItem
+                  key={page}
+                  onClick={() => {
+                    history.push('/');
+                  }}
+                >
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
           <Logo isXs />
-          {/*   <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} /> */}
           <Typography
             variant="h5"
             noWrap
@@ -119,7 +125,9 @@ export default function SecondaryNavBar() {
             {pages.map(page => (
               <Button
                 key={page}
-                onClick={handleCloseNavMenu}
+                onClick={() => {
+                  history.push('/');
+                }}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {page}

@@ -22,7 +22,7 @@ const info = async (ctx): Promise<void> => {
 
 			{
 				name: "Bug",
-				value: "Per segnalare bug, accedere a https://trello.com/b/EkuUaJeX/god-bot Creare un utenza Trello e richiedere l'accesso alla board. Inseire una card nella prima colonna denominata BUGS",
+				value: "Per segnalare bug, accedere a https://trello.com/b/EkuUaJeX/god-bot Creare un utenza Trello e richiedere l'accesso alla board. Inserire una card nella prima colonna denominata 'Bugs'",
 			},
 		)
 		.setFooter({

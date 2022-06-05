@@ -66,6 +66,7 @@ const Card = ({
   setGradientColor1,
   setGradientColor2,
   thereAreChanges,
+  setThereAreChanges,
 }) => {
   let canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -74,6 +75,8 @@ const Card = ({
   const [openPicker, setOpenPicker] = useState('');
 
   const isGradientField = watch('isGradient');
+
+  console.log(isGradientField);
 
   const draw = (ctx, canvas) => {
     generateBackground(ctx, gradientColor1, gradientColor2, isGradientField);
@@ -221,13 +224,15 @@ const Card = ({
               size="small"
               variant="contained"
               sx={{ margin: '0.5em' }}
+              disabled={!thereAreChanges}
               onClick={() => {
-                reset();
+                reset(settings?.rank);
                 setColor1(settings.rank.color1 || 'white');
                 setColor2(settings.rank.color2 || 'white');
                 setColor3(settings.rank.color3 || 'white');
                 setGradientColor1(settings.rank.gradientColor1 || 'white');
                 setGradientColor2(settings.rank.gradientColor2 || 'white');
+                setThereAreChanges(false);
               }}
             >
               Cancella

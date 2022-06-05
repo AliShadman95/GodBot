@@ -10,26 +10,33 @@ import { generateRankCard } from "@app/functions/common/generateRankCard";
  * @param ctx
  */
 const rank = async (ctx): Promise<void> => {
-	const users = await db.rank.getAll();
+	const selectedUser = ctx.options.getUser("utente") || ctx.user;
 
-	if (!users.find((u) => u.id === discord.api.interactions.getUserID(ctx))) {
-		await db.rank.add({ ...ctx.author, points: "0", messageAwarded: 0, secondsInVoiceChat: 0 });
+	if (selectedUser.bot) {
+		discord.api.interactions.send(ctx, "Non puoi vedere il rank di un bot!", "");
+		return;
 	}
 
-	const user = await db.rank.get({ id: discord.api.interactions.getUserID(ctx) });
+	let user = await db.rank.get({ id: selectedUser.id });
+
+	if (user.id === "0") {
+		await db.rank.add({ ...selectedUser, points: "0", messageAwarded: 0, secondsInVoiceChat: 0 });
+		user = await db.rank.get({ id: selectedUser.id });
+	}
+
 	const settings = await db.settings.get({});
 	const allUsers = await db.rank.getAll();
 
 	const card = await generateRankCard({
 		...settings?.rank,
-		username: discord.api.interactions.getUsername(ctx),
-		discriminator: discord.api.interactions.getUserDiscriminator(ctx),
-		avatar: discord.api.interactions.getUserAvatar(ctx),
-		points: user?.points || "0", // TODO Change user points to 0
+		username: selectedUser.username,
+		discriminator: selectedUser.discriminator,
+		avatar: selectedUser.displayAvatarURL({ format: "jpg" }),
+		points: user?.points || "0",
 		rank:
 			allUsers
 				.sort((a, b) => parseInt(b.points) - parseInt(a.points))
-				.findIndex((u) => u.id === discord.api.interactions.getUserID(ctx)) + 1,
+				.findIndex((u) => u.id === selectedUser.id) + 1,
 	});
 
 	discord.api.interactions.send(ctx, "", card);

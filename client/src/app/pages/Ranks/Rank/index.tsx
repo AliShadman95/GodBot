@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTheme } from '@mui/material/styles';
 import { Typography, CircularProgress } from '@mui/material';
 import _ from 'lodash';
 import {
@@ -57,11 +58,11 @@ export default function Ranks() {
         {
           ...settings.rank,
           ...formData,
-          color1,
-          color2,
-          color3,
-          gradientColor1,
-          gradientColor2,
+          ...(color1 !== 'white' && { color1 }),
+          ...(color2 !== 'white' && { color2 }),
+          ...(color3 !== 'white' && { color3 }),
+          ...(gradientColor1 !== 'white' && { gradientColor1 }),
+          ...(gradientColor2 !== 'white' && { gradientColor2 }),
         },
         settings?.rank,
       )
@@ -117,6 +118,7 @@ export default function Ranks() {
               setGradientColor1={setGradientColor1}
               setGradientColor2={setGradientColor2}
               thereAreChanges={thereAreChanges}
+              setThereAreChanges={setThereAreChanges}
             />
           </form>
         </React.Fragment>
