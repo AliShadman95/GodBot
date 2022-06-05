@@ -4,7 +4,7 @@ import { execSync } from "child_process";
 import semver from "../package.json";
 
 const execSyncWrapper = (command) => {
-	let stdout: string | null = null;
+	let stdout = null;
 	try {
 		stdout = execSync(command).toString().trim();
 	} catch (error) {
