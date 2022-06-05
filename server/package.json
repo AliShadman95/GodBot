@@ -45,7 +45,7 @@
 		"git-set-upstream": "git remote add upstream git@github.com:ptkdev/aboutmeinfo-telegram-bot.git && git fetch upstream",
 		"git-pull-upstream": "git pull upstream main && git pull upstream beta && git pull upstream nightly",
 		"git-pull": "git pull --recursive",
-		"git-hash": "node scripts/githash.ts",
+		"git-hash": "node scripts/githash.js",
 		"git-ignore-reset": "git rm -r --cached . && git add . && git commit -m \"[Fix] Removing all files in .gitignore\"",
 		"github-workflow-next-version": "ts-node scripts/version.ts",
 		"github-workflow-changelog": "ts-node scripts/changelog_release.ts",
