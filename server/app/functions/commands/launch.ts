@@ -33,14 +33,14 @@ for (const file of commandFiles) {
 const launch = async (): Promise<void> => {
 	logger.info("command: /launch", "launch.ts:launch()");
 
-	bot.login(configs.discord.token);
+	bot.login(process.env.BOT_TOKEN);
 
-	const rest = new REST({ version: "9" }).setToken(configs.discord.token);
+	const rest = new REST({ version: "9" }).setToken(process.env.BOT_TOKEN || "");
 
 	try {
 		logger.info("Started refreshing application (/) commands", "launch.ts:launch()");
 
-		await rest.put(Routes.applicationGuildCommands(configs.discord.client_id, configs.discord.guild_id), {
+		await rest.put(Routes.applicationGuildCommands(process.env.CLIENT_ID || "", process.env.GUILD_ID || ""), {
 			body: commands,
 		});
 		logger.info("Successfully reloaded application (/) commands.", "launch.ts:launch()");

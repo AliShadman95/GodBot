@@ -7,7 +7,6 @@
  * @license: MIT License
  *
  */
-import configs from "@configs/config";
 import Mongoose from "mongoose";
 import { logger } from "@app/functions/utils/logger";
 
@@ -25,7 +24,7 @@ const connectDB = async (): Promise<void> => {
 		return;
 	}
 	try {
-		await Mongoose.connect(configs.database.URL, {
+		await Mongoose.connect(process.env.MONGODB, {
 			useNewUrlParser: true,
 			useFindAndModify: false,
 			useUnifiedTopology: true,
