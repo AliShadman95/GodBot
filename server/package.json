@@ -35,6 +35,7 @@
 		"build": "tsc",
 		"release": "npm run git-hash && npm run build && tsc --declaration --emitDeclarationOnly",
 		"test": "jest app",
+		"heroku-postbuild": "npm run release",
 		"mongodump": "mongodump -d aboutmeinfodb -o .",
 		"mongorestore": "mongorestore -d aboutmeinfodb aboutmeinfodb",
 		"docs": "git submodule update --recursive && markserv ./README.md",
