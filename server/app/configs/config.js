@@ -1,7 +1,6 @@
 module.exports = {
 	// Debug
 	debug: process.env.DEBUG || true,
-
 	// LOGS
 	logger: {
 		path: {

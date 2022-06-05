@@ -1,5 +1,4 @@
 import discord from "@routes/api/discord";
-import configs from "@app/configs/config";
 import { MessageEmbed } from "discord.js";
 
 /**
@@ -17,7 +16,7 @@ const info = async (ctx): Promise<void> => {
 		.addFields(
 			{
 				name: "Configurazione",
-				value: `Per configurare il bot, accedere a ${configs.frontend.url}  In base all'utenza loggata è possibile modificare vari settaggi.`,
+				value: `Per configurare il bot, accedere a ${process.env.FRONTEND_URL}  In base all'utenza loggata è possibile modificare vari settaggi.`,
 			},
 
 			{

@@ -28,7 +28,7 @@ router.post("/login", async function (req: express.Request, res: express.Respons
 			return res.status(401).send("Password non valida");
 		}
 
-		const token = jwt.sign({ id: user.id }, config.secret, {
+		const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
 			expiresIn: 604800, // 24 hours = 86400 , 1 week = 604800
 		});
 

@@ -8,7 +8,7 @@ const verifyToken = (req, res, next): undefined => {
 	}
 	token = token.replace("Bearer", "").trim();
 
-	jwt.verify(token, config.secret, (err, decoded) => {
+	jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
 		if (err) {
 			return res.status(401).send({ message: "Unauthorized!" });
 		}
