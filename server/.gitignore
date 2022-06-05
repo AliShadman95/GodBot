@@ -121,7 +121,6 @@ npm-debug.log
 
 # App #
 #######
-/app/configs/version.json
 /dist
 /build
 
