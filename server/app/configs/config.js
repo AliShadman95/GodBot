@@ -1,15 +1,15 @@
 module.exports = {
 	discord: {
-		token: process.env.BOT_TOKEN || "1234:asdfghjkl",
-		guild_id: process.env.GUILD_ID || "3232",
-	    client_id: process.env.CLIENT_ID || "3232",
+		token: process.env.BOT_TOKEN || "",
+		guild_id: process.env.GUILD_ID || "",
+		client_id: process.env.CLIENT_ID || "",
 	},
-	frontend: { url: process.env.FRONTEND_URL || "http://localhost:3006" },
-
-	
+	frontend: { url: process.env.FRONTEND_URL || "" },
 
 	// mongodb
-	database: { URL: process.env.MONGODB || "mongodb://localhost:27017/mongourl" },
+	database: {
+		URL: process.env.MONGODB || "",
+	},
 
 	// Debug
 	debug: process.env.DEBUG || true,

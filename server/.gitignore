@@ -1,8 +1,8 @@
 ######################################################################################
 # License:        MIT - http://opensource.org/licenses/MIT                           #
-# Author:         Patryk Rzucidło (@ptkdev) <support@ptkdev.io> https://ptk.dev    #
+# Author:         Ali Shadman (@alishd) https://alishd.dev    #
 # Original:       octocat - https://github.com/octocat                               #
-# Latest version: https://github.com/ptkdev/dotfiles                                 #
+# Latest version: https://github.com/alishadman95/dotfiles                                 #
 ######################################################################################
 
 # Compiled source #
@@ -121,10 +121,6 @@ npm-debug.log
 
 # App #
 #######
-/app/configs/config.js
-/app/configs/auth.config.js
-/app/configs/config.ts
-/app/configs/config.json
 /app/configs/version.json
 /dist
 /build
