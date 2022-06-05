@@ -18,7 +18,7 @@ import {
 async function login(payload) {
   try {
     return await axios.post(
-      `http://${process.env.REACT_APP_SERVER_URL}/auth/login`,
+      `${process.env.REACT_APP_SERVER_URL}/auth/login`,
       payload,
     );
   } catch (response) {
@@ -69,14 +69,17 @@ export function* verifiyLoginSaga() {
     const token = getToken();
     const userRole = getUserRole();
 
+    console.log('here', process.env.REACT_APP_SERVER_URL);
+
     const response = yield call(poweredFetch, {
       method: 'GET',
-      url: `http://${process.env.REACT_APP_SERVER_URL}/settings`,
+      url: `${process.env.REACT_APP_SERVER_URL}/settings`,
       headers: {
         Accept: 'application/json',
         Authorization: `Bearer ${token}`,
       },
     });
+    console.log(response);
     if (response.status === 200) {
       yield put(
         authenticationProviderActions.verifyTokenSuccess({
@@ -89,6 +92,10 @@ export function* verifiyLoginSaga() {
       yield put(authenticationProviderActions.verifyTokenError(response.data));
       yield put(authenticationProviderActions.logoutAction());
     }
+  } else {
+    yield put(
+      authenticationProviderActions.verifyTokenError('Errore generico'),
+    );
   }
 }
 

@@ -4,7 +4,7 @@ import { poweredFetch } from 'utils/api';
 function* getSettings(dispatch) {
   yield put(dashboardActions.getSettingsLoading());
   const response = yield call(poweredFetch, {
-    url: `http://${process.env.REACT_APP_SERVER_URL}/settings`,
+    url: `${process.env.REACT_APP_SERVER_URL}/settings`,
     method: 'GET',
   });
   if (response.status === 200) {
@@ -18,7 +18,7 @@ function* updateSettings({ payload }) {
   yield put(dashboardActions.updateSettingsLoading());
   const response = yield call(poweredFetch, {
     method: 'PUT',
-    url: `http://${process.env.REACT_APP_SERVER_URL}/settings`,
+    url: `${process.env.REACT_APP_SERVER_URL}/settings`,
     data: JSON.stringify(payload),
     headers: { 'Content-Type': 'application/json' },
   });
@@ -35,7 +35,7 @@ function* getVoiceChannels(dispatch) {
     poweredFetch,
 
     {
-      url: `http://${process.env.REACT_APP_SERVER_URL}/settings/voiceChannels`,
+      url: `${process.env.REACT_APP_SERVER_URL}/settings/voiceChannels`,
       method: 'GET',
     },
   );
@@ -49,7 +49,7 @@ function* getVoiceChannels(dispatch) {
 function* getTextChannels(dispatch) {
   yield put(dashboardActions.getTextChannelsLoading());
   const response = yield call(poweredFetch, {
-    url: `http://${process.env.REACT_APP_SERVER_URL}/settings/textChannels`,
+    url: `${process.env.REACT_APP_SERVER_URL}/settings/textChannels`,
     method: 'GET',
   });
   if (response.status === 200) {
@@ -62,7 +62,7 @@ function* getTextChannels(dispatch) {
 function* getRoles(dispatch) {
   yield put(dashboardActions.getRolesLoading());
   const response = yield call(poweredFetch, {
-    url: `http://${process.env.REACT_APP_SERVER_URL}/settings/roles`,
+    url: `${process.env.REACT_APP_SERVER_URL}/settings/roles`,
     method: 'GET',
   });
   if (response.status === 200) {

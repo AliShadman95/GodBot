@@ -5,7 +5,7 @@ import { poweredFetch } from 'utils/api';
 function* getSettings(dispatch) {
   yield put(actions.getSettingsLoading());
   const response = yield call(poweredFetch, {
-    url: `http://${process.env.REACT_APP_SERVER_URL}/settings`,
+    url: `${process.env.REACT_APP_SERVER_URL}/settings`,
     method: 'GET',
   });
   if (response.status === 200) {
@@ -18,7 +18,7 @@ function* getSettings(dispatch) {
 function* getUsers(dispatch) {
   yield put(actions.getUsersLoading());
   const response = yield call(poweredFetch, {
-    url: `http://${process.env.REACT_APP_SERVER_URL}/ranks`,
+    url: `${process.env.REACT_APP_SERVER_URL}/ranks`,
     method: 'GET',
   });
   if (response.status === 200) {
@@ -31,7 +31,7 @@ function* getUsers(dispatch) {
 function* resetRanks({ payload }) {
   yield put(actions.resetRanksLoading());
   const response = yield call(poweredFetch, {
-    url: `http://${process.env.REACT_APP_SERVER_URL}/ranks/resetRanks`,
+    url: `${process.env.REACT_APP_SERVER_URL}/ranks/resetRanks`,
     method: 'PUT',
     data: payload,
   });
@@ -46,7 +46,7 @@ function* resetRanks({ payload }) {
 function* resetAllRanks({ payload }) {
   yield put(actions.resetAllRanksLoading());
   const response = yield call(poweredFetch, {
-    url: `http://${process.env.REACT_APP_SERVER_URL}/ranks/resetAllRanks`,
+    url: `${process.env.REACT_APP_SERVER_URL}/ranks/resetAllRanks`,
     method: 'PUT',
   });
   if (response.status === 200) {
