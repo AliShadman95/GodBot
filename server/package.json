@@ -21,7 +21,8 @@
 		"url": "https://github.com/AliShadman95/GodBot/issues"
 	},
 	"engines": {
-		"node": ">=14.0.0"
+		"node": "16.14.2",
+		"npm": "8.5.0"
 	},
 	"scripts": {
 		"init": "npm install && husky install",
