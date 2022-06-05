@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import * as React from 'react';
 import { Typography, CircularProgress, Box } from '@mui/material';
 import AlertChanges from 'app/components/AlertChanges';
