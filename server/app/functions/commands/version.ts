@@ -20,7 +20,7 @@ import v from "@app/configs/version.json";
 
 const version = async (ctx): Promise<void> => {
 	logger.info("command: /version", "version.ts:version()");
-	discord.api.interactions.send(ctx, `v${v?.semver || "0.0.0"} (${v?.hash || ""})`, "");
+	discord.api.interactions.send(ctx, `v${v?.semver || "0.0.0"}`, "");
 };
 
 export { version };
