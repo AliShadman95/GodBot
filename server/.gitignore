@@ -123,7 +123,7 @@ npm-debug.log
 #######
 /dist
 /build
-/app/configs/version.json
+app/configs/version.json
 
 # Copyies 
 #########
