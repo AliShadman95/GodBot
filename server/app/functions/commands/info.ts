@@ -23,6 +23,10 @@ const info = async (ctx): Promise<void> => {
 				name: "Bug",
 				value: "Per segnalare bug, accedere a https://trello.com/b/EkuUaJeX/god-bot Creare un utenza Trello e richiedere l'accesso alla board. Inserire una card nella prima colonna denominata 'Bugs'",
 			},
+			{
+				name: "Nuove funzioni",
+				value: "Per suggerire nuove funzioni, seguire lo step indicando sopra e inserire una card nella seconda colonna denominata 'Backlog'",
+			},
 		)
 		.setFooter({
 			text: "Sviluppato da Alì Shadman [@AliShadman95]",
