@@ -37,41 +37,24 @@ export interface DiscordSettingsInterface {
  *
  *
  *
- * @param { boolean } isGradient - if the background of the rank card is
- * @param { string } gradientColor1 - first color of gradiant background
- * @param { string } gradientColor2 - second color of gradiant background
  * @param {  number } levelMultiplier - the multiplier which scales the levelling
  * @param { number[] } xps - The list of alk xps for levels
+ * @param { string } minPointsMessage - The minimum points awarded per message sent
+ * @param { string } maxPointsMessage - The max points awarded per message sent
+ * @param { string } messagePointCooldown - The cooldown for getting points after a message
+ * @param { string } minPointsVoiceChannel - The minimum points awarded per minute in a voice channel
+ * @param { string } maxPointsVoiceChannel - The max points awarded per minute in voice channel
+ * @param { boolean } displayLevelUpMessage - If the bot should display a message when the user levels up
+ * @param { string } levelUpMessage - The message to display when the user levels up
+ * @param { string } levelUpChannelId - The channel id where the level up message should be displayed
+ * @param { string } afkChannelId - The channel id of the afk channel
+ * @param { string } giveXpMessage - The message to display when the user use the givexp command
+ * @param { string } removeXpMessage - The message to display when the user use the removexp command
+ * @param { string[] } giveXpEnabledRoles - The list of roles that can use the givexp command
+ * @param { string[] } removeXpEnabledRoles - The list of roles that can use the removexp command
  *
  */
 export interface DiscordSettingsRankInterface {
-	/**
-	 * Discord Settings Rank Interface
-	 * =====================
-	 *
-	 *
-	 * @param { boolean } isGradient - if the background of the rank card is
-	 *
-	 */
-	isGradient: boolean;
-	/**
-	 * Discord Settings Rank Interface
-	 * =====================
-	 *
-	 *
-	 * @param { string } gradientColor1 - first color of gradiant background
-	 *
-	 */
-	gradientColor1: string;
-	/**
-	 * Discord Settings Rank Interface
-	 * =====================
-	 *
-	 *
-	 * @param { string } gradientColor2 - second color of gradiant background
-	 *
-	 */
-	gradientColor2: string;
 	/**
 	 * Discord Settings Rank Interface
 	 * =====================
@@ -90,33 +73,6 @@ export interface DiscordSettingsRankInterface {
 	 *
 	 */
 	xps: number[];
-	/**
-	 * Discord Settings Rank Interface
-	 * =====================
-	 *
-	 *
-	 * @param { string } color1 - main color theme
-	 *
-	 */
-	color1: string;
-	/**
-	 * Discord Settings Rank Interface
-	 * =====================
-	 *
-	 *
-	 * @param { string } color2 - second color theme
-	 *
-	 */
-	color2: string;
-	/**
-	 * Discord Settings Rank Interface
-	 * =====================
-	 *
-	 *
-	 * @param { string } color3 - third color theme
-	 *
-	 */
-	color3: string;
 	/**
 	 * Discord Settings Rank Interface
 	 * =====================
@@ -367,4 +323,79 @@ export interface DiscordUsersInferface {
 	 *
 	 */
 	role: string;
+	/**
+	 * Discord Users Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } idDiscord - user id discord
+	 *
+	 */
+	idDiscord: string;
+	/**
+	 * Discord Users Interface
+	 * =====================
+	 *
+	 *
+	 * @param { DiscordUsersCardInferface } card - user card settings
+	 *
+	 */
+	card: DiscordUsersCardInferface;
+}
+
+export interface DiscordUsersCardInferface {
+	/**
+	 * Discord Users Card Interface
+	 * =====================
+	 *
+	 *
+	 * @param { boolean } isGradient - if the background of the rank card is
+	 *
+	 */
+	isGradient: boolean;
+	/**
+	 * Discord Users Card Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } gradientColor1 - first color of gradiant background
+	 *
+	 */
+	gradientColor1: string;
+	/**
+	 * Discord Users Card Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } gradientColor2 - second color of gradiant background
+	 *
+	 */
+	gradientColor2: string;
+	/**
+	 * Discord Users Card Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } color1 - main color theme
+	 *
+	 */
+	color1: string;
+	/**
+	 * Discord Users Card Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } color2 - second color theme
+	 *
+	 */
+	color2: string;
+	/**
+	 * Discord Users Card Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } color3 - third color theme
+	 *
+	 */
+	color3: string;
 }

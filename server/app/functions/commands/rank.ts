@@ -25,10 +25,12 @@ const rank = async (ctx): Promise<void> => {
 	}
 
 	const settings = await db.settings.get({});
+	const userSettings = await db.users.get({ idDiscord: selectedUser.id });
 	const allUsers = await db.rank.getAll();
 
 	const card = await generateRankCard({
 		...settings?.rank,
+		...userSettings?.card,
 		username: selectedUser.username,
 		discriminator: selectedUser.discriminator,
 		avatar: selectedUser.displayAvatarURL({ format: "jpg" }),

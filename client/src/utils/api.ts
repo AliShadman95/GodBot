@@ -3,6 +3,7 @@ const TOKEN_LABEL = 'token';
 const USER_ROLE_LABEL = 'userRole';
 const USERNAME_LABEL = 'username';
 const USER_INFO = 'userinfo';
+const ID_DISCORD_LABEL = 'idDiscord';
 
 export const getUserinfo = () => {
   const stringUserRole = window.localStorage.getItem(USER_INFO);
@@ -34,6 +35,12 @@ export const setUsername = mail =>
 export const getUsername = () => window.localStorage.getItem(USERNAME_LABEL);
 export const deleteUsername = () =>
   window.localStorage.removeItem(USERNAME_LABEL);
+
+export const setIdDiscord = mail =>
+  window.localStorage.setItem(ID_DISCORD_LABEL, mail);
+export const getIdDiscord = () => window.localStorage.getItem(ID_DISCORD_LABEL);
+export const deleteIdDiscord = () =>
+  window.localStorage.removeItem(ID_DISCORD_LABEL);
 
 export function getBaseHeaders(headers = {}, isBodyFormData) {
   const token = getToken();

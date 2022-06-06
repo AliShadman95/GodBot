@@ -10,6 +10,7 @@ export const initialState: AuthenticationProviderState = {
   loading: false,
   userRole: '',
   username: '',
+  idDiscord: '',
 };
 
 const slice = createSlice({
@@ -25,6 +26,7 @@ const slice = createSlice({
       state.token = action.payload.token;
       state.userRole = action.payload.role;
       state.username = action.payload.username;
+      state.idDiscord = action.payload.idDiscord;
     },
     retrieveTokenError(state, action: PayloadAction<any>) {
       state.loading = false;
@@ -34,6 +36,7 @@ const slice = createSlice({
       state.token = undefined;
       state.userRole = '';
       state.username = '';
+      state.idDiscord = '';
     },
     verifyTokenAction(state) {},
     verifyTokenLoading(state) {
@@ -44,6 +47,7 @@ const slice = createSlice({
       state.token = action.payload.token;
       state.userRole = action.payload.role;
       state.username = action.payload.username;
+      state.idDiscord = action.payload.idDiscord;
     },
     verifyTokenError(state, action: PayloadAction<any>) {
       state.loading = false;

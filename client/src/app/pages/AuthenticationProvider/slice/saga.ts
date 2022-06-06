@@ -13,6 +13,9 @@ import {
   getToken,
   poweredFetch,
   getUserRole,
+  setIdDiscord,
+  deleteIdDiscord,
+  getIdDiscord,
 } from 'utils/api';
 
 async function login(payload) {
@@ -31,22 +34,24 @@ export function* authentication({ payload }) {
   const { username, password } = payload;
   const response = yield call(login, { username, password });
   if (response.status === 200) {
-    const { accessToken, role } = response.data;
+    const { accessToken, role, idDiscord } = response.data;
     setUsername(username);
     setUserRole(role);
     setToken(accessToken);
+    setIdDiscord(idDiscord);
     yield put(
       authenticationProviderActions.retrieveTokenSuccess({
         token: accessToken,
         username,
         role,
+        idDiscord,
       }),
     );
   } else {
     deleteUsername();
     deleteUserRole();
     deleteToken();
-
+    deleteIdDiscord();
     yield put(alertActions.showAlert(response.response.data));
     yield put(
       authenticationProviderActions.retrieveTokenError(response.response.data),
@@ -68,6 +73,7 @@ export function* verifiyLoginSaga() {
   if (username) {
     const token = getToken();
     const userRole = getUserRole();
+    const idDiscord = getIdDiscord();
 
     const response = yield call(poweredFetch, {
       method: 'GET',
@@ -83,6 +89,7 @@ export function* verifiyLoginSaga() {
           username,
           token,
           role: userRole,
+          idDiscord,
         }),
       );
     } else {

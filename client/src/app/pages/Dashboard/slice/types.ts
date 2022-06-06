@@ -6,4 +6,6 @@ export interface DashboardState {
   voiceChannels: any[];
   textChannels: any[];
   roles: any[];
+  card: any;
+  hasLoadedCard: boolean;
 }

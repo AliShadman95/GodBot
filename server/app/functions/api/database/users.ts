@@ -8,7 +8,7 @@
  *
  */
 import { Schema, model } from "mongoose";
-import type { DiscordUsersInferface } from "@app/types/databases.type";
+import type { DiscordUsersInferface, DiscordUsersCardInferface } from "@app/types/databases.type";
 import { logger } from "@app/functions/utils/logger";
 
 const schema = new Schema<DiscordUsersInferface>({
@@ -16,6 +16,8 @@ const schema = new Schema<DiscordUsersInferface>({
 	username: { type: String, default: "" },
 	password: { type: String, default: "" },
 	role: { type: String, default: "user" },
+	idDiscord: { type: String, default: "0" },
+	card: { type: Object, default: {} },
 });
 
 const query = model<DiscordUsersInferface>("User", schema, "users");

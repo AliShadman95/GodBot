@@ -5,12 +5,14 @@ import { DashboardState } from './types';
 
 export const initialState: DashboardState = {
   settings: {},
+  card: {},
   voiceChannels: [],
   textChannels: [],
   roles: [],
   loading: false,
   error: undefined,
   loadingUpdate: false,
+  hasLoadedCard: false,
 };
 
 const slice = createSlice({
@@ -76,6 +78,19 @@ const slice = createSlice({
     updateSettingsError: (state, action) => {
       state.error = action.payload;
       state.loadingUpdate = false;
+    },
+    getCardAction: state => {},
+    getCardLoading: state => {
+      state.loading = true;
+    },
+    getCardSuccess: (state, action) => {
+      state.loading = false;
+      state.card = action.payload;
+      state.hasLoadedCard = true;
+    },
+    getCardError: (state, action) => {
+      state.error = action.payload;
+      state.loading = false;
     },
   },
 });

@@ -4,4 +4,5 @@ export interface AuthenticationProviderState {
   loading: boolean;
   userRole?: string;
   username?: string;
+  idDiscord?: string;
 }

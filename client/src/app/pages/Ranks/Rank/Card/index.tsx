@@ -67,6 +67,7 @@ const Card = ({
   setGradientColor2,
   thereAreChanges,
   setThereAreChanges,
+  originalCard,
 }) => {
   let canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -225,11 +226,11 @@ const Card = ({
               disabled={!thereAreChanges}
               onClick={() => {
                 reset(settings?.rank);
-                setColor1(settings.rank.color1 || 'white');
-                setColor2(settings.rank.color2 || 'white');
-                setColor3(settings.rank.color3 || 'white');
-                setGradientColor1(settings.rank.gradientColor1 || 'white');
-                setGradientColor2(settings.rank.gradientColor2 || 'white');
+                setColor1(originalCard.color1 || 'white');
+                setColor2(originalCard.color2 || 'white');
+                setColor3(originalCard.color3 || 'white');
+                setGradientColor1(originalCard.gradientColor1 || 'white');
+                setGradientColor2(originalCard.gradientColor2 || 'white');
                 setThereAreChanges(false);
               }}
             >

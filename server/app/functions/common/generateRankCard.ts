@@ -1,5 +1,5 @@
 import canvas, { registerFont } from "canvas"; // For canvas.
-import { DiscordSettingsRankInterface } from "@app/types/databases.type";
+import { DiscordSettingsRankInterface, DiscordUsersCardInferface } from "@app/types/databases.type";
 registerFont("app/fonts/Inter-Regular.ttf", { family: "InterBold" });
 
 interface userInfo {
@@ -25,7 +25,16 @@ const generateBackground = (ctx, { isGradient, gradientColor1, gradientColor2 }:
 
 const generateText = (
 	ctx,
-	{ username, discriminator, xps, points, color1, color2, color3, rank }: userInfo & DiscordSettingsRankInterface,
+	{
+		username,
+		discriminator,
+		xps,
+		points,
+		color1,
+		color2,
+		color3,
+		rank,
+	}: userInfo & DiscordSettingsRankInterface & DiscordUsersCardInferface,
 	currentLevelIndex: number,
 ): void => {
 	// Add our title text
@@ -92,7 +101,7 @@ const generateText = (
 
 const generateProgressBar = (
 	ctx,
-	{ points, xps, color1, color2 }: userInfo & DiscordSettingsRankInterface,
+	{ points, xps, color1, color2 }: userInfo & DiscordSettingsRankInterface & DiscordUsersCardInferface,
 	currentLevelIndex: number,
 ): void => {
 	const percentage = Math.floor(
@@ -145,7 +154,9 @@ const generateAvatar = async (ctx, c, { avatar }: userInfo): Promise<void> => {
 	ctx.drawImage(a, circle.x - hsx, circle.y - hsy, hsx * 2, hsy * 2);
 };
 
-const generateRankCard = async (userInfo: userInfo & DiscordSettingsRankInterface): Promise<Buffer> => {
+const generateRankCard = async (
+	userInfo: userInfo & DiscordSettingsRankInterface & DiscordUsersCardInferface,
+): Promise<Buffer> => {
 	// Create canvas
 	const c = canvas.createCanvas(1342, 400);
 	const ctx = c.getContext("2d");
