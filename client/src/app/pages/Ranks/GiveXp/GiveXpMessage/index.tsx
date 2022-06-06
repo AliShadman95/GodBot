@@ -44,26 +44,24 @@ export default function GiveXpMessage({ control, defaultValues, roles }) {
           <Grid container spacing={3}>
             <Grid item xs={12} md={6} lg={6}>
               <FormControl fullWidth>
-                <Tooltip title="Non disponi dei permessi necessari">
-                  <SelectField
-                    name="giveXpEnabledRoles"
-                    labelid="giveXpEnabledRoles"
-                    id="giveXpEnabledRoles"
-                    variant="outlined"
-                    margin="normal"
-                    label="Canale"
-                    defaultValue={defaultValues?.giveXpEnabledRoles}
-                    control={control}
-                    multiple
-                    disabled={!isAdmin}
-                  >
-                    {roles.map(role => (
-                      <MenuItem key={role.id} value={role.id}>
-                        {role.name}
-                      </MenuItem>
-                    ))}
-                  </SelectField>
-                </Tooltip>
+                <SelectField
+                  name="giveXpEnabledRoles"
+                  labelid="giveXpEnabledRoles"
+                  id="giveXpEnabledRoles"
+                  variant="outlined"
+                  margin="normal"
+                  label="Ruoli"
+                  defaultValue={defaultValues?.giveXpEnabledRoles}
+                  control={control}
+                  multiple
+                  disabled={!isAdmin}
+                >
+                  {roles.map(role => (
+                    <MenuItem key={role.id} value={role.id}>
+                      {role.name}
+                    </MenuItem>
+                  ))}
+                </SelectField>
 
                 <Input
                   id="giveXpMessage"
