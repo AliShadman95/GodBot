@@ -77,7 +77,7 @@
   },
   "scripts": {
     "start": "PORT=3006 react-scripts start",
-    "start-heroku": "PORT=3006 react-scripts start",
+    "start-heroku": " PORT=3006 env-cmd -f .env.heroku react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
