@@ -11,7 +11,7 @@ import configs from "@app/configs/config";
 const leaderboard = async (ctx): Promise<void> => {
 	discord.api.interactions.send(
 		ctx,
-		`Ecco il link per accedere alla leaderboard: ${configs.frontend.url}/leaderboard/${Math.floor(
+		`Ecco il link per accedere alla leaderboard: ${process.env.FRONTEND_URL}/leaderboard/${Math.floor(
 			Math.random() * 10,
 		)}`,
 		"",
