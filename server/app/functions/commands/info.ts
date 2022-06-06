@@ -25,7 +25,7 @@ const info = async (ctx): Promise<void> => {
 			},
 			{
 				name: "Nuove funzioni",
-				value: "Per suggerire nuove funzioni, seguire lo step indicando sopra e inserire una card nella seconda colonna denominata 'Backlog'",
+				value: "Per suggerire nuove funzioni, seguire lo step indicato sopra e inserire una card nella seconda colonna denominata 'Backlog'",
 			},
 		)
 		.setFooter({
