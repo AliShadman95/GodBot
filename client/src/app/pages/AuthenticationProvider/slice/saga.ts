@@ -69,8 +69,6 @@ export function* verifiyLoginSaga() {
     const token = getToken();
     const userRole = getUserRole();
 
-    console.log('here', process.env.REACT_APP_SERVER_URL);
-
     const response = yield call(poweredFetch, {
       method: 'GET',
       url: `${process.env.REACT_APP_SERVER_URL}/settings`,
@@ -79,7 +77,6 @@ export function* verifiyLoginSaga() {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log(response);
     if (response.status === 200) {
       yield put(
         authenticationProviderActions.verifyTokenSuccess({

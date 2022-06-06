@@ -76,8 +76,6 @@ const Card = ({
 
   const isGradientField = watch('isGradient');
 
-  console.log(isGradientField);
-
   const draw = (ctx, canvas) => {
     generateBackground(ctx, gradientColor1, gradientColor2, isGradientField);
     generateText(ctx, color1, color2, color3);
