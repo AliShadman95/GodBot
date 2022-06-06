@@ -8,7 +8,6 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  Tooltip,
 } from '@mui/material';
 import SelectField from 'app/components/Fields/Select';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
