@@ -31,7 +31,7 @@ router.put("/", async function (req: express.Request, res: express.Response): Pr
 
 router.get("/voiceChannels", async function (req: express.Request, res: express.Response): Promise<void> {
 	const channels = bot.channels?.cache
-		?.filter((c) => c.type === "GUILD_VOICE")
+		?.filter((c) => c.type === "GUILD_VOICE" && c.guildId === process.env.GUILD_ID)
 		.map((channel) => {
 			if (channel.type === "GUILD_VOICE") {
 				return { id: channel.id, name: channel.name };
@@ -43,7 +43,7 @@ router.get("/voiceChannels", async function (req: express.Request, res: express.
 
 router.get("/textChannels", async function (req: express.Request, res: express.Response): Promise<void> {
 	const channels = bot.channels?.cache
-		?.filter((c) => c.type === "GUILD_TEXT")
+		?.filter((c) => c.type === "GUILD_TEXT" && c.guildId === process.env.GUILD_ID)
 		.map((channel) => {
 			if (channel.type === "GUILD_TEXT") {
 				return { id: channel.id, name: channel.name };
