@@ -45,7 +45,10 @@ const userLeft = async (
 	// Se l'utente esiste ed è stato nel canale per almeno 600 secondi (10 minuti)
 	if (userInChannel && differenceInSeconds(Date.now(), userInChannel.joinTime) > 600) {
 		const points = getPointsByTimeInChannel(userInChannel, minPointsVoiceChannel, maxPointsVoiceChannel);
-		logger.info(`ASSEGNANDO ALL'UTENTE ${member.id} questi punti : ${points}`, "voiceDetection.ts:userLeft()");
+		logger.info(
+			`ASSEGNANDO ALL'UTENTE ${member.username} questi punti : ${points}`,
+			"voiceDetection.ts:userLeft()",
+		);
 
 		let user = await db.rank.get({ id: member.id });
 
@@ -79,6 +82,10 @@ const userLeft = async (
 		const levelUp = isLevelUp(xps, user.points, points);
 
 		if (displayLevelUpMessage && levelUp !== -1) {
+			logger.info(
+				`NUOVO LIVELLO PER ${user.username}, aveva: ${user.points} e ha ricevuto: ${points}`,
+				"voiceDetection.ts:voiceDetection()",
+			);
 			const channel = bot.channels.cache.get(levelUpChannelId) as TextChannel;
 			channel.send(
 				levelUpMessage.replace("{user}", user.username || "").replace("{livello}", levelUp.toString() || ""),
@@ -116,8 +123,20 @@ const voiceDetection = async (): Promise<void> => {
 
 		// TODO unificare i due if qui sotto una volta capito se è stabile
 		if (newUserChannel?.id === afkChannel?.id) {
-			logger.info(`USER JOINED AFK, NO POINTS CALCULATED`, "voiceDetection.ts:voiceDetection()");
-			return;
+			// Se l'utente è andato diretto negli AFK
+			if (oldUserChannel === null) {
+				logger.info(
+					`USER ${newMember?.member?.user.username} JOINED AFK,NOT GETTING POINTS`,
+					"voiceDetection.ts:voiceDetection()",
+				);
+				return;
+			}
+			// Se l'utente è passato da AFK a qualche altro canale
+			logger.info(
+				`USER ${newMember?.member?.user.username} JOINED AFK,HE COME FROM NORMAL CHANNEL, HE IS GETTING POINTS`,
+				"voiceDetection.ts:voiceDetection()",
+			);
+			await userLeft(newMember?.member?.user, settings.rank);
 		}
 
 		if (discord.api.message.getBotID(bot) === userId || !userId) {
@@ -128,7 +147,7 @@ const voiceDetection = async (): Promise<void> => {
 			return;
 		}
 
-		if (oldUserChannel === null && newUserChannel !== null) {
+		if (oldUserChannel === null || (oldUserChannel?.id === afkChannel?.id && newUserChannel !== null)) {
 			userJoin(userId);
 		}
 
