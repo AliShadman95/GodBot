@@ -31,5 +31,7 @@ export const selectLoadingUpdate = createSelector(
   [selectSlice],
   state => state.loadingUpdate,
 );
-
-export const selectCard = createSelector([selectSlice], state => state.card);
+export const selectCardInfo = createSelector(
+  [selectSlice],
+  state => state.cardInfo,
+);

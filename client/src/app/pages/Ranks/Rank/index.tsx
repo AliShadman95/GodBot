@@ -6,21 +6,23 @@ import {
   selectSettings,
   selectLoadingUpdate,
   selectLoading,
-  selectCard,
+  selectCardInfo,
 } from '../../Dashboard/slice/selectors';
 import { useDashboardSlice } from '../../Dashboard/slice/index';
 import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
 import Card from './Card';
 import Title from 'app/components/Title';
+import { getIdDiscord } from 'utils/api';
 
 export default function Ranks() {
   const dispatch = useDispatch();
   const { actions } = useDashboardSlice();
   const settings = useSelector(selectSettings);
   const loadingUpdate = useSelector(selectLoadingUpdate);
-  const card = useSelector(selectCard);
   const loading = useSelector(selectLoading);
+  const cardInfo = useSelector(selectCardInfo);
+  const idDiscord = getIdDiscord();
 
   const [color1, setColor1] = useState('white');
   const [color2, setColor2] = useState('white');
@@ -31,18 +33,18 @@ export default function Ranks() {
   const [thereAreChanges, setThereAreChanges] = React.useState(false);
 
   const { control, handleSubmit, watch, reset } = useForm({
-    defaultValues: settings?.rank,
+    defaultValues: cardInfo,
   });
 
   React.useEffect(() => {
-    if (card && Object.keys(card).length > 0) {
-      setColor1(card.color1);
-      setColor2(card.color2);
-      setColor3(card.color3);
-      setGradientColor1(card.gradientColor1);
-      setGradientColor2(card.gradientColor2);
+    if (cardInfo && Object.keys(cardInfo).length > 0) {
+      setColor1(cardInfo.color1);
+      setColor2(cardInfo.color2);
+      setColor3(cardInfo.color3);
+      setGradientColor1(cardInfo.gradientColor1);
+      setGradientColor2(cardInfo.gradientColor2);
     }
-  }, [card]);
+  }, [cardInfo]);
 
   const formData = watch();
 
@@ -54,12 +56,11 @@ export default function Ranks() {
 
   React.useEffect(() => {
     if (
-      Object.keys(settings).length > 0 &&
+      Object.keys(cardInfo).length > 0 &&
       Object.keys(formData).length > 0 &&
-      Object.keys(card).length > 0 &&
       !_.isEqual(
         {
-          ...settings.rank,
+          ...cardInfo,
           ...formData,
           ...(color1 !== 'white' && { color1 }),
           ...(color2 !== 'white' && { color2 }),
@@ -67,7 +68,7 @@ export default function Ranks() {
           ...(gradientColor1 !== 'white' && { gradientColor1 }),
           ...(gradientColor2 !== 'white' && { gradientColor2 }),
         },
-        { ...settings?.rank, ...card },
+        cardInfo,
       )
     ) {
       setThereAreChanges(true);
@@ -80,12 +81,21 @@ export default function Ranks() {
         ...settings,
         rank: {
           ...settings.rank,
-          ...data,
-          color1,
-          color2,
-          color3,
-          gradientColor1,
-          gradientColor2,
+          ...{
+            cards: settings.rank.cards.map(c =>
+              c.idDiscord === getIdDiscord()
+                ? {
+                    ...data,
+                    color1,
+                    color2,
+                    color3,
+                    gradientColor1,
+                    gradientColor2,
+                    idDiscord,
+                  }
+                : c,
+            ),
+          },
         },
       }),
     );
@@ -105,7 +115,7 @@ export default function Ranks() {
           </div>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Card
-              settings={settings}
+              cardInfo={cardInfo}
               control={control}
               reset={reset}
               watch={watch}
@@ -122,7 +132,6 @@ export default function Ranks() {
               setGradientColor2={setGradientColor2}
               thereAreChanges={thereAreChanges}
               setThereAreChanges={setThereAreChanges}
-              originalCard={card}
             />
           </form>
         </React.Fragment>

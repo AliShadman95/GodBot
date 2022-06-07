@@ -22,7 +22,6 @@ export default function Dashboard() {
 
   React.useEffect(() => {
     dispatch(actions.getSettingsAction());
-    dispatch(actions.getCardAction());
     dispatch(actions.getVoiceChannelsAction());
     dispatch(actions.getTextChannelsAction());
     dispatch(actions.getRolesAction());

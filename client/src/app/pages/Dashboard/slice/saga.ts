@@ -1,6 +1,6 @@
 import { call, put, all, takeLatest } from 'redux-saga/effects';
 import { dashboardActions } from '../slice/index';
-import { getIdDiscord, poweredFetch } from 'utils/api';
+import { poweredFetch } from 'utils/api';
 function* getSettings(dispatch) {
   yield put(dashboardActions.getSettingsLoading());
   const response = yield call(poweredFetch, {
@@ -72,20 +72,6 @@ function* getRoles(dispatch) {
   }
 }
 
-function* getCard(dispatch) {
-  yield put(dashboardActions.getCardLoading());
-  const idDiscord = getIdDiscord();
-  const response = yield call(poweredFetch, {
-    url: `${process.env.REACT_APP_SERVER_URL}/users/card?id=${idDiscord}`,
-    method: 'GET',
-  });
-  if (response.status === 200) {
-    yield put(dashboardActions.getCardSuccess(response.data));
-  } else {
-    yield put(dashboardActions.getCardError(response.data));
-  }
-}
-
 export function* dashboardSaga() {
   try {
     yield all([
@@ -94,7 +80,6 @@ export function* dashboardSaga() {
       takeLatest(dashboardActions.getTextChannelsAction, getTextChannels),
       takeLatest(dashboardActions.getRolesAction, getRoles),
       takeLatest(dashboardActions.updateSettingsAction, updateSettings),
-      takeLatest(dashboardActions.getCardAction, getCard),
     ]);
   } catch (error) {
     console.log(error);

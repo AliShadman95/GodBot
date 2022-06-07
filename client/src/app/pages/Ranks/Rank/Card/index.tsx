@@ -50,7 +50,7 @@ const CustomBox = ({ color, onClick, isOpen, setColor, disabled = false }) => {
   );
 };
 const Card = ({
-  settings,
+  cardInfo,
   control,
   reset,
   watch,
@@ -67,7 +67,6 @@ const Card = ({
   setGradientColor2,
   thereAreChanges,
   setThereAreChanges,
-  originalCard,
 }) => {
   let canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -121,7 +120,7 @@ const Card = ({
               margin="normal"
               variant="outlined"
               label={isGradientField ? 'Sfondo sfumato' : 'Sfondo non sfumato'}
-              defaultValue={settings?.rank?.isGradient}
+              defaultValue={cardInfo.isGradient}
               control={control}
             />
           </Grid>
@@ -225,12 +224,12 @@ const Card = ({
               sx={{ margin: '0.5em' }}
               disabled={!thereAreChanges}
               onClick={() => {
-                reset(settings?.rank);
-                setColor1(originalCard.color1 || 'white');
-                setColor2(originalCard.color2 || 'white');
-                setColor3(originalCard.color3 || 'white');
-                setGradientColor1(originalCard.gradientColor1 || 'white');
-                setGradientColor2(originalCard.gradientColor2 || 'white');
+                reset(cardInfo);
+                setColor1(cardInfo.color1 || 'white');
+                setColor2(cardInfo.color2 || 'white');
+                setColor3(cardInfo.color3 || 'white');
+                setGradientColor1(cardInfo.gradientColor1 || 'white');
+                setGradientColor2(cardInfo.gradientColor2 || 'white');
                 setThereAreChanges(false);
               }}
             >

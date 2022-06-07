@@ -2,10 +2,11 @@ import { createSlice } from 'utils/@reduxjs/toolkit';
 import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
 import { dashboardSaga } from './saga';
 import { DashboardState } from './types';
+import { getIdDiscord } from 'utils/api';
 
 export const initialState: DashboardState = {
   settings: {},
-  card: {},
+  cardInfo: {},
   voiceChannels: [],
   textChannels: [],
   roles: [],
@@ -25,6 +26,10 @@ const slice = createSlice({
     getSettingsSuccess: (state, action) => {
       state.loading = false;
       state.settings = action.payload;
+      state.cardInfo =
+        action.payload.rank.cards.find(
+          card => card.idDiscord === getIdDiscord(),
+        ) || action.payload.rank.cards.find(card => card.idDiscord === '0');
     },
     getSettingsError: (state, action) => {
       state.error = action.payload;
@@ -73,22 +78,14 @@ const slice = createSlice({
     updateSettingsSuccess: (state, action) => {
       state.loadingUpdate = false;
       state.settings = action.payload;
+      state.cardInfo =
+        action.payload.rank.cards.find(
+          card => card.idDiscord === getIdDiscord(),
+        ) || action.payload.rank.cards.find(card => card.idDiscord === '0');
     },
     updateSettingsError: (state, action) => {
       state.error = action.payload;
       state.loadingUpdate = false;
-    },
-    getCardAction: state => {},
-    getCardLoading: state => {
-      state.loading = true;
-    },
-    getCardSuccess: (state, action) => {
-      state.loading = false;
-      state.card = action.payload;
-    },
-    getCardError: (state, action) => {
-      state.error = action.payload;
-      state.loading = false;
     },
   },
 });
