@@ -25,12 +25,19 @@ const rank = async (ctx): Promise<void> => {
 	}
 
 	const settings = await db.settings.get({});
-	const userSettings = await db.users.get({ idDiscord: selectedUser.id });
 	const allUsers = await db.rank.getAll();
 
-	const card = await generateRankCard({
-		...settings?.rank,
-		...userSettings?.card,
+	const defaultCard = {
+		isGradient: true,
+		gradientColor1: "#6e00ff",
+		gradientColor2: "#8e48c7",
+		color1: "#ffffff",
+		color2: "#000000",
+		color3: "#02d032",
+		idDiscord: "0",
+	};
+
+	const userInfo = {
 		username: selectedUser.username,
 		discriminator: selectedUser.discriminator,
 		avatar: selectedUser.displayAvatarURL({ format: "jpg" }),
@@ -39,7 +46,14 @@ const rank = async (ctx): Promise<void> => {
 			allUsers
 				.sort((a, b) => parseInt(b.points) - parseInt(a.points))
 				.findIndex((u) => u.id === selectedUser.id) + 1,
-	});
+	};
+
+	const cardInfo =
+		settings.rank.cards.find((card) => card.idDiscord === selectedUser.id) ||
+		settings.rank.cards.find((card) => card.idDiscord === "0") ||
+		defaultCard;
+
+	const card = await generateRankCard(settings?.rank, cardInfo, userInfo);
 
 	discord.api.interactions.send(ctx, "", card);
 };

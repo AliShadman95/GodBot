@@ -52,9 +52,19 @@ export interface DiscordSettingsInterface {
  * @param { string } removeXpMessage - The message to display when the user use the removexp command
  * @param { string[] } giveXpEnabledRoles - The list of roles that can use the givexp command
  * @param { string[] } removeXpEnabledRoles - The list of roles that can use the removexp command
+ * @param { DiscordCardInferface[] } cards - The list of cards
  *
  */
 export interface DiscordSettingsRankInterface {
+	/**
+	 * Discord Settings Rank Interface
+	 * =====================
+	 *
+	 *
+	 * @param {  DiscordCardInferface[] } cards - The list of cards
+	 *
+	 */
+	cards: DiscordCardInferface[];
 	/**
 	 * Discord Settings Rank Interface
 	 * =====================
@@ -332,20 +342,20 @@ export interface DiscordUsersInferface {
 	 *
 	 */
 	idDiscord: string;
+}
+
+export interface DiscordCardInferface {
 	/**
-	 * Discord Users Interface
+	 * Discord Card Interface
 	 * =====================
 	 *
 	 *
-	 * @param { DiscordUsersCardInferface } card - user card settings
+	 * @param { string } idDiscord - user id discord
 	 *
 	 */
-	card: DiscordUsersCardInferface;
-}
-
-export interface DiscordUsersCardInferface {
+	idDiscord: string;
 	/**
-	 * Discord Users Card Interface
+	 * Discord Card Interface
 	 * =====================
 	 *
 	 *
@@ -354,7 +364,7 @@ export interface DiscordUsersCardInferface {
 	 */
 	isGradient: boolean;
 	/**
-	 * Discord Users Card Interface
+	 * Discord Card Interface
 	 * =====================
 	 *
 	 *
@@ -363,7 +373,7 @@ export interface DiscordUsersCardInferface {
 	 */
 	gradientColor1: string;
 	/**
-	 * Discord Users Card Interface
+	 * Discord Card Interface
 	 * =====================
 	 *
 	 *
@@ -372,7 +382,7 @@ export interface DiscordUsersCardInferface {
 	 */
 	gradientColor2: string;
 	/**
-	 * Discord Users Card Interface
+	 * Discord Card Interface
 	 * =====================
 	 *
 	 *
@@ -381,7 +391,7 @@ export interface DiscordUsersCardInferface {
 	 */
 	color1: string;
 	/**
-	 * Discord Users Card Interface
+	 * Discord Card Interface
 	 * =====================
 	 *
 	 *
@@ -390,7 +400,7 @@ export interface DiscordUsersCardInferface {
 	 */
 	color2: string;
 	/**
-	 * Discord Users Card Interface
+	 * Discord Card Interface
 	 * =====================
 	 *
 	 *

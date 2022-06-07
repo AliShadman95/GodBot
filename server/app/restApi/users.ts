@@ -1,4 +1,4 @@
-import express from "express";
+/* import express from "express";
 const router = express.Router();
 import db from "@routes/api/database";
 import logger from "@app/functions/utils/logger";
@@ -21,3 +21,4 @@ router.get("/card", async function (req: express.Request, res: express.Response)
 });
 
 module.exports = router;
+ */

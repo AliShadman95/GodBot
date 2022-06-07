@@ -32,7 +32,7 @@ router.post("/login", async function (req: express.Request, res: express.Respons
 			expiresIn: 604800, // 24 hours = 86400 , 1 week = 604800
 		});
 
-		const { password: userPassword, card, ...rest } = user;
+		const { password: userPassword, ...rest } = user;
 
 		res.status(200).send({ ...rest, accessToken: token });
 	} catch (e) {

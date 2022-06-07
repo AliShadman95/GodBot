@@ -1,19 +1,16 @@
 import canvas, { registerFont } from "canvas"; // For canvas.
-import { DiscordSettingsRankInterface, DiscordUsersCardInferface } from "@app/types/databases.type";
+import { DiscordSettingsRankInterface, DiscordCardInferface } from "@app/types/databases.type";
 registerFont("app/fonts/Inter-Regular.ttf", { family: "InterBold" });
 
 interface userInfo {
 	username: string;
-	isGradient: boolean;
-	gradientColor1: string;
-	gradientColor2: string;
 	discriminator: string;
 	avatar: string;
 	points: string;
 	rank: number;
 }
 
-const generateBackground = (ctx, { isGradient, gradientColor1, gradientColor2 }: userInfo): void => {
+const generateBackground = (ctx, { isGradient, gradientColor1, gradientColor2 }: DiscordCardInferface): void => {
 	// Add gradient - we use createLinearGradient to do this
 	const grd = ctx.createLinearGradient(0, 853, 1352, 0);
 	grd.addColorStop(0, gradientColor1);
@@ -25,16 +22,9 @@ const generateBackground = (ctx, { isGradient, gradientColor1, gradientColor2 }:
 
 const generateText = (
 	ctx,
-	{
-		username,
-		discriminator,
-		xps,
-		points,
-		color1,
-		color2,
-		color3,
-		rank,
-	}: userInfo & DiscordSettingsRankInterface & DiscordUsersCardInferface,
+	{ xps }: DiscordSettingsRankInterface,
+	{ username, discriminator, points, rank }: userInfo,
+	{ color1, color2, color3 }: DiscordCardInferface,
 	currentLevelIndex: number,
 ): void => {
 	// Add our title text
@@ -101,7 +91,9 @@ const generateText = (
 
 const generateProgressBar = (
 	ctx,
-	{ points, xps, color1, color2 }: userInfo & DiscordSettingsRankInterface & DiscordUsersCardInferface,
+	{ xps }: DiscordSettingsRankInterface,
+	{ points }: userInfo,
+	{ color1, color2 }: DiscordCardInferface,
 	currentLevelIndex: number,
 ): void => {
 	const percentage = Math.floor(
@@ -155,20 +147,22 @@ const generateAvatar = async (ctx, c, { avatar }: userInfo): Promise<void> => {
 };
 
 const generateRankCard = async (
-	userInfo: userInfo & DiscordSettingsRankInterface & DiscordUsersCardInferface,
+	settings: DiscordSettingsRankInterface,
+	card: DiscordCardInferface,
+	userInfo: userInfo,
 ): Promise<Buffer> => {
 	// Create canvas
 	const c = canvas.createCanvas(1342, 400);
 	const ctx = c.getContext("2d");
 
 	const currentLevelIndex =
-		userInfo?.xps?.findIndex(
-			(xp, index) => parseInt(userInfo?.points) >= xp && parseInt(userInfo.points) < userInfo?.xps[index + 1],
+		settings?.xps?.findIndex(
+			(xp, index) => parseInt(userInfo?.points) >= xp && parseInt(userInfo.points) < settings?.xps[index + 1],
 		) + 1;
 
-	generateBackground(ctx, userInfo);
-	generateText(ctx, userInfo, currentLevelIndex);
-	generateProgressBar(ctx, userInfo, currentLevelIndex);
+	generateBackground(ctx, card);
+	generateText(ctx, settings, userInfo, card, currentLevelIndex);
+	generateProgressBar(ctx, settings, userInfo, card, currentLevelIndex);
 	await generateAvatar(ctx, c, userInfo);
 
 	const canvasData = await c.toBuffer("image/png");

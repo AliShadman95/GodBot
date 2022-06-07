@@ -7,5 +7,4 @@ export interface DashboardState {
   textChannels: any[];
   roles: any[];
   card: any;
-  hasLoadedCard: boolean;
 }

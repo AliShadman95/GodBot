@@ -12,7 +12,6 @@ export const initialState: DashboardState = {
   loading: false,
   error: undefined,
   loadingUpdate: false,
-  hasLoadedCard: false,
 };
 
 const slice = createSlice({
@@ -86,7 +85,6 @@ const slice = createSlice({
     getCardSuccess: (state, action) => {
       state.loading = false;
       state.card = action.payload;
-      state.hasLoadedCard = true;
     },
     getCardError: (state, action) => {
       state.error = action.payload;
