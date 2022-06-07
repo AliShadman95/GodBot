@@ -25,6 +25,10 @@ export default function Dashboard() {
     dispatch(actions.getVoiceChannelsAction());
     dispatch(actions.getTextChannelsAction());
     dispatch(actions.getRolesAction());
+
+    return () => {
+      dispatch(actions.clearDashboardState());
+    };
   }, []);
 
   return (

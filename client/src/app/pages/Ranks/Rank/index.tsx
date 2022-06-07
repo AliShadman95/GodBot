@@ -72,6 +72,8 @@ export default function Ranks() {
       )
     ) {
       setThereAreChanges(true);
+    } else {
+      setThereAreChanges(false);
     }
   }, [formData]);
 

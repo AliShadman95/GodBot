@@ -87,6 +87,16 @@ const slice = createSlice({
       state.error = action.payload;
       state.loadingUpdate = false;
     },
+    clearDashboardState: state => {
+      state.settings = {};
+      state.cardInfo = {};
+      state.voiceChannels = [];
+      state.textChannels = [];
+      state.roles = [];
+      state.loading = false;
+      state.error = undefined;
+      state.loadingUpdate = false;
+    },
   },
 });
 
