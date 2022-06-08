@@ -6,8 +6,8 @@ import cors from "cors";
 const settings = require("@app/restApi/settings");
 const auth = require("@app/restApi/auth");
 const ranks = require("@app/restApi/ranks");
-/* const users = require("@app/restApi/users");
- */ const authJwt = require("@app/restApi/authHandlers");
+const main = require("@app/restApi/main");
+const authJwt = require("@app/restApi/authHandlers");
 require("dotenv").config();
 
 const app = express();
@@ -19,11 +19,11 @@ app.use(express.urlencoded({ extended: true }));
 
 app.listen(port, () => logger.info("REST API is ready...", "bot.ts:main()"));
 
+app.use("/", main);
 app.use("/settings", authJwt.verifyToken, settings);
 app.use("/auth", auth);
-app.use("/ranks", ranks);
-/* app.use("/users", users);
- */
+app.use("/ranks", authJwt.verifyToken, ranks);
+
 /**
  * Start bot
  * =====================
