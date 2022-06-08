@@ -17,6 +17,7 @@ import { useAuthenticationProviderSlice } from '../AuthenticationProvider/slice'
 import { useDispatch } from 'react-redux';
 import Logo from 'app/components/Logo';
 import { useHistory } from 'react-router-dom';
+import { getUsername } from 'utils/api';
 
 const pages = ['Dashboard'];
 
@@ -134,6 +135,16 @@ export default function SecondaryNavBar() {
               </Button>
             ))}
           </Box>
+
+          <Typography
+            component="h1"
+            variant="h6"
+            color="inherit"
+            noWrap
+            sx={{ flexGrow: 0, marginRight: '1em' }}
+          >
+            {getUsername()}
+          </Typography>
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Logout">

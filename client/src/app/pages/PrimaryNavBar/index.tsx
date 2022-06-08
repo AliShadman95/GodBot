@@ -7,10 +7,18 @@ import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import MenuIcon from '@mui/icons-material/Menu';
 import IconButton from '@mui/material/IconButton';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import { Divider, List, Toolbar, Grid, Typography } from '@mui/material';
+import {
+  Divider,
+  List,
+  Toolbar,
+  Grid,
+  Typography,
+  Tooltip,
+} from '@mui/material';
 import { MainListItems } from '../ListItems';
 import { useAuthenticationProviderSlice } from '../AuthenticationProvider/slice';
 import Logo from 'app/components/Logo';
+import { getUsername } from 'utils/api';
 
 const drawerWidth: number = 240;
 
@@ -101,14 +109,26 @@ export default function PrimaryNavBar() {
           >
             Dashboard
           </Typography>
-          <IconButton
+          <Typography
+            component="h1"
+            variant="h6"
             color="inherit"
-            onClick={() => {
-              dispatch(actions.logoutAction());
-            }}
+            noWrap
+            sx={{ flexGrow: 0, marginRight: '0.5em' }}
           >
-            <LogoutIcon />
-          </IconButton>
+            {getUsername()}
+          </Typography>
+
+          <Tooltip title="Logout">
+            <IconButton
+              color="inherit"
+              onClick={() => {
+                dispatch(actions.logoutAction());
+              }}
+            >
+              <LogoutIcon />
+            </IconButton>
+          </Tooltip>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>

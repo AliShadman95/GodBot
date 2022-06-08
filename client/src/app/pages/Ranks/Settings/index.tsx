@@ -55,13 +55,24 @@ export default function Settings() {
       xps = levelGenerator(formData.levelMultiplier);
     }
 
-    if (
+    /*  if (
       Object.keys(settings).length > 0 &&
       Object.keys(formData).length > 0 &&
       !_.isEqual({ ...settings.rank, ...formData, ...{ xps } }, settings?.rank)
     ) {
       setThereAreChanges(true);
-    }
+    } else {
+      setThereAreChanges(false);
+    } */
+
+    setThereAreChanges(
+      Object.keys(settings).length > 0 &&
+        Object.keys(formData).length > 0 &&
+        !_.isEqual(
+          { ...settings.rank, ...formData, ...{ xps } },
+          settings?.rank,
+        ),
+    );
   }, [formData]);
 
   const onSubmit = data => {

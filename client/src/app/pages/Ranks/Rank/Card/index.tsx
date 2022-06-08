@@ -20,6 +20,7 @@ import {
   generateProgressBar,
   generateText,
 } from './canvasGenerator';
+import OutsideAlerter from './OutsideAlerter';
 
 const CustomBox = ({ color, onClick, isOpen, setColor, disabled = false }) => {
   return (
@@ -149,34 +150,52 @@ const Card = ({
 
           <Grid container>
             <Grid item xs={4} md={4} lg={3}>
-              <CustomBox
-                color={color1}
-                isOpen={openPicker === 'color1'}
-                onClick={() =>
-                  setOpenPicker(openPicker === 'color1' ? '' : 'color1')
-                }
-                setColor={setColor1}
-              />
+              <OutsideAlerter
+                func={() => {
+                  setOpenPicker(openPicker !== '' ? '' : openPicker);
+                }}
+              >
+                <CustomBox
+                  color={color1}
+                  isOpen={openPicker === 'color1'}
+                  onClick={() =>
+                    setOpenPicker(openPicker === 'color1' ? '' : 'color1')
+                  }
+                  setColor={setColor1}
+                />
+              </OutsideAlerter>
             </Grid>
             <Grid item xs={4} md={4} lg={3}>
-              <CustomBox
-                color={color2}
-                isOpen={openPicker === 'color2'}
-                onClick={() =>
-                  setOpenPicker(openPicker === 'color2' ? '' : 'color2')
-                }
-                setColor={setColor2}
-              />
+              <OutsideAlerter
+                func={() => {
+                  setOpenPicker(openPicker !== '' ? '' : openPicker);
+                }}
+              >
+                <CustomBox
+                  color={color2}
+                  isOpen={openPicker === 'color2'}
+                  onClick={() =>
+                    setOpenPicker(openPicker === 'color2' ? '' : 'color2')
+                  }
+                  setColor={setColor2}
+                />
+              </OutsideAlerter>
             </Grid>
             <Grid item xs={4} md={4} lg={3}>
-              <CustomBox
-                color={color3}
-                isOpen={openPicker === 'color3'}
-                onClick={() =>
-                  setOpenPicker(openPicker === 'color3' ? '' : 'color3')
-                }
-                setColor={setColor3}
-              />
+              <OutsideAlerter
+                func={() => {
+                  setOpenPicker(openPicker !== '' ? '' : openPicker);
+                }}
+              >
+                <CustomBox
+                  color={color3}
+                  isOpen={openPicker === 'color3'}
+                  onClick={() =>
+                    setOpenPicker(openPicker === 'color3' ? '' : 'color3')
+                  }
+                  setColor={setColor3}
+                />
+              </OutsideAlerter>
             </Grid>
           </Grid>
         </Grid>
@@ -187,30 +206,42 @@ const Card = ({
 
           <Grid container>
             <Grid item xs={4} md={4} lg={3}>
-              <CustomBox
-                color={gradientColor1}
-                isOpen={openPicker === 'gradientColor1'}
-                onClick={() =>
-                  setOpenPicker(
-                    openPicker === 'gradientColor1' ? '' : 'gradientColor1',
-                  )
-                }
-                setColor={setGradientColor1}
-              />
+              <OutsideAlerter
+                func={() => {
+                  setOpenPicker(openPicker !== '' ? '' : openPicker);
+                }}
+              >
+                <CustomBox
+                  color={gradientColor1}
+                  isOpen={openPicker === 'gradientColor1'}
+                  onClick={() =>
+                    setOpenPicker(
+                      openPicker === 'gradientColor1' ? '' : 'gradientColor1',
+                    )
+                  }
+                  setColor={setGradientColor1}
+                />
+              </OutsideAlerter>
             </Grid>
             <Grid item xs={4} md={4} lg={3}>
-              <CustomBox
-                color={gradientColor2}
-                isOpen={openPicker === 'gradientColor2'}
-                onClick={() =>
-                  isGradientField &&
-                  setOpenPicker(
-                    openPicker === 'gradientColor2' ? '' : 'gradientColor2',
-                  )
-                }
-                setColor={setGradientColor2}
-                disabled={!isGradientField}
-              />
+              <OutsideAlerter
+                func={() => {
+                  setOpenPicker(openPicker !== '' ? '' : openPicker);
+                }}
+              >
+                <CustomBox
+                  color={gradientColor2}
+                  isOpen={openPicker === 'gradientColor2'}
+                  onClick={() =>
+                    isGradientField &&
+                    setOpenPicker(
+                      openPicker === 'gradientColor2' ? '' : 'gradientColor2',
+                    )
+                  }
+                  setColor={setGradientColor2}
+                  disabled={!isGradientField}
+                />
+              </OutsideAlerter>
             </Grid>
           </Grid>
         </Grid>

@@ -55,7 +55,7 @@ export default function Ranks() {
   }, [loadingUpdate]);
 
   React.useEffect(() => {
-    if (
+    /*  if (
       Object.keys(cardInfo).length > 0 &&
       Object.keys(formData).length > 0 &&
       !_.isEqual(
@@ -74,7 +74,24 @@ export default function Ranks() {
       setThereAreChanges(true);
     } else {
       setThereAreChanges(false);
-    }
+    } */
+
+    setThereAreChanges(
+      Object.keys(cardInfo).length > 0 &&
+        Object.keys(formData).length > 0 &&
+        !_.isEqual(
+          {
+            ...cardInfo,
+            ...formData,
+            ...(color1 !== 'white' && { color1 }),
+            ...(color2 !== 'white' && { color2 }),
+            ...(color3 !== 'white' && { color3 }),
+            ...(gradientColor1 !== 'white' && { gradientColor1 }),
+            ...(gradientColor2 !== 'white' && { gradientColor2 }),
+          },
+          cardInfo,
+        ),
+    );
   }, [formData]);
 
   const onSubmit = data => {

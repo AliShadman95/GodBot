@@ -38,13 +38,21 @@ export default function GiveXp() {
   }, [loadingUpdate]);
 
   React.useEffect(() => {
-    if (
+    /*   if (
       Object.keys(settings).length > 0 &&
       Object.keys(formData).length > 0 &&
       !_.isEqual({ ...settings.rank, ...formData }, settings?.rank)
     ) {
       setThereAreChanges(true);
-    }
+    } else {
+      setThereAreChanges(false);
+    } */
+
+    setThereAreChanges(
+      Object.keys(settings).length > 0 &&
+        Object.keys(formData).length > 0 &&
+        !_.isEqual({ ...settings.rank, ...formData }, settings?.rank),
+    );
   }, [formData]);
 
   const onSubmit = data => {
