@@ -368,3 +368,43 @@ export interface DiscordUsersInferface {
 	 */
 	role: string;
 }
+
+/**
+ * Discord Voice Channel Interface
+ * =====================
+ *
+ *
+ *
+ * @param { string } id - discord id
+ * @param { number } joinTime - time when user joined voice channel
+ *
+ */
+export interface DiscordVoiceChannelInterface {
+	/**
+	 * Discord Voice Channel Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } id - user id
+	 *
+	 */
+	id: string;
+	/**
+	 * Discord Voice Channel Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } username -  username
+	 *
+	 */
+	username: string;
+	/**
+	 * Discord Voice Channel Interface
+	 * =====================
+	 *
+	 *
+	 * @param { number } joinTime - time when user joined voice channel
+	 *
+	 */
+	joinTime: number;
+}

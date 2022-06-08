@@ -8,7 +8,7 @@ import config from "@app/configs/auth.config";
 
 // middleware that is specific to this router
 router.use(function timeLog(req: express.Request, res: express.Response, next) {
-	logger.info(`Time: ${Date.now()}`, "auth.ts:timeLog()");
+	logger.info(`Time: ${Date.now()}`, "main.ts:timeLog()");
 	next();
 });
 

@@ -11,12 +11,14 @@ import connection from "@app/functions/api/database/connection";
 import rank from "@app/functions/api/database/rank";
 import settings from "@app/functions/api/database/settings";
 import users from "@app/functions/api/database/users";
+import voiceChannel from "@app/functions/api/database/voiceChannel";
 
 const db = {
 	connection: connection,
 	rank: rank,
 	settings: settings,
 	users: users,
+	voiceChannel: voiceChannel,
 };
 
 export { db };
