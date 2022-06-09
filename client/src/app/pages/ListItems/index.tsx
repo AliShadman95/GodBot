@@ -19,11 +19,25 @@ export const MainListItems = () => {
   return (
     <React.Fragment>
       <ListSubheader component="div" inset>
+        Generale
+      </ListSubheader>
+      <ListItemButton
+        onClick={() => {
+          history.push(`${url}/settings`);
+        }}
+      >
+        <ListItemIcon>
+          <Settings />
+        </ListItemIcon>
+        <ListItemText primary="Settings" />
+      </ListItemButton>
+      <Divider sx={{ my: 1 }} />
+      <ListSubheader component="div" inset>
         Ranks
       </ListSubheader>
       <ListItemButton
         onClick={() => {
-          history.push(`${url}/rank`);
+          history.push(`${url}/rank/rank`);
         }}
       >
         <ListItemIcon>
@@ -33,7 +47,7 @@ export const MainListItems = () => {
       </ListItemButton>
       <ListItemButton
         onClick={() => {
-          history.push(`${url}/give-xp`);
+          history.push(`${url}/rank/give-xp`);
         }}
       >
         <ListItemIcon>
@@ -43,7 +57,7 @@ export const MainListItems = () => {
       </ListItemButton>
       <ListItemButton
         onClick={() => {
-          history.push(`${url}/remove-xp`);
+          history.push(`${url}/rank/remove-xp`);
         }}
       >
         <ListItemIcon>
@@ -54,7 +68,7 @@ export const MainListItems = () => {
 
       <ListItemButton
         onClick={() => {
-          history.push(`${url}/settings`);
+          history.push(`${url}/rank/settings`);
         }}
       >
         <ListItemIcon>

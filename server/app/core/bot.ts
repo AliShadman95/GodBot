@@ -2,6 +2,7 @@
 import db from "@routes/api/database";
 import commands from "@app/routes/commands";
 import express from "express";
+import bot from "@app/core/token";
 import cors from "cors";
 const settings = require("@app/restApi/settings");
 const auth = require("@app/restApi/auth");
@@ -34,6 +35,7 @@ app.use("/ranks", authJwt.verifyToken, ranks);
  *
  */
 import logger from "@app/functions/utils/logger";
+import { TextChannel } from "discord.js";
 
 (async () => {
 	logger.info("Bot is starting...", "bot.ts:main()");
@@ -44,6 +46,12 @@ import logger from "@app/functions/utils/logger";
 	await commands.launch();
 	await commands.voiceDetection();
 })();
+
+process.on("SIGTERM", async function () {
+	const settings = await db.settings.get({});
+	const channel = bot.channels.cache.get(settings?.rank?.botInfoChannelId) as TextChannel;
+	channel.send(settings?.rank?.botRestartMessage);
+});
 
 process.on("SIGINT", async function () {
 	// on CTRL-C

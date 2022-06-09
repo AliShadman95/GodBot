@@ -10,22 +10,18 @@
 import { TextChannel } from "discord.js";
 import bot from "@app/core/token";
 import discord from "@routes/api/discord";
-import type { DiscordSettingsRankInterface } from "@app/types/databases.type";
+import type { DiscordSettingsRankInterface, DiscordVoiceChannelInterface } from "@app/types/databases.type";
 import differenceInSeconds from "date-fns/differenceInSeconds";
 import db from "@routes/api/database";
 import logger from "@app/functions/utils/logger";
 import isLevelUp from "@app/functions/common/isLevelUp";
 
-interface UserTimeInChannelData {
-	id: string;
-	joinTime: number;
-}
+// Use this const for testing
+const minimumSecondsInVoiceChannel = 600;
 
-let usersTimeInChannelData: UserTimeInChannelData[] = [];
-
-const userJoin = (userId: string): void => {
-	usersTimeInChannelData.push({ id: userId, joinTime: Date.now() });
-	logger.info(`User joined ${userId}`, "voiceDetection.ts:userJoin()");
+const userJoin = async (id: string, username: string): Promise<void> => {
+	await db.voiceChannel.add({ id, username, joinTime: Date.now() });
+	logger.info(`User joined ${id}-${username}`, "voiceDetection.ts:userJoin()");
 };
 
 const userLeft = async (
@@ -39,63 +35,67 @@ const userLeft = async (
 		levelUpMessage,
 	}: DiscordSettingsRankInterface,
 ): Promise<void> => {
-	logger.info(`User left ${member.id}`, "voiceDetection.ts:userLeft()");
-	const userInChannel = usersTimeInChannelData.find((u) => u.id === member.id);
+	logger.info(`User left ${member.id}-${member.username}`, "voiceDetection.ts:userLeft()");
+	const userInChannel = await db.voiceChannel.get({ id: member.id });
 
-	// Se l'utente esiste ed è stato nel canale per almeno 600 secondi (10 minuti)
-	if (userInChannel && differenceInSeconds(Date.now(), userInChannel.joinTime) > 600) {
-		const points = getPointsByTimeInChannel(userInChannel, minPointsVoiceChannel, maxPointsVoiceChannel);
-		logger.info(
-			`ASSEGNANDO ALL'UTENTE ${member.username} questi punti : ${points}`,
-			"voiceDetection.ts:userLeft()",
-		);
+	if (userInChannel.id !== "0") {
+		// Se l'utente esiste ed è stato nel canale per almeno 600 secondi (10 minuti)
+		if (differenceInSeconds(Date.now(), userInChannel.joinTime) > minimumSecondsInVoiceChannel) {
+			const points = getPointsByTimeInChannel(userInChannel, minPointsVoiceChannel, maxPointsVoiceChannel);
+			logger.info(
+				`ASSEGNANDO ALL'UTENTE ${member.username} questi punti : ${points}`,
+				"voiceDetection.ts:userLeft()",
+			);
 
-		let user = await db.rank.get({ id: member.id });
+			let user = await db.rank.get({ id: member.id });
 
-		if (user.id !== "0") {
-			await db.rank.update(
-				{ id: member.id },
-				{
-					...user,
-					points: (parseInt(user.points) + points).toString(),
+			if (user.id !== "0") {
+				await db.rank.update(
+					{ id: member.id },
+					{
+						...user,
+						points: (parseInt(user.points) + points).toString(),
+						secondsInVoiceChat: (user.secondsInVoiceChat += differenceInSeconds(
+							Date.now(),
+							userInChannel.joinTime,
+						)),
+					},
+				);
+			} else {
+				await db.rank.add({
+					...member,
+					points: points.toString(),
+					messageAwarded: 0,
 					secondsInVoiceChat: (user.secondsInVoiceChat += differenceInSeconds(
 						Date.now(),
 						userInChannel.joinTime,
 					)),
-				},
-			);
-		} else {
-			await db.rank.add({
-				...member,
-				points: points.toString(),
-				messageAwarded: 0,
-				secondsInVoiceChat: (user.secondsInVoiceChat += differenceInSeconds(
-					Date.now(),
-					userInChannel.joinTime,
-				)),
-			});
-			user = await db.rank.get({ id: member.id });
+				});
+				user = await db.rank.get({ id: member.id });
+			}
+
+			const levelUp = isLevelUp(xps, user.points, points);
+
+			if (displayLevelUpMessage && levelUp !== -1) {
+				logger.info(
+					`NUOVO LIVELLO PER ${user.username}, aveva: ${user.points} e ha ricevuto: ${points}`,
+					"voiceDetection.ts:voiceDetection()",
+				);
+				const channel = bot.channels.cache.get(levelUpChannelId) as TextChannel;
+				channel.send(
+					levelUpMessage
+						.replace("{user}", user.username || "")
+						.replace("{livello}", levelUp.toString() || ""),
+				);
+			}
 		}
-
-		usersTimeInChannelData = usersTimeInChannelData.filter((u) => u.id !== member.id);
-
-		const levelUp = isLevelUp(xps, user.points, points);
-
-		if (displayLevelUpMessage && levelUp !== -1) {
-			logger.info(
-				`NUOVO LIVELLO PER ${user.username}, aveva: ${user.points} e ha ricevuto: ${points}`,
-				"voiceDetection.ts:voiceDetection()",
-			);
-			const channel = bot.channels.cache.get(levelUpChannelId) as TextChannel;
-			channel.send(
-				levelUpMessage.replace("{user}", user.username || "").replace("{livello}", levelUp.toString() || ""),
-			);
-		}
+		// Removing the user
+		await db.voiceChannel.remove({ id: member.id });
 	}
 };
 
 const getPointsByTimeInChannel = (
-	user: UserTimeInChannelData,
+	user: DiscordVoiceChannelInterface,
 	minPointsVoiceChannel: string,
 	maxPointsVoiceChannel: string,
 ): number => {
@@ -103,7 +103,7 @@ const getPointsByTimeInChannel = (
 		Math.floor(Math.random() * (parseInt(maxPointsVoiceChannel) - (parseInt(minPointsVoiceChannel) + 1))) +
 		parseInt(minPointsVoiceChannel);
 
-	return Math.floor(differenceInSeconds(Date.now(), user.joinTime) / 600) * pointAwarded;
+	return Math.floor(differenceInSeconds(Date.now(), user.joinTime) / minimumSecondsInVoiceChannel) * pointAwarded;
 };
 
 /**
@@ -117,11 +117,11 @@ const voiceDetection = async (): Promise<void> => {
 		const newUserChannel = newMember.channel;
 		const oldUserChannel = oldMember.channel;
 		const userId = newMember?.member?.user?.id;
+		const username = newMember?.member?.user?.username || "";
 		const settings = await db.settings.get({});
 
 		const afkChannel = bot.channels.cache.get(settings?.rank?.afkChannelId);
 
-		// TODO unificare i due if qui sotto una volta capito se è stabile
 		if (newUserChannel?.id === afkChannel?.id) {
 			// Se l'utente è andato diretto negli AFK
 			if (oldUserChannel === null) {
@@ -148,7 +148,7 @@ const voiceDetection = async (): Promise<void> => {
 		}
 
 		if (oldUserChannel === null || (oldUserChannel?.id === afkChannel?.id && newUserChannel !== null)) {
-			userJoin(userId);
+			await userJoin(userId, username);
 		}
 
 		if (oldUserChannel !== null && newUserChannel === null) {

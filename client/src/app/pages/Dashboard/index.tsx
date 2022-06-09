@@ -8,7 +8,8 @@ import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Rank from '../Ranks/Rank';
-import Settings from '../Ranks/Settings';
+import RankSettings from '../Ranks/Settings';
+import Settings from '../Settings';
 import GiveXp from '../Ranks/GiveXp';
 import RemoveXp from '../Ranks/RemoveXp';
 import { useDashboardSlice } from './slice/index';
@@ -48,17 +49,20 @@ export default function Dashboard() {
           <Grid container spacing={3}>
             <Grid item xs={12} md={12} lg={12}>
               <Switch>
-                <Redirect exact from={`${path}`} to={`${path}/rank`} />
-                <Route path={`${path}/rank`}>
+                <Redirect exact from={`${path}`} to={`${path}/rank/rank`} />
+                <Route path={`${path}/rank/rank`}>
                   <Rank />
                 </Route>
                 <Route path={`${path}/settings`}>
                   <Settings />
                 </Route>
-                <Route path={`${path}/give-xp`}>
+                <Route path={`${path}/rank/settings`}>
+                  <RankSettings />
+                </Route>
+                <Route path={`${path}/rank/give-xp`}>
                   <GiveXp />
                 </Route>
-                <Route path={`${path}/remove-xp`}>
+                <Route path={`${path}/rank/remove-xp`}>
                   <RemoveXp />
                 </Route>
               </Switch>

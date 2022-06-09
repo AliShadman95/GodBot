@@ -200,6 +200,33 @@ export interface DiscordSettingsRankInterface {
 	 *
 	 */
 	removeXpEnabledRoles: string[];
+	/**
+	 * Discord Settings Rank Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } botInfoChannelId - The channel id of the bot info channel
+	 *
+	 */
+	botInfoChannelId: string;
+	/**
+	 * Discord Settings Rank Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } botRestartMessage - The message to display when the bot is restarted
+	 *
+	 */
+	botRestartMessage: string;
+	/**
+	 * Discord Settings Rank Interface
+	 * =====================
+	 *
+	 *
+	 * @param { boolean } displayRestartMessage - If the bot should display a message when the bot is restarted
+	 *
+	 */
+	displayRestartMessage: string;
 }
 
 /**
@@ -408,4 +435,44 @@ export interface DiscordCardInferface {
 	 *
 	 */
 	color3: string;
+}
+
+/**
+ * Discord Voice Channel Interface
+ * =====================
+ *
+ *
+ *
+ * @param { string } id - discord id
+ * @param { number } joinTime - time when user joined voice channel
+ *
+ */
+export interface DiscordVoiceChannelInterface {
+	/**
+	 * Discord Voice Channel Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } id - user id
+	 *
+	 */
+	id: string;
+	/**
+	 * Discord Voice Channel Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } username -  username
+	 *
+	 */
+	username: string;
+	/**
+	 * Discord Voice Channel Interface
+	 * =====================
+	 *
+	 *
+	 * @param { number } joinTime - time when user joined voice channel
+	 *
+	 */
+	joinTime: number;
 }
