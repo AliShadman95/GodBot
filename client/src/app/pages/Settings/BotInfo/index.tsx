@@ -88,7 +88,7 @@ export default function BotInfo({
                 <Input
                   id="botRestartMessage"
                   name="botRestartMessage"
-                  label="Messaggio"
+                  label="Messaggio riavvio bot"
                   margin="normal"
                   control={control}
                   defaultValue={defaultValues.botRestartMessage}
