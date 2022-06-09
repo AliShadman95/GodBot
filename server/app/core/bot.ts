@@ -48,8 +48,9 @@ import { TextChannel } from "discord.js";
 })();
 
 process.on("SIGTERM", async function () {
-	const channel = bot.channels.cache.get("984205663989268580") as TextChannel;
-	channel.send("Il bot si sta riavviando. Tornerà presto disponbile!");
+	const settings = await db.settings.get({});
+	const channel = bot.channels.cache.get(settings?.rank?.botInfoChannelId) as TextChannel;
+	channel.send(settings?.rank?.botRestartMessage);
 });
 
 process.on("SIGINT", async function () {

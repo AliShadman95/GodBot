@@ -234,6 +234,33 @@ export interface DiscordSettingsRankInterface {
 	 *
 	 */
 	removeXpEnabledRoles: string[];
+	/**
+	 * Discord Settings Rank Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } botInfoChannelId - The channel id of the bot info channel
+	 *
+	 */
+	botInfoChannelId: string;
+	/**
+	 * Discord Settings Rank Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } botRestartMessage - The message to display when the bot is restarted
+	 *
+	 */
+	botRestartMessage: string;
+	/**
+	 * Discord Settings Rank Interface
+	 * =====================
+	 *
+	 *
+	 * @param { boolean } displayRestartMessage - If the bot should display a message when the bot is restarted
+	 *
+	 */
+	displayRestartMessage: string;
 }
 
 /**

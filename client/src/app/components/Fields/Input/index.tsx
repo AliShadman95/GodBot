@@ -19,6 +19,7 @@ const Input = ({
   error = false,
   autoFocus = false,
   autoComplete = 'off',
+  disabled = false,
   ...props
 }) => {
   return (
@@ -36,6 +37,7 @@ const Input = ({
             error={error}
             autoFocus={autoFocus}
             autoComplete={autoComplete}
+            disabled={disabled}
             {...field}
           />
         )}
