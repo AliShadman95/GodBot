@@ -58,7 +58,7 @@ const addPointsHandler = async (ctx): Promise<void> => {
 		const channel = bot.channels.cache.get(settings?.rank?.levelUpChannelId) as TextChannel;
 		channel.send(
 			settings?.rank?.levelUpMessage
-				.replace("{user}", user.username || "")
+				.replace("{user}", `<@${user.id}>` || "")
 				.replace("{livello}", levelUp.toString() || ""),
 		);
 	}

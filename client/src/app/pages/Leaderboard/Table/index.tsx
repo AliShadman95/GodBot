@@ -14,12 +14,11 @@ export default function Table({
 }) {
   return (
     <React.Fragment>
-      {' '}
       {!loading ? (
         <Paper sx={{ marginLeft: '2em', marginRight: '2em' }}>
           <div
             style={{
-              height: 400,
+              height: '70vh',
               width: '100%',
               marginTop: isAdmin ? '4em' : '7em',
             }}

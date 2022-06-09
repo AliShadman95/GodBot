@@ -36,7 +36,7 @@ export default function Leaderboard() {
   const settings = useSelector(selectLeaderboardSettings);
   const loading = useSelector(selectLeaderboardLoading);
 
-  // 0 = none, 1 = Some, 2 = All
+  // 0 = none, 1 = Reset Some, 2 = Resest All
   const [openDialog, setOpenDialog] = React.useState('0');
 
   const handleClickOpenDialog = value => {

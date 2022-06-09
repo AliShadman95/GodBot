@@ -84,7 +84,7 @@ const userLeft = async (
 				const channel = bot.channels.cache.get(levelUpChannelId) as TextChannel;
 				channel.send(
 					levelUpMessage
-						.replace("{user}", user.username || "")
+						.replace("{user}", `<@${user.id}>` || "")
 						.replace("{livello}", levelUp.toString() || ""),
 				);
 			}
