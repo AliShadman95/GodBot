@@ -51,6 +51,7 @@ process.on("SIGTERM", async function () {
 	const settings = await db.settings.get({});
 	const channel = bot.channels.cache.get(settings?.rank?.botInfoChannelId) as TextChannel;
 	channel.send(settings?.rank?.botRestartMessage);
+	await db.connection.disconnectDB();
 	process.exit(1);
 });
 
@@ -65,14 +66,17 @@ process.once("SIGUSR2", async function () {
 	await db.connection.disconnectDB();
 });
 
-process.on("uncaughtException", function (error) {
+process.on("uncaughtException", async function (error) {
 	console.log("An error uncaughtException has occured. error is: %s", error);
 	console.log("Process will restart now.");
+	await db.connection.disconnectDB();
+
 	process.exit(1);
 });
 
-process.on("unhandledRejection", function (error) {
+process.on("unhandledRejection", async function (error) {
 	console.log("An error unhandledRejection has occured. error is: %s", error);
 	console.log("Process will restart now.");
+	await db.connection.disconnectDB();
 	process.exit(1);
 });
