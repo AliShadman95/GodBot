@@ -44,7 +44,8 @@ const giveXp = async (ctx): Promise<void> => {
 		ctx,
 		settings?.rank?.giveXpMessage
 			.replace("{user}", selectedUser.username)
-			.replace("{punti}", (parseInt(user.points) + parseInt(selectedPoints)).toString()),
+			.replace("{puntiTotali}", (parseInt(user.points) + parseInt(selectedPoints)).toString())
+			.replace("{puntiAssegnati}", selectedPoints),
 
 		"",
 	);

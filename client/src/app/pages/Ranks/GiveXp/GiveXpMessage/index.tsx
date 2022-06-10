@@ -73,7 +73,7 @@ export default function GiveXpMessage({ control, defaultValues, roles }) {
                   rows={4}
                   multiline
                   helperText={
-                    "Usare {user} e {punti} per inserire il nome dell'utente e il punteggio"
+                    "Usare {user}, {puntiAssegnati}, {puntiTotali} per inserire il nome dell'utente, i punti assegnati e il punteggio totale"
                   }
                 />
               </FormControl>

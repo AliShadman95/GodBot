@@ -20,8 +20,12 @@ import isLevelUp from "@app/functions/common/isLevelUp";
 const minimumSecondsInVoiceChannel = 600;
 
 const userJoin = async (id: string, username: string): Promise<void> => {
-	await db.voiceChannel.add({ id, username, joinTime: Date.now() });
 	logger.info(`User joined ${id}-${username}`, "voiceDetection.ts:userJoin()");
+	if (id === "0") {
+		return;
+	}
+
+	await db.voiceChannel.add({ id, username, joinTime: Date.now() });
 };
 
 const userLeft = async (
@@ -49,6 +53,8 @@ const userLeft = async (
 
 			let user = await db.rank.get({ id: member.id });
 
+			let isNewUser = false;
+
 			if (user.id !== "0") {
 				await db.rank.update(
 					{ id: member.id },
@@ -72,9 +78,10 @@ const userLeft = async (
 					)),
 				});
 				user = await db.rank.get({ id: member.id });
+				isNewUser = true;
 			}
 
-			const levelUp = isLevelUp(xps, user.points, points);
+			const levelUp = isLevelUp(xps, user.points, points, isNewUser);
 
 			if (displayLevelUpMessage && levelUp !== -1) {
 				logger.info(
@@ -119,40 +126,49 @@ const voiceDetection = async (): Promise<void> => {
 		const userId = newMember?.member?.user?.id;
 		const username = newMember?.member?.user?.username || "";
 		const settings = await db.settings.get({});
-
 		const afkChannel = bot.channels.cache.get(settings?.rank?.afkChannelId);
 
-		if (newUserChannel?.id === afkChannel?.id) {
-			// Se l'utente è andato diretto negli AFK
-			if (oldUserChannel === null) {
-				logger.info(
-					`USER ${newMember?.member?.user.username} JOINED AFK,NOT GETTING POINTS`,
-					"voiceDetection.ts:voiceDetection()",
-				);
-				return;
-			}
-			// Se l'utente è passato da AFK a qualche altro canale
-			logger.info(
-				`USER ${newMember?.member?.user.username} JOINED AFK,HE COME FROM NORMAL CHANNEL, HE IS GETTING POINTS`,
-				"voiceDetection.ts:voiceDetection()",
-			);
-			await userLeft(newMember?.member?.user, settings.rank);
-		}
+		// IT WILL ASSIGN POINTS WHEN USER LEFT THE VOICE CHANNEL
 
-		if (discord.api.message.getBotID(bot) === userId || !userId) {
-			logger.info(
-				`BOT HAS JOINED VOICE CHANEL OR USERID IS NULL, RETURNING`,
-				"voiceDetection.ts:voiceDetection()",
-			);
+		const isJoinNormal = newUserChannel && !oldUserChannel && newUserChannel.id !== afkChannel?.id;
+		const isLeaveNormal = oldUserChannel && !newUserChannel && oldUserChannel.id !== afkChannel?.id;
+		const isJoinAfkDirect = newUserChannel && !oldUserChannel && afkChannel?.id === newUserChannel.id;
+		const isJoinAfkFromChannel = newUserChannel && oldUserChannel && afkChannel?.id === newUserChannel.id;
+		const isJoinChannelFromAfk = newUserChannel && oldUserChannel && afkChannel?.id === oldUserChannel.id;
+		const isLeftAfk = oldUserChannel && !newUserChannel && afkChannel?.id === oldUserChannel.id;
+
+		if (isJoinAfkDirect || isLeftAfk || discord.api.message.getBotID(bot) === userId) {
 			return;
 		}
 
-		if (oldUserChannel === null || (oldUserChannel?.id === afkChannel?.id && newUserChannel !== null)) {
-			await userJoin(userId, username);
+		if (isJoinNormal || isJoinChannelFromAfk) {
+			switch (newUserChannel?.members?.size) {
+				case 1:
+					break;
+				case 2:
+					newUserChannel?.members.forEach(async (m) => await userJoin(m.user.id, m.user.username));
+					break;
+				default:
+					await userJoin(userId || "0", username);
+					break;
+			}
+
+			return;
 		}
 
-		if (oldUserChannel !== null && newUserChannel === null) {
-			await userLeft(newMember.member.user, settings.rank);
+		if (isLeaveNormal || isJoinAfkFromChannel) {
+			switch (oldUserChannel?.members?.size) {
+				case 0:
+					break;
+				case 1:
+					await userLeft(newMember.member?.user, settings.rank);
+					await userLeft(oldUserChannel.members.first()?.user, settings.rank);
+					break;
+				default:
+					await userLeft(newMember.member?.user, settings.rank);
+					break;
+			}
+			return;
 		}
 	});
 };

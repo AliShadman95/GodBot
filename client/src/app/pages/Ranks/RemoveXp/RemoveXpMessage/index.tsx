@@ -73,7 +73,7 @@ export default function RemoveXpMessage({ control, defaultValues, roles }) {
                   rows={4}
                   multiline
                   helperText={
-                    "Usare {user} e {punti} per inserire il nome dell'utente e il punteggio"
+                    "Usare {user}, {puntiRimossi}, {puntiTotali} per inserire il nome dell'utente, i punti rimossi e il punteggio totale"
                   }
                 />
               </FormControl>

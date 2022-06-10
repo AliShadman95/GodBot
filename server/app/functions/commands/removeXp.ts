@@ -52,12 +52,13 @@ const removeXp = async (ctx): Promise<void> => {
 		settings?.rank?.removeXpMessage
 			.replace("{user}", selectedUser.username)
 			.replace(
-				"{punti}",
+				"{puntiTotali}",
 				(parseInt(user.points) - parseInt(selectedPoints) <= 0
 					? 0
 					: parseInt(user.points) - parseInt(selectedPoints)
 				).toString(),
-			),
+			)
+			.replace("{puntiRimossi}", selectedPoints),
 
 		"",
 	);
