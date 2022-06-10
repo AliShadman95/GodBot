@@ -51,6 +51,7 @@ process.on("SIGTERM", async function () {
 	const settings = await db.settings.get({});
 	const channel = bot.channels.cache.get(settings?.rank?.botInfoChannelId) as TextChannel;
 	channel.send(settings?.rank?.botRestartMessage);
+	process.exit(1);
 });
 
 process.on("SIGINT", async function () {
