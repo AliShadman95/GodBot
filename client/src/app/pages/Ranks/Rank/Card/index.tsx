@@ -14,12 +14,12 @@ import {
 } from '@mui/material';
 import Title from 'app/components/Title';
 import SwitchField from 'app/components/Fields/Switch';
+import { generateCard } from './canvasGenerator';
+import { useSelector, useDispatch } from 'react-redux';
 import {
-  generateAvatar,
-  generateBackground,
-  generateProgressBar,
-  generateText,
-} from './canvasGenerator';
+  selectRankInfo,
+  selectAllRanks,
+} from '../../../Dashboard/slice/selectors';
 
 const CustomBox = ({ color, onClick, isOpen, setColor, disabled = false }) => {
   return (
@@ -45,7 +45,25 @@ const CustomBox = ({ color, onClick, isOpen, setColor, disabled = false }) => {
       >
         <ColorizeOutlinedIcon fontSize="small" sx={{ color: 'black' }} />
       </Box>
-      {isOpen && <SketchPicker color={color} onChange={e => setColor(e.hex)} />}
+      {isOpen && (
+        <React.Fragment>
+          <div
+            style={{
+              position: 'fixed',
+              top: '0px',
+              right: '0px',
+              bottom: '0px',
+              left: '0px',
+            }}
+            onClick={onClick}
+          />
+          <SketchPicker
+            color={color}
+            onChange={e => setColor(e.hex)}
+            disableAlpha
+          />
+        </React.Fragment>
+      )}
     </React.Fragment>
   );
 };
@@ -67,20 +85,30 @@ const Card = ({
   setGradientColor2,
   thereAreChanges,
   setThereAreChanges,
+  settings,
 }) => {
   let canvasRef = useRef<HTMLCanvasElement>(null);
-
   const isNotMobile = useMediaQuery('(min-width:650px)');
-
   const [openPicker, setOpenPicker] = useState('');
-
   const isGradientField = watch('isGradient');
 
+  const rankInfo = useSelector(selectRankInfo);
+  const allRanks = useSelector(selectAllRanks);
+
   const draw = (ctx, canvas) => {
-    generateBackground(ctx, gradientColor1, gradientColor2, isGradientField);
-    generateText(ctx, color1, color2, color3);
-    generateProgressBar(ctx, color1, color2);
-    generateAvatar(ctx, canvas);
+    generateCard(
+      ctx,
+      canvas,
+      color1,
+      color2,
+      color3,
+      gradientColor1,
+      gradientColor2,
+      isGradientField,
+      rankInfo,
+      settings,
+      allRanks,
+    );
   };
 
   useEffect(() => {

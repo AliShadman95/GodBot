@@ -35,3 +35,11 @@ export const selectCardInfo = createSelector(
   [selectSlice],
   state => state.cardInfo,
 );
+export const selectRankInfo = createSelector(
+  [selectSlice],
+  state => state.rankInfo,
+);
+export const selectAllRanks = createSelector(
+  [selectSlice],
+  state => state.allRanks,
+);

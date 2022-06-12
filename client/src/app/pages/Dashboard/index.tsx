@@ -15,6 +15,7 @@ import RemoveXp from '../Ranks/RemoveXp';
 import { useDashboardSlice } from './slice/index';
 import PrimaryNavBar from '../PrimaryNavBar';
 import Copyright from 'app/components/Copyright';
+import { getIdDiscord, getUsername } from 'utils/api';
 
 export default function Dashboard() {
   const dispatch = useDispatch();
@@ -23,9 +24,16 @@ export default function Dashboard() {
 
   React.useEffect(() => {
     dispatch(actions.getSettingsAction());
+    dispatch(actions.getAllRanksAction());
     dispatch(actions.getVoiceChannelsAction());
     dispatch(actions.getTextChannelsAction());
     dispatch(actions.getRolesAction());
+    dispatch(
+      actions.getRankUserAction({
+        id: getIdDiscord(),
+        username: getUsername(),
+      }),
+    );
 
     return () => {
       dispatch(actions.clearDashboardState());

@@ -1,4 +1,4 @@
-export const generateBackground = (
+const generateBackground = (
   ctx,
   gradientColor1,
   gradientColor2,
@@ -15,15 +15,24 @@ export const generateBackground = (
   ctx.fillRect(0, 0, 1342, 853);
 };
 
-export const generateText = (ctx, color1, color2, color3): void => {
+const generateText = (
+  ctx,
+  color1,
+  color2,
+  color3,
+  rankInfo,
+  currentLevelIndex,
+  rank,
+  settings,
+): void => {
   ctx.restore();
   // Add our title text
   ctx.font = '70px Inter';
   ctx.fillStyle = color1;
 
-  const numberLevelWidth = ctx.measureText(12).width;
+  const numberLevelWidth = ctx.measureText(currentLevelIndex).width;
 
-  ctx.fillText(12, 1270 - numberLevelWidth, 110);
+  ctx.fillText(currentLevelIndex, 1270 - numberLevelWidth, 110);
 
   // Add our title text
   ctx.font = '40px Inter';
@@ -37,10 +46,10 @@ export const generateText = (ctx, color1, color2, color3): void => {
   ctx.font = '70px Inter';
   ctx.fillStyle = color2;
 
-  const numberRankWidth = ctx.measureText(`#44`).width;
+  const numberRankWidth = ctx.measureText(`#${rank}`).width;
 
   ctx.fillText(
-    `#44`,
+    `#${rank}`,
     1270 - numberLevelWidth - levelLabelWidth - numberRankWidth - 40,
     110,
   );
@@ -67,9 +76,9 @@ export const generateText = (ctx, color1, color2, color3): void => {
   // Add our title text
   ctx.font = '58px Inter';
   ctx.fillStyle = color2;
-  ctx.fillText('Pippo', 385, 250);
+  ctx.fillText(rankInfo?.username, 385, 250);
 
-  const usernameWidth = ctx.measureText('Pippo').width;
+  const usernameWidth = ctx.measureText(rankInfo?.username).width;
 
   ctx.font = '38px Inter';
   ctx.fillStyle = color3;
@@ -80,19 +89,44 @@ export const generateText = (ctx, color1, color2, color3): void => {
   ctx.font = '38px Inter';
   ctx.fillStyle = color3;
 
-  const xpNeededWidth = ctx.measureText(`/ 1000 XP`).width;
+  const xpNeededWidth = ctx.measureText(
+    `/ ${settings?.rank?.xps[currentLevelIndex]} XP`,
+  ).width;
 
-  ctx.fillText(`/ 1000 XP`, 1260 - xpNeededWidth, 250);
+  ctx.fillText(
+    `/ ${settings?.rank?.xps[currentLevelIndex]} XP`,
+    1260 - xpNeededWidth,
+    250,
+  );
 
   ctx.font = '38px Inter';
   ctx.fillStyle = color2;
 
-  const currentXpWidth = ctx.measureText(500).width;
+  const currentXpWidth = ctx.measureText(rankInfo.points).width;
 
-  ctx.fillText(500, 1260 - xpNeededWidth - currentXpWidth - 20, 250);
+  ctx.fillText(
+    rankInfo.points,
+    1260 - xpNeededWidth - currentXpWidth - 20,
+    250,
+  );
 };
 
-export const generateProgressBar = (ctx, color1, color2): void => {
+const generateProgressBar = (
+  ctx,
+  color1,
+  color2,
+  settings,
+  rankInfo,
+  currentLevelIndex,
+): void => {
+  const percentage = Math.floor(
+    (parseInt(rankInfo?.points) -
+      (settings?.rank?.xps[currentLevelIndex - 1] || 0)) /
+      ((settings?.rank?.xps[currentLevelIndex] -
+        (settings?.rank?.xps[currentLevelIndex - 1] || 0)) /
+        100),
+  );
+
   // Background level bar
   for (let i = 0; i < 100; i++) {
     ctx.beginPath();
@@ -104,7 +138,7 @@ export const generateProgressBar = (ctx, color1, color2): void => {
     ctx.fill();
   }
   // Progress bar
-  for (let i = 0; i < 50; i++) {
+  for (let i = 0; i < percentage; i++) {
     ctx.beginPath();
     ctx.lineWidth = 42;
     ctx.strokeStyle = color1;
@@ -115,7 +149,7 @@ export const generateProgressBar = (ctx, color1, color2): void => {
   }
 };
 
-export const generateAvatar = (ctx, c): void => {
+const generateAvatar = (ctx, c): void => {
   const circle = {
     x: c.width / 7,
     y: c.height / 2,
@@ -141,4 +175,53 @@ export const generateAvatar = (ctx, c): void => {
   };
 
   // Compute aspectration
+};
+
+export const generateCard = (
+  ctx,
+  canvas,
+  color1,
+  color2,
+  color3,
+  gradientColor1,
+  gradientColor2,
+  isGradientField,
+  rankInfo,
+  settings,
+  allRanks,
+): void => {
+  const currentLevelIndex =
+    settings?.rank?.xps?.findIndex(
+      (xp, index) =>
+        parseInt(rankInfo?.points) >= xp &&
+        parseInt(rankInfo.points) < settings?.rank?.xps[index + 1],
+    ) + 1;
+
+  const rank =
+    [...allRanks]
+      .sort((a, b) => parseInt(b.points) - parseInt(a.points))
+      .findIndex(u => u.id === rankInfo?.id) + 1;
+
+  console.log(rank);
+
+  generateBackground(ctx, gradientColor1, gradientColor2, isGradientField);
+  generateText(
+    ctx,
+    color1,
+    color2,
+    color3,
+    rankInfo,
+    currentLevelIndex,
+    rank,
+    settings,
+  );
+  generateProgressBar(
+    ctx,
+    color1,
+    color2,
+    settings,
+    rankInfo,
+    currentLevelIndex,
+  );
+  generateAvatar(ctx, canvas);
 };

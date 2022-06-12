@@ -38,7 +38,13 @@ const addPointsHandler = async (ctx): Promise<void> => {
 	logger.info(`Getting points for user ${userId}, points: ${pointAwarded} `, "addPointHandler.ts:disablePoints()");
 
 	if (user.id === "0") {
-		await db.rank.add({ ...ctx.author, points: pointAwarded, messageAwarded: 1, secondsInVoiceChat: 0 });
+		await db.rank.add({
+			...ctx.author,
+			avatar: ctx.author.displayAvatarURL({ format: "jpg" }),
+			points: pointAwarded,
+			messageAwarded: 1,
+			secondsInVoiceChat: 0,
+		});
 		return;
 	}
 

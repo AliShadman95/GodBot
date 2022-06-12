@@ -7,4 +7,6 @@ export interface DashboardState {
   voiceChannels: any[];
   textChannels: any[];
   roles: any[];
+  rankInfo: any;
+  allRanks: any[];
 }
