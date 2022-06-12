@@ -23,6 +23,7 @@ export default function Ranks() {
   const loadingUpdate = useSelector(selectLoadingUpdate);
   const loading = useSelector(selectLoading);
   const cardInfo = useSelector(selectCardInfo);
+  const rankInfo = useSelector(selectRankInfo);
 
   const idDiscord = getIdDiscord();
 

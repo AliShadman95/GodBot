@@ -15,7 +15,7 @@ import {
 import Title from 'app/components/Title';
 import SwitchField from 'app/components/Fields/Switch';
 import { generateCard } from './canvasGenerator';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   selectRankInfo,
   selectAllRanks,

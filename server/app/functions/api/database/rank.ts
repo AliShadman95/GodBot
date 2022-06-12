@@ -19,6 +19,7 @@ const schema = new Schema<DiscordRankInterface>({
 	points: { type: String, default: "0" },
 	messageAwarded: { type: Number, default: 0 },
 	secondsInVoiceChat: { type: Number, default: 0 },
+	discriminator: { type: String, default: "" },
 });
 
 const query = model<DiscordRankInterface>("Rank", schema, "ranks");

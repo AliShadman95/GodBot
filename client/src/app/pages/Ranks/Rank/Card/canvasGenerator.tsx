@@ -83,7 +83,11 @@ const generateText = (
   ctx.font = '38px Inter';
   ctx.fillStyle = color3;
 
-  ctx.fillText(`#${3232}`, 385 + usernameWidth + 12, 250);
+  ctx.fillText(
+    `#${rankInfo?.discriminator || '000'}`,
+    385 + usernameWidth + 12,
+    250,
+  );
 
   // Xp To New Level
   ctx.font = '38px Inter';
@@ -149,7 +153,7 @@ const generateProgressBar = (
   }
 };
 
-const generateAvatar = (ctx, c): void => {
+const generateAvatar = (ctx, c, rankInfo, avatarImage): void => {
   const circle = {
     x: c.width / 7,
     y: c.height / 2,
@@ -162,16 +166,19 @@ const generateAvatar = (ctx, c): void => {
   ctx.closePath();
   ctx.clip();
 
-  const a = new Image();
-  a.src = 'https://i.pravatar.cc/300?img=8';
-
-  a.onload = () => {
-    const aspect = a.height / a.width;
+  avatarImage.onload = () => {
+    const aspect = avatarImage.height / avatarImage.width;
     // Math.max is ued to have cover effect use Math.min for contain
     const hsx = circle.radius * Math.max(1.0 / aspect, 1.0);
     const hsy = circle.radius * Math.max(aspect, 1.0);
     // x - hsl and y - hsy centers the image
-    ctx.drawImage(a, circle.x - hsx, circle.y - hsy, hsx * 2, hsy * 2);
+    ctx.drawImage(
+      avatarImage,
+      circle.x - hsx,
+      circle.y - hsy,
+      hsx * 2,
+      hsy * 2,
+    );
   };
 
   // Compute aspectration
@@ -197,12 +204,13 @@ export const generateCard = (
         parseInt(rankInfo.points) < settings?.rank?.xps[index + 1],
     ) + 1;
 
+  const avatarImage = new Image();
+  avatarImage.src = rankInfo?.avatar || 'https://i.pravatar.cc/300?img=8';
+
   const rank =
     [...allRanks]
       .sort((a, b) => parseInt(b.points) - parseInt(a.points))
       .findIndex(u => u.id === rankInfo?.id) + 1;
-
-  console.log(rank);
 
   generateBackground(ctx, gradientColor1, gradientColor2, isGradientField);
   generateText(
@@ -223,5 +231,5 @@ export const generateCard = (
     rankInfo,
     currentLevelIndex,
   );
-  generateAvatar(ctx, canvas);
+  generateAvatar(ctx, canvas, rankInfo, avatarImage);
 };
