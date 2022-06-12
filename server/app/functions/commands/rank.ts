@@ -20,10 +20,8 @@ const rank = async (ctx): Promise<void> => {
 	let user = await db.rank.get({ id: selectedUser.id });
 
 	if (user.id === "0") {
-		console.log(selectedUser);
 		await db.rank.add({
 			...selectedUser,
-			avatar: selectedUser.displayAvatarURL({ format: "jpg" }),
 			points: "0",
 			messageAwarded: 0,
 			secondsInVoiceChat: 0,
@@ -44,12 +42,10 @@ const rank = async (ctx): Promise<void> => {
 		idDiscord: "0",
 	};
 
-	console.log(`THIS${selectedUser.displayAvatarURL({ format: "jpg" })}`);
-
 	const userInfo = {
 		username: selectedUser.username,
 		discriminator: selectedUser.discriminator,
-		avatar: user.avatar || "0",
+		avatar: selectedUser.displayAvatarURL({ format: "jpg" }) || "0",
 		points: user?.points || "0",
 		rank:
 			allUsers

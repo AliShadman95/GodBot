@@ -1,3 +1,5 @@
+import { getIdDiscord } from 'utils/api';
+
 const generateBackground = (
   ctx,
   gradientColor1,
@@ -205,7 +207,10 @@ export const generateCard = (
     ) + 1;
 
   const avatarImage = new Image();
-  avatarImage.src = rankInfo?.avatar || 'https://i.pravatar.cc/300?img=8';
+  avatarImage.src =
+    `https://cdn.discordapp.com/avatars/${getIdDiscord()}/${
+      rankInfo?.avatar
+    }.jpg` || 'https://i.pravatar.cc/300?img=8';
 
   const rank =
     [...allRanks]

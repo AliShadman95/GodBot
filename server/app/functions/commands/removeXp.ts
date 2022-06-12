@@ -34,7 +34,6 @@ const removeXp = async (ctx): Promise<void> => {
 	if (user.id === "0") {
 		await db.rank.add({
 			...selectedUser,
-			avatar: selectedUser.displayAvatarURL({ format: "jpg" }),
 			points: "0",
 			messageAwarded: 0,
 			secondsInVoiceChat: 0,

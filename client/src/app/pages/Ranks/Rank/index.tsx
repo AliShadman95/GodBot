@@ -7,7 +7,6 @@ import {
   selectLoadingUpdate,
   selectLoading,
   selectCardInfo,
-  selectRankInfo,
 } from '../../Dashboard/slice/selectors';
 import { useDashboardSlice } from '../../Dashboard/slice/index';
 import { useForm } from 'react-hook-form';
@@ -23,7 +22,6 @@ export default function Ranks() {
   const loadingUpdate = useSelector(selectLoadingUpdate);
   const loading = useSelector(selectLoading);
   const cardInfo = useSelector(selectCardInfo);
-  const rankInfo = useSelector(selectRankInfo);
 
   const idDiscord = getIdDiscord();
 

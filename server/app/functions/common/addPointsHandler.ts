@@ -40,7 +40,6 @@ const addPointsHandler = async (ctx): Promise<void> => {
 	if (user.id === "0") {
 		await db.rank.add({
 			...ctx.author,
-			avatar: ctx.author.displayAvatarURL({ format: "jpg" }),
 			points: pointAwarded,
 			messageAwarded: 1,
 			secondsInVoiceChat: 0,
