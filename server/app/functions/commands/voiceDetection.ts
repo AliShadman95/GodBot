@@ -17,7 +17,7 @@ import logger from "@app/functions/utils/logger";
 import isLevelUp from "@app/functions/common/isLevelUp";
 
 // Use this const for testing
-const minimumSecondsInVoiceChannel = 600;
+const minimumSecondsInVoiceChannel = 3;
 
 const userJoin = async (id: string, username: string): Promise<void> => {
 	logger.info(`User joined ${id}-${username}`, "voiceDetection.ts:userJoin()");
@@ -136,12 +136,14 @@ const voiceDetection = async (): Promise<void> => {
 		const isJoinAfkFromChannel = newUserChannel && oldUserChannel && afkChannel?.id === newUserChannel.id;
 		const isJoinChannelFromAfk = newUserChannel && oldUserChannel && afkChannel?.id === oldUserChannel.id;
 		const isLeftAfk = oldUserChannel && !newUserChannel && afkChannel?.id === oldUserChannel.id;
+		const isChangeChannel =
+			oldUserChannel &&
+			newUserChannel &&
+			oldUserChannel.id !== newUserChannel.id &&
+			afkChannel?.id !== newUserChannel.id &&
+			afkChannel?.id !== oldUserChannel.id;
 
-		if (isJoinAfkDirect || isLeftAfk || discord.api.message.getBotID(bot) === userId) {
-			return;
-		}
-
-		if (isJoinNormal || isJoinChannelFromAfk) {
+		const joinVoiceChannel = async (): Promise<void> => {
 			switch (newUserChannel?.members?.size) {
 				case 1:
 					break;
@@ -152,11 +154,9 @@ const voiceDetection = async (): Promise<void> => {
 					await userJoin(userId || "0", username);
 					break;
 			}
+		};
 
-			return;
-		}
-
-		if (isLeaveNormal || isJoinAfkFromChannel) {
+		const leaveVoiceChannel = async (): Promise<void> => {
 			switch (oldUserChannel?.members?.size) {
 				case 0:
 					break;
@@ -168,6 +168,25 @@ const voiceDetection = async (): Promise<void> => {
 					await userLeft(newMember.member?.user, settings.rank);
 					break;
 			}
+		};
+
+		if (isJoinAfkDirect || isLeftAfk || discord.api.message.getBotID(bot) === userId) {
+			return;
+		}
+
+		if (isJoinNormal || isJoinChannelFromAfk) {
+			await joinVoiceChannel();
+			return;
+		}
+
+		if (isLeaveNormal || isJoinAfkFromChannel) {
+			await leaveVoiceChannel();
+			return;
+		}
+
+		if (isChangeChannel) {
+			await leaveVoiceChannel();
+			await joinVoiceChannel();
 			return;
 		}
 	});
