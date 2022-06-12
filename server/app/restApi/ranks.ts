@@ -35,13 +35,19 @@ router.get("/rank", async function (req: express.Request, res: express.Response)
 });
 
 router.put("/resetRanks", async function (req: express.Request, res: express.Response): Promise<void> {
-	await db.rank.updateMany({ id: { $in: req.body } }, { $set: { points: "0" } });
+	await db.rank.updateMany(
+		{ id: { $in: req.body } },
+		{ $set: { points: "0", secondsInVoiceChat: 0, messageAwarded: 0 } },
+	);
 	res.json("Update Successful");
 });
 
 router.put("/resetAllRanks", async function (req: express.Request, res: express.Response): Promise<void> {
 	const users = await db.rank.getAll();
-	await db.rank.updateMany({ id: { $in: users.map((u) => u.id) } }, { $set: { points: "0" } });
+	await db.rank.updateMany(
+		{ id: { $in: users.map((u) => u.id) } },
+		{ $set: { points: "0", secondsInVoiceChat: 0, messageAwarded: 0 } },
+	);
 	res.json("Update Successful");
 });
 
