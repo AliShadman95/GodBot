@@ -3,4 +3,5 @@ export interface LeaderboardState {
   loading: boolean;
   error: any;
   users: any[];
+  rankInfo: any;
 }

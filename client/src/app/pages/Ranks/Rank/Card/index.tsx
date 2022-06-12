@@ -2,15 +2,17 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { SketchPicker } from 'react-color';
 import ColorizeOutlinedIcon from '@mui/icons-material/ColorizeOutlined';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {
-  Paper,
   Typography,
-  useMediaQuery,
   Grid,
   Divider,
   Box,
   Button,
   CircularProgress,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
 } from '@mui/material';
 import Title from 'app/components/Title';
 import SwitchField from 'app/components/Fields/Switch';
@@ -88,7 +90,6 @@ const Card = ({
   settings,
 }) => {
   let canvasRef = useRef<HTMLCanvasElement>(null);
-  const isNotMobile = useMediaQuery('(min-width:650px)');
   const [openPicker, setOpenPicker] = useState('');
   const isGradientField = watch('isGradient');
 
@@ -123,164 +124,170 @@ const Card = ({
   }, [draw]);
 
   return (
-    <Paper
-      sx={{
-        p: 2,
-        display: 'flex',
-        flexDirection: 'column',
-        height: isNotMobile ? 500 : 750,
-      }}
-    >
-      <div style={{ marginBottom: '2em' }}>
-        <Grid container>
-          <Grid item xs={7} md={10}>
-            <Title>Server rank card</Title>
-            <Typography component="p" color="main" gutterBottom>
-              Puoi customizzare la card del rank. Ogni membro del server avrà
-              questa.
-            </Typography>
+    <Accordion defaultExpanded>
+      <AccordionSummary
+        expandIcon={<ExpandMoreIcon />}
+        aria-controls="panel1a-content"
+        id="panel1a-header"
+      >
+        <Title>
+          {' '}
+          <Title>Server rank card</Title>
+        </Title>
+      </AccordionSummary>
+      <AccordionDetails>
+        <div style={{ marginBottom: '2em' }}>
+          <Grid container>
+            <Grid item xs={7} md={10}>
+              <Typography component="p" color="main" gutterBottom>
+                Puoi customizzare la card del rank. Ogni membro del server avrà
+                questa.
+              </Typography>
+            </Grid>
+            <Grid item xs={5} md={2}>
+              <SwitchField
+                name="isGradient"
+                labelid="isGradient"
+                id="isGradient"
+                margin="normal"
+                variant="outlined"
+                label={
+                  isGradientField ? 'Sfondo sfumato' : 'Sfondo non sfumato'
+                }
+                defaultValue={cardInfo.isGradient}
+                control={control}
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={5} md={2}>
-            <SwitchField
-              name="isGradient"
-              labelid="isGradient"
-              id="isGradient"
-              margin="normal"
-              variant="outlined"
-              label={isGradientField ? 'Sfondo sfumato' : 'Sfondo non sfumato'}
-              defaultValue={cardInfo.isGradient}
-              control={control}
+        </div>
+        <Divider sx={{ my: 1 }} />
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={5} lg={5}>
+            <canvas
+              ref={canvasRef}
+              width={1342}
+              height={400}
+              style={{
+                width: '100%',
+                maxWidth: '100%',
+                height: '78%',
+                marginTop: '2.5em',
+              }}
             />
           </Grid>
-        </Grid>
-      </div>
-      <Divider sx={{ my: 1 }} />
-      <Grid container spacing={3}>
-        <Grid item xs={12} md={5} lg={5}>
-          <canvas
-            ref={canvasRef}
-            width={1342}
-            height={400}
-            style={{
-              width: '100%',
-              maxWidth: '100%',
-              height: '78%',
-              marginTop: '2.5em',
-            }}
-          />
-        </Grid>
-        <Box width="100%" />
-        <Grid item xs={12} md={4} lg={5} sx={{ my: 2 }}>
-          <Typography component="p" color="main" gutterBottom>
-            Colori Principali
-          </Typography>
+          <Box width="100%" />
+          <Grid item xs={12} md={4} lg={5} sx={{ my: 2 }}>
+            <Typography component="p" color="main" gutterBottom>
+              Colori Principali
+            </Typography>
 
-          <Grid container>
-            <Grid item xs={4} md={4} lg={3}>
-              <CustomBox
-                color={color1}
-                isOpen={openPicker === 'color1'}
-                onClick={() =>
-                  setOpenPicker(openPicker === 'color1' ? '' : 'color1')
-                }
-                setColor={setColor1}
-              />
-            </Grid>
-            <Grid item xs={4} md={4} lg={3}>
-              <CustomBox
-                color={color2}
-                isOpen={openPicker === 'color2'}
-                onClick={() =>
-                  setOpenPicker(openPicker === 'color2' ? '' : 'color2')
-                }
-                setColor={setColor2}
-              />
-            </Grid>
-            <Grid item xs={4} md={4} lg={3}>
-              <CustomBox
-                color={color3}
-                isOpen={openPicker === 'color3'}
-                onClick={() =>
-                  setOpenPicker(openPicker === 'color3' ? '' : 'color3')
-                }
-                setColor={setColor3}
-              />
+            <Grid container>
+              <Grid item xs={4} md={4} lg={3}>
+                <CustomBox
+                  color={color1}
+                  isOpen={openPicker === 'color1'}
+                  onClick={() =>
+                    setOpenPicker(openPicker === 'color1' ? '' : 'color1')
+                  }
+                  setColor={setColor1}
+                />
+              </Grid>
+              <Grid item xs={4} md={4} lg={3}>
+                <CustomBox
+                  color={color2}
+                  isOpen={openPicker === 'color2'}
+                  onClick={() =>
+                    setOpenPicker(openPicker === 'color2' ? '' : 'color2')
+                  }
+                  setColor={setColor2}
+                />
+              </Grid>
+              <Grid item xs={4} md={4} lg={3}>
+                <CustomBox
+                  color={color3}
+                  isOpen={openPicker === 'color3'}
+                  onClick={() =>
+                    setOpenPicker(openPicker === 'color3' ? '' : 'color3')
+                  }
+                  setColor={setColor3}
+                />
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
-        <Grid item xs={12} md={4} lg={5} sx={{ my: 2 }}>
-          <Typography component="p" color="main" gutterBottom>
-            Colori Sfondo
-          </Typography>
+          <Grid item xs={12} md={4} lg={5} sx={{ my: 2 }}>
+            <Typography component="p" color="main" gutterBottom>
+              Colori Sfondo
+            </Typography>
 
-          <Grid container>
-            <Grid item xs={4} md={4} lg={3}>
-              <CustomBox
-                color={gradientColor1}
-                isOpen={openPicker === 'gradientColor1'}
-                onClick={() =>
-                  setOpenPicker(
-                    openPicker === 'gradientColor1' ? '' : 'gradientColor1',
-                  )
-                }
-                setColor={setGradientColor1}
-              />
-            </Grid>
-            <Grid item xs={4} md={4} lg={3}>
-              <CustomBox
-                color={gradientColor2}
-                isOpen={openPicker === 'gradientColor2'}
-                onClick={() =>
-                  isGradientField &&
-                  setOpenPicker(
-                    openPicker === 'gradientColor2' ? '' : 'gradientColor2',
-                  )
-                }
-                setColor={setGradientColor2}
-                disabled={!isGradientField}
-              />
+            <Grid container>
+              <Grid item xs={4} md={4} lg={3}>
+                <CustomBox
+                  color={gradientColor1}
+                  isOpen={openPicker === 'gradientColor1'}
+                  onClick={() =>
+                    setOpenPicker(
+                      openPicker === 'gradientColor1' ? '' : 'gradientColor1',
+                    )
+                  }
+                  setColor={setGradientColor1}
+                />
+              </Grid>
+              <Grid item xs={4} md={4} lg={3}>
+                <CustomBox
+                  color={gradientColor2}
+                  isOpen={openPicker === 'gradientColor2'}
+                  onClick={() =>
+                    isGradientField &&
+                    setOpenPicker(
+                      openPicker === 'gradientColor2' ? '' : 'gradientColor2',
+                    )
+                  }
+                  setColor={setGradientColor2}
+                  disabled={!isGradientField}
+                />
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
 
-        <Grid item xs={12} md={4} lg={2} sx={{ my: 2 }} display="flex">
-          <Box display="flex" alignItems="flex-end" maxHeight={'7em'}>
-            <Button
-              color="secondary"
-              size="small"
-              variant="contained"
-              sx={{ margin: '0.5em' }}
-              disabled={!thereAreChanges}
-              onClick={() => {
-                reset(cardInfo);
-                setColor1(cardInfo.color1 || 'white');
-                setColor2(cardInfo.color2 || 'white');
-                setColor3(cardInfo.color3 || 'white');
-                setGradientColor1(cardInfo.gradientColor1 || 'white');
-                setGradientColor2(cardInfo.gradientColor2 || 'white');
-                setThereAreChanges(false);
-              }}
-            >
-              Cancella
-            </Button>
-            <Button
-              color="primary"
-              size="small"
-              variant="contained"
-              sx={{ margin: '0.5em' }}
-              type="submit"
-              disabled={!thereAreChanges}
-            >
-              {loadingUpdate ? (
-                <CircularProgress color="inherit" size={20} />
-              ) : (
-                'Salva'
-              )}
-            </Button>
-          </Box>
+          <Grid item xs={12} md={4} lg={2} sx={{ my: 2 }} display="flex">
+            <Box display="flex" alignItems="flex-end" maxHeight={'7em'}>
+              <Button
+                color="secondary"
+                size="small"
+                variant="contained"
+                sx={{ margin: '0.5em' }}
+                disabled={!thereAreChanges}
+                onClick={() => {
+                  reset(cardInfo);
+                  setColor1(cardInfo.color1 || 'white');
+                  setColor2(cardInfo.color2 || 'white');
+                  setColor3(cardInfo.color3 || 'white');
+                  setGradientColor1(cardInfo.gradientColor1 || 'white');
+                  setGradientColor2(cardInfo.gradientColor2 || 'white');
+                  setThereAreChanges(false);
+                }}
+              >
+                Cancella
+              </Button>
+              <Button
+                color="primary"
+                size="small"
+                variant="contained"
+                sx={{ margin: '0.5em' }}
+                type="submit"
+                disabled={!thereAreChanges}
+              >
+                {loadingUpdate ? (
+                  <CircularProgress color="inherit" size={20} />
+                ) : (
+                  'Salva'
+                )}
+              </Button>
+            </Box>
+          </Grid>
         </Grid>
-      </Grid>
-    </Paper>
+      </AccordionDetails>
+    </Accordion>
   );
 };
 

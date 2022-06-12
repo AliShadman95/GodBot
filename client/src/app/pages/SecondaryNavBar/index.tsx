@@ -10,20 +10,24 @@ import {
   MenuItem,
   Button,
   Tooltip,
+  Avatar,
 } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useAuthenticationProviderSlice } from '../AuthenticationProvider/slice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Logo from 'app/components/Logo';
 import { useHistory } from 'react-router-dom';
-import { getUsername } from 'utils/api';
+import { getIdDiscord, getUsername } from 'utils/api';
+import { selectRankInfo } from '../Leaderboard/slice/selectors';
 
 const pages = ['Dashboard'];
 
 export default function SecondaryNavBar() {
   const dispatch = useDispatch();
   let history = useHistory();
+
+  const rankInfo = useSelector(selectRankInfo);
 
   const { actions } = useAuthenticationProviderSlice();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -135,6 +139,16 @@ export default function SecondaryNavBar() {
               </Button>
             ))}
           </Box>
+
+          <Avatar
+            alt="Remy Sharp"
+            src={
+              `https://cdn.discordapp.com/avatars/${getIdDiscord()}/${
+                rankInfo?.avatar
+              }.jpg` || 'https://i.pravatar.cc/300?img=8'
+            }
+            sx={{ flexGrow: 0, marginRight: '0.5em' }}
+          />
 
           <Typography
             component="h1"

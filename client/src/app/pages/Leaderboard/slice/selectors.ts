@@ -19,3 +19,8 @@ export const selectLeaderboardLoading = createSelector(
   [selectSlice],
   state => state.loading,
 );
+
+export const selectRankInfo = createSelector(
+  [selectSlice],
+  state => state.rankInfo,
+);

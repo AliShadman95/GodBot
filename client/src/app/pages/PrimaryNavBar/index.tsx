@@ -2,7 +2,7 @@ import React from 'react';
 import LogoutIcon from '@mui/icons-material/Logout';
 import MuiDrawer from '@mui/material/Drawer';
 import { styled } from '@mui/material/styles';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import MenuIcon from '@mui/icons-material/Menu';
 import IconButton from '@mui/material/IconButton';
@@ -14,11 +14,13 @@ import {
   Grid,
   Typography,
   Tooltip,
+  Avatar,
 } from '@mui/material';
 import { MainListItems } from '../ListItems';
 import { useAuthenticationProviderSlice } from '../AuthenticationProvider/slice';
 import Logo from 'app/components/Logo';
-import { getUsername } from 'utils/api';
+import { getIdDiscord, getUsername } from 'utils/api';
+import { selectRankInfo } from '../Dashboard/slice/selectors';
 
 const drawerWidth: number = 240;
 
@@ -74,6 +76,8 @@ export default function PrimaryNavBar() {
   const dispatch = useDispatch();
   const { actions } = useAuthenticationProviderSlice();
 
+  const rankInfo = useSelector(selectRankInfo);
+
   const [open, setOpen] = React.useState(true);
 
   const toggleDrawer = () => {
@@ -109,6 +113,16 @@ export default function PrimaryNavBar() {
           >
             Dashboard
           </Typography>
+          <Avatar
+            alt="Remy Sharp"
+            src={
+              `https://cdn.discordapp.com/avatars/${getIdDiscord()}/${
+                rankInfo?.avatar
+              }.jpg` || 'https://i.pravatar.cc/300?img=8'
+            }
+            sx={{ flexGrow: 0, marginRight: '0.5em' }}
+          />
+
           <Typography
             component="h1"
             variant="h6"

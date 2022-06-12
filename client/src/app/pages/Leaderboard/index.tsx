@@ -10,7 +10,7 @@ import {
   DialogActions,
   ButtonGroup,
 } from '@mui/material';
-import { isAdmin as isAdminFunc } from 'utils/api';
+import { getIdDiscord, getUsername, isAdmin as isAdminFunc } from 'utils/api';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLeaderboardSlice } from './slice';
 import {
@@ -29,6 +29,12 @@ export default function Leaderboard() {
   useEffect(() => {
     dispatch(actions.getSettingsAction());
     dispatch(actions.getUsersAction());
+    dispatch(
+      actions.getRankUserAction({
+        id: getIdDiscord(),
+        username: getUsername(),
+      }),
+    );
   }, []);
 
   const isAdmin = isAdminFunc();

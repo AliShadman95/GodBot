@@ -6,6 +6,7 @@ import { LeaderboardState } from './types';
 export const initialState: LeaderboardState = {
   users: [],
   settings: {},
+  rankInfo: {},
   loading: false,
   error: undefined,
 };
@@ -59,6 +60,18 @@ const slice = createSlice({
       state.loading = false;
     },
     resetAllRanksError: (state, action) => {
+      state.error = action.payload;
+      state.loading = false;
+    },
+    getRankUserAction: (state, action) => {},
+    getRankUserLoading: state => {
+      state.loading = true;
+    },
+    getRankUserSuccess: (state, action) => {
+      state.loading = false;
+      state.rankInfo = action.payload;
+    },
+    getRankUserError: (state, action) => {
       state.error = action.payload;
       state.loading = false;
     },
