@@ -37,6 +37,8 @@ const rank = async (ctx): Promise<void> => {
 		idDiscord: "0",
 	};
 
+	console.log(`THIS${selectedUser.displayAvatarURL({ format: "jpg" })}`);
+
 	const userInfo = {
 		username: selectedUser.username,
 		discriminator: selectedUser.discriminator,
