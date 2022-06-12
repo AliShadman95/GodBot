@@ -73,9 +73,11 @@ export const columns = isAdmin => [
   { field: 'messageAwarded', headerName: 'MESSAGGI', flex: 0.6, minWidth: 100 },
   {
     field: 'minutesInVoiceChannel',
-    headerName: 'MINUTI IN VOICE CHAT',
+    headerName: 'ORE IN VOICE CHAT',
     flex: 1,
     minWidth: 200,
+    valueGetter: params =>
+      Math.floor(params.value / 60) + ':' + (params.value % 60),
   },
   { field: 'points', headerName: 'XP', flex: 0.6, minWidth: 100 },
   {

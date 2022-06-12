@@ -20,7 +20,14 @@ const rank = async (ctx): Promise<void> => {
 	let user = await db.rank.get({ id: selectedUser.id });
 
 	if (user.id === "0") {
-		await db.rank.add({ ...selectedUser, points: "0", messageAwarded: 0, secondsInVoiceChat: 0 });
+		console.log(selectedUser);
+		await db.rank.add({
+			...selectedUser,
+			avatar: selectedUser.displayAvatarURL({ format: "jpg" }),
+			points: "0",
+			messageAwarded: 0,
+			secondsInVoiceChat: 0,
+		});
 		user = await db.rank.get({ id: selectedUser.id });
 	}
 
@@ -42,7 +49,7 @@ const rank = async (ctx): Promise<void> => {
 	const userInfo = {
 		username: selectedUser.username,
 		discriminator: selectedUser.discriminator,
-		avatar: selectedUser.displayAvatarURL({ format: "jpg" }),
+		avatar: user.avatar || "0",
 		points: user?.points || "0",
 		rank:
 			allUsers

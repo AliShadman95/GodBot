@@ -1,6 +1,7 @@
 import { call, put, all, takeLatest } from 'redux-saga/effects';
 import { dashboardActions } from '../slice/index';
 import { poweredFetch } from 'utils/api';
+
 function* getSettings(dispatch) {
   yield put(dashboardActions.getSettingsLoading());
   const response = yield call(poweredFetch, {
@@ -72,10 +73,38 @@ function* getRoles(dispatch) {
   }
 }
 
+function* getRankUser({ payload }) {
+  yield put(dashboardActions.getRankUserLoading());
+  const response = yield call(poweredFetch, {
+    url: `${process.env.REACT_APP_SERVER_URL}/ranks/rank?id=${payload.id}&username=${payload.username}`,
+    method: 'GET',
+  });
+  if (response.status === 200) {
+    yield put(dashboardActions.getRankUserSuccess(response.data));
+  } else {
+    yield put(dashboardActions.getRankUserError(response.data));
+  }
+}
+
+function* getAllRanks(dispatch) {
+  yield put(dashboardActions.getAllRanksLoading());
+  const response = yield call(poweredFetch, {
+    url: `${process.env.REACT_APP_SERVER_URL}/ranks`,
+    method: 'GET',
+  });
+  if (response.status === 200) {
+    yield put(dashboardActions.getAllRanksSuccess(response.data));
+  } else {
+    yield put(dashboardActions.getAllRanksError(response.data));
+  }
+}
+
 export function* dashboardSaga() {
   try {
     yield all([
       takeLatest(dashboardActions.getSettingsAction, getSettings),
+      takeLatest(dashboardActions.getAllRanksAction, getAllRanks),
+      takeLatest(dashboardActions.getRankUserAction, getRankUser),
       takeLatest(dashboardActions.getVoiceChannelsAction, getVoiceChannels),
       takeLatest(dashboardActions.getTextChannelsAction, getTextChannels),
       takeLatest(dashboardActions.getRolesAction, getRoles),

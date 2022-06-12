@@ -32,7 +32,13 @@ const removeXp = async (ctx): Promise<void> => {
 	let user = await db.rank.get({ id: selectedUser.id });
 
 	if (user.id === "0") {
-		await db.rank.add({ ...selectedUser, points: "0", messageAwarded: 0, secondsInVoiceChat: 0 });
+		await db.rank.add({
+			...selectedUser,
+			avatar: selectedUser.displayAvatarURL({ format: "jpg" }),
+			points: "0",
+			messageAwarded: 0,
+			secondsInVoiceChat: 0,
+		});
 		user = await db.rank.get({ id: selectedUser.id });
 	}
 

@@ -70,6 +70,7 @@ const userLeft = async (
 			} else {
 				await db.rank.add({
 					...member,
+					avatar: member.displayAvatarURL({ format: "jpg" }),
 					points: points.toString(),
 					messageAwarded: 0,
 					secondsInVoiceChat: (user.secondsInVoiceChat += differenceInSeconds(

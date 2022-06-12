@@ -7,12 +7,14 @@ import { getIdDiscord } from 'utils/api';
 export const initialState: DashboardState = {
   settings: {},
   cardInfo: {},
+  rankInfo: {},
   voiceChannels: [],
   textChannels: [],
   roles: [],
   loading: false,
   error: undefined,
   loadingUpdate: false,
+  allRanks: [],
 };
 
 const slice = createSlice({
@@ -96,6 +98,30 @@ const slice = createSlice({
       state.loading = false;
       state.error = undefined;
       state.loadingUpdate = false;
+    },
+    getRankUserAction: (state, action) => {},
+    getRankUserLoading: state => {
+      state.loading = true;
+    },
+    getRankUserSuccess: (state, action) => {
+      state.loading = false;
+      state.rankInfo = action.payload;
+    },
+    getRankUserError: (state, action) => {
+      state.error = action.payload;
+      state.loading = false;
+    },
+    getAllRanksAction: state => {},
+    getAllRanksLoading: state => {
+      state.loading = true;
+    },
+    getAllRanksSuccess: (state, action) => {
+      state.loading = false;
+      state.allRanks = action.payload;
+    },
+    getAllRanksError: (state, action) => {
+      state.error = action.payload;
+      state.loading = false;
     },
   },
 });

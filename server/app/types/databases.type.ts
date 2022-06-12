@@ -309,6 +309,15 @@ export interface DiscordRankInterface {
 	 *
 	 */
 	secondsInVoiceChat: number;
+	/**
+	 * Discord Rank Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } discriminator - user discriminator from discord
+	 *
+	 */
+	discriminator: string;
 }
 
 /**

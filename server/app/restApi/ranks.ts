@@ -14,6 +14,26 @@ router.get("/", async function (req: express.Request, res: express.Response): Pr
 	res.json(users);
 });
 
+// define the home page route
+router.get("/rank", async function (req: express.Request, res: express.Response): Promise<void> {
+	const users = await db.rank.get({ id: req.query.id });
+
+	const response =
+		users.id !== "0"
+			? users
+			: {
+					id: "0",
+					username: req.query.username,
+					bot: false,
+					points: "0",
+					secondInVoiceChat: 0,
+					messageAwarded: 0,
+					avatar: "0",
+			  };
+
+	res.json(response);
+});
+
 router.put("/resetRanks", async function (req: express.Request, res: express.Response): Promise<void> {
 	await db.rank.updateMany({ id: { $in: req.body } }, { $set: { points: "0" } });
 	res.json("Update Successful");

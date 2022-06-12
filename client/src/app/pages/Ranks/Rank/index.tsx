@@ -7,6 +7,7 @@ import {
   selectLoadingUpdate,
   selectLoading,
   selectCardInfo,
+  selectRankInfo,
 } from '../../Dashboard/slice/selectors';
 import { useDashboardSlice } from '../../Dashboard/slice/index';
 import { useForm } from 'react-hook-form';
@@ -22,6 +23,8 @@ export default function Ranks() {
   const loadingUpdate = useSelector(selectLoadingUpdate);
   const loading = useSelector(selectLoading);
   const cardInfo = useSelector(selectCardInfo);
+  const rankInfo = useSelector(selectRankInfo);
+
   const idDiscord = getIdDiscord();
 
   const [color1, setColor1] = useState('white');
@@ -55,27 +58,6 @@ export default function Ranks() {
   }, [loadingUpdate]);
 
   React.useEffect(() => {
-    /*  if (
-      Object.keys(cardInfo).length > 0 &&
-      Object.keys(formData).length > 0 &&
-      !_.isEqual(
-        {
-          ...cardInfo,
-          ...formData,
-          ...(color1 !== 'white' && { color1 }),
-          ...(color2 !== 'white' && { color2 }),
-          ...(color3 !== 'white' && { color3 }),
-          ...(gradientColor1 !== 'white' && { gradientColor1 }),
-          ...(gradientColor2 !== 'white' && { gradientColor2 }),
-        },
-        cardInfo,
-      )
-    ) {
-      setThereAreChanges(true);
-    } else {
-      setThereAreChanges(false);
-    } */
-
     setThereAreChanges(
       Object.keys(cardInfo).length > 0 &&
         Object.keys(formData).length > 0 &&
@@ -151,6 +133,7 @@ export default function Ranks() {
               setGradientColor2={setGradientColor2}
               thereAreChanges={thereAreChanges}
               setThereAreChanges={setThereAreChanges}
+              settings={settings}
             />
           </form>
         </React.Fragment>
