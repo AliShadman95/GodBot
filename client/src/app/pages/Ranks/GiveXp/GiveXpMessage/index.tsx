@@ -49,7 +49,7 @@ export default function GiveXpMessage({ control, defaultValues, roles }) {
                   id="giveXpEnabledRoles"
                   variant="outlined"
                   margin="normal"
-                  label="Ruoli"
+                  label="Ruoli abilitati"
                   defaultValue={defaultValues?.giveXpEnabledRoles}
                   control={control}
                   multiple

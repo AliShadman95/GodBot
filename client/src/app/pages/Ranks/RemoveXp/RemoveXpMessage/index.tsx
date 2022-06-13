@@ -49,7 +49,7 @@ export default function RemoveXpMessage({ control, defaultValues, roles }) {
                   id="removeXpEnabledRoles"
                   variant="outlined"
                   margin="normal"
-                  label="Ruoli"
+                  label="Ruoli abilitati"
                   defaultValue={defaultValues?.removeXpEnabledRoles}
                   control={control}
                   multiple
