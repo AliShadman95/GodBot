@@ -22,7 +22,10 @@ export default function BotInfo({
   textChannels,
   getValues,
 }): React.ReactElement {
-  const displayRestartMessageField = getValues('displayRestartMessage');
+  const displayRestartMessageField =
+    getValues('displayRestartMessage') || defaultValues?.displayRestartMessage;
+
+  console.log(displayRestartMessageField);
 
   const isAdmin = isAdminFunc();
 

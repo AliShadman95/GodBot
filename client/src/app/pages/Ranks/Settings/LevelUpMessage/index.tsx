@@ -21,7 +21,10 @@ export default function LevelUpMessage({
   textChannels,
   getValues,
 }): React.ReactElement {
-  const displayLevelUpMessageField = getValues('displayLevelUpMessage');
+  const displayLevelUpMessageField =
+    getValues('displayLevelUpMessage') || defaultValues?.displayLevelUpMessage;
+
+  console.log(displayLevelUpMessageField);
 
   return (
     <React.Fragment>
