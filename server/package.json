@@ -2,7 +2,7 @@
 	"name": "@ashd95/godbot",
 	"displayName": "GodBot",
 	"description": "The god bot",
-	"version": "1.0.6",
+	"version": "1.0.8",
 	"main": "dist/core/bot.js",
 	"publishConfig": {
 		"access": "public"
