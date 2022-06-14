@@ -2,7 +2,14 @@ import { Switch, FormControlLabel, FormControl } from '@mui/material';
 import { Controller } from 'react-hook-form';
 import PropTypes from 'prop-types';
 
-const SwitchField = ({ name, label, control, defaultValue, ...props }) => {
+const SwitchField = ({
+  name,
+  label,
+  control,
+  defaultValue,
+  disabled = false,
+  ...props
+}) => {
   return (
     <FormControl {...props}>
       <FormControlLabel
@@ -12,6 +19,7 @@ const SwitchField = ({ name, label, control, defaultValue, ...props }) => {
               <Switch {...field} checked={!!value} />
             )}
             name={name}
+            disabled={disabled}
             control={control}
             defaultValue={defaultValue}
           />

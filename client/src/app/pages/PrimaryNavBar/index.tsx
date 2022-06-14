@@ -15,6 +15,7 @@ import {
   Typography,
   Tooltip,
   Avatar,
+  useMediaQuery,
 } from '@mui/material';
 import { MainListItems } from '../ListItems';
 import { useAuthenticationProviderSlice } from '../AuthenticationProvider/slice';
@@ -77,12 +78,15 @@ export default function PrimaryNavBar() {
   const { actions } = useAuthenticationProviderSlice();
 
   const rankInfo = useSelector(selectRankInfo);
+  const isMobile = useMediaQuery('(max-width:600px)');
 
   const [open, setOpen] = React.useState(true);
 
   const toggleDrawer = () => {
     setOpen(!open);
   };
+
+  const canShowLabels = isMobile ? !open : true;
 
   return (
     <React.Fragment>
@@ -104,34 +108,37 @@ export default function PrimaryNavBar() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography
-            component="h1"
-            variant="h6"
-            color="inherit"
-            noWrap
-            sx={{ flexGrow: 1 }}
-          >
-            Dashboard
-          </Typography>
+          {canShowLabels && (
+            <Typography
+              component="h1"
+              variant="h6"
+              color="inherit"
+              noWrap
+              sx={{ flexGrow: 1 }}
+            >
+              Dashboard
+            </Typography>
+          )}
+
           <Avatar
             alt="Remy Sharp"
-            src={
-              `https://cdn.discordapp.com/avatars/${getIdDiscord()}/${
-                rankInfo?.avatar
-              }.jpg` || 'https://i.pravatar.cc/300?img=8'
-            }
+            src={`https://cdn.discordapp.com/avatars/${getIdDiscord()}/${
+              rankInfo?.avatar !== undefined ? rankInfo?.avatar : 0
+            }.jpg`}
             sx={{ flexGrow: 0, marginRight: '0.5em' }}
           />
 
-          <Typography
-            component="h1"
-            variant="h6"
-            color="inherit"
-            noWrap
-            sx={{ flexGrow: 0, marginRight: '0.5em' }}
-          >
-            {getUsername()}
-          </Typography>
+          {canShowLabels && (
+            <Typography
+              component="h1"
+              variant="h6"
+              color="inherit"
+              noWrap
+              sx={{ flexGrow: 0, marginRight: '0.5em' }}
+            >
+              {getUsername()}
+            </Typography>
+          )}
 
           <Tooltip title="Logout">
             <IconButton

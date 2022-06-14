@@ -17,6 +17,7 @@ function* getSettings(dispatch) {
 
 function* updateSettings({ payload }) {
   yield put(dashboardActions.updateSettingsLoading());
+
   const response = yield call(poweredFetch, {
     method: 'PUT',
     url: `${process.env.REACT_APP_SERVER_URL}/settings`,

@@ -98,6 +98,8 @@ const slice = createSlice({
       state.loading = false;
       state.error = undefined;
       state.loadingUpdate = false;
+      state.allRanks = [];
+      state.rankInfo = {};
     },
     getRankUserAction: (state, action) => {},
     getRankUserLoading: state => {
