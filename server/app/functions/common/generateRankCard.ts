@@ -1,5 +1,6 @@
 import canvas, { registerFont } from "canvas"; // For canvas.
 import { DiscordSettingsRankInterface, DiscordCardInferface } from "@app/types/databases.type";
+import { logger } from "@configs/config";
 registerFont("app/fonts/Inter-Regular.ttf", { family: "InterBold" });
 
 interface userInfo {
@@ -15,8 +16,15 @@ const generateBackground = async (
 	{ isGradient, gradientColor1, gradientColor2, isImage, image }: DiscordCardInferface,
 ): Promise<void> => {
 	if (isImage && image !== "") {
-		const a = await canvas.loadImage(image);
-		ctx.drawImage(a, 0, 0, 1342, 853);
+		try {
+			const a = await canvas.loadImage(image);
+			if (!a) {
+				return;
+			}
+			ctx.drawImage(a, 0, 0, 1342, 853);
+		} catch (error) {
+			console.log(error);
+		}
 		return;
 	}
 	// Add gradient - we use createLinearGradient to do this
