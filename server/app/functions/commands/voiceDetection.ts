@@ -17,7 +17,7 @@ import logger from "@app/functions/utils/logger";
 import isLevelUp from "@app/functions/common/isLevelUp";
 
 // Use this const for testing
-const minimumSecondsInVoiceChannel = 3;
+const minimumSecondsInVoiceChannel = 600;
 
 const userJoin = async (id: string, username: string): Promise<void> => {
 	logger.info(`User joined ${id}-${username}`, "voiceDetection.ts:userJoin()");
@@ -125,6 +125,7 @@ const voiceDetection = async (): Promise<void> => {
 		const oldUserChannel = oldMember.channel;
 		const userId = newMember?.member?.user?.id;
 		const username = newMember?.member?.user?.username || "";
+		const isBot = newMember?.member?.user?.bot || false;
 		const settings = await db.settings.get({});
 		const afkChannel = bot.channels.cache.get(settings?.rank?.afkChannelId);
 
@@ -174,7 +175,7 @@ const voiceDetection = async (): Promise<void> => {
 			}
 		};
 
-		if (isJoinAfkDirect || isLeftAfk || discord.api.message.getBotID(bot) === userId) {
+		if (isJoinAfkDirect || isLeftAfk || discord.api.message.getBotID(bot) === userId || isBot) {
 			return;
 		}
 
