@@ -33,8 +33,9 @@ export default function Ranks() {
 
   const [thereAreChanges, setThereAreChanges] = React.useState(false);
 
-  const { control, handleSubmit, watch, reset } = useForm({
+  const { control, handleSubmit, watch, reset, formState } = useForm({
     defaultValues: cardInfo,
+    mode: 'onChange',
   });
 
   React.useEffect(() => {
@@ -132,6 +133,7 @@ export default function Ranks() {
               thereAreChanges={thereAreChanges}
               setThereAreChanges={setThereAreChanges}
               settings={settings}
+              formState={formState}
             />
           </form>
         </React.Fragment>

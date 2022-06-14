@@ -91,6 +91,7 @@ const Card = ({
   thereAreChanges,
   setThereAreChanges,
   settings,
+  formState,
 }) => {
   let canvasRef = useRef<HTMLCanvasElement>(null);
   const [openPicker, setOpenPicker] = useState('');
@@ -100,6 +101,8 @@ const Card = ({
 
   const rankInfo = useSelector(selectRankInfo);
   const allRanks = useSelector(selectAllRanks);
+
+  console.log(formState.isValid, formState.errors);
 
   const draw = (ctx, canvas) => {
     generateCard(
@@ -244,7 +247,17 @@ const Card = ({
                     label="Link immagine"
                     control={control}
                     defaultValue={cardInfo.image}
-                    rules={{ required: true }}
+                    error={
+                      imageField !== undefined && imageField.includes('wiki')
+                    }
+                    rules={{
+                      validate: value => !value.includes('wiki'),
+                    }}
+                    helperText={
+                      imageField !== undefined && imageField.includes('wiki')
+                        ? 'Stai usando un link di wikipedia'
+                        : 'Non usare link di wikipedia!'
+                    }
                   />
                 </FormControl>
               </Grid>
@@ -336,7 +349,7 @@ const Card = ({
                 variant="contained"
                 sx={{ margin: '0.5em' }}
                 type="submit"
-                disabled={!thereAreChanges}
+                disabled={!thereAreChanges || !formState.isValid}
               >
                 {loadingUpdate ? (
                   <CircularProgress color="inherit" size={20} />

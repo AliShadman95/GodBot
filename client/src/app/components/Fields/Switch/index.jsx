@@ -16,7 +16,7 @@ const SwitchField = ({
         control={
           <Controller
             render={({ field: { value, ...field } }) => (
-              <Switch {...field} checked={!!value} />
+              <Switch {...field} checked={!!value} disabled={disabled} />
             )}
             name={name}
             disabled={disabled}

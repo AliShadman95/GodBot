@@ -144,11 +144,15 @@ const voiceDetection = async (): Promise<void> => {
 			afkChannel?.id !== oldUserChannel.id;
 
 		const joinVoiceChannel = async (): Promise<void> => {
-			switch (newUserChannel?.members?.size) {
+			switch (newUserChannel?.members?.filter((m) => !m.user.bot).size) {
 				case 1:
 					break;
 				case 2:
-					newUserChannel?.members.forEach(async (m) => await userJoin(m.user.id, m.user.username));
+					newUserChannel?.members.forEach(async (m) => {
+						if (!m.user.bot) {
+							await userJoin(m.user.id, m.user.username);
+						}
+					});
 					break;
 				default:
 					await userJoin(userId || "0", username);
@@ -157,7 +161,7 @@ const voiceDetection = async (): Promise<void> => {
 		};
 
 		const leaveVoiceChannel = async (): Promise<void> => {
-			switch (oldUserChannel?.members?.size) {
+			switch (oldUserChannel?.members?.filter((m) => !m.user.bot).size) {
 				case 0:
 					break;
 				case 1:
