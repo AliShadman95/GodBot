@@ -34,11 +34,11 @@ export default function SecondaryNavBar() {
     null,
   );
 
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>): void => {
     setAnchorElNav(event.currentTarget);
   };
 
-  const handleCloseNavMenu = () => {
+  const handleCloseNavMenu = (): void => {
     setAnchorElNav(null);
   };
 

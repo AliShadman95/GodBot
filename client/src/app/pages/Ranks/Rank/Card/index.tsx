@@ -24,6 +24,7 @@ import {
   selectAllRanks,
 } from '../../../Dashboard/slice/selectors';
 import Input from 'app/components/Fields/Input';
+import { isValidHttpUrl } from 'utils/utils';
 
 const CustomBox = ({ color, onClick, isOpen, setColor, disabled = false }) => {
   return (
@@ -94,15 +95,15 @@ const Card = ({
   formState,
 }) => {
   let canvasRef = useRef<HTMLCanvasElement>(null);
-  const [openPicker, setOpenPicker] = useState('');
-  const isGradientField = watch('isGradient');
-  const isImageField = watch('isImage');
-  const imageField = watch('image');
+  const [openPicker, setOpenPicker] = useState<string>('');
+  const isGradientField: boolean | undefined = watch('isGradient');
+  const isImageField: boolean | undefined = watch('isImage');
+  const imageField: string | undefined = watch('image');
 
-  const rankInfo = useSelector(selectRankInfo);
-  const allRanks = useSelector(selectAllRanks);
+  const rankInfo: any = useSelector(selectRankInfo);
+  const allRanks: any[] = useSelector(selectAllRanks);
 
-  const draw = (ctx, canvas) => {
+  const draw = (ctx, canvas): void => {
     generateCard(
       ctx,
       canvas,
@@ -120,21 +121,7 @@ const Card = ({
     );
   };
 
-  function isValidHttpUrl(string) {
-    let url;
-
-    try {
-      url = new URL(string);
-    } catch (_) {
-      return false;
-    }
-
-    return url.protocol === 'http:' || url.protocol === 'https:';
-  }
-
-  console.log(formState.isValid, formState.errors);
-
-  const getHelperTextLink = () => {
+  const getHelperTextLink = (): string => {
     if (imageField !== undefined) {
       if (!isValidHttpUrl(imageField)) {
         return 'Devi usare un link valido';

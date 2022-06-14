@@ -25,9 +25,7 @@ export default function BotInfo({
   const displayRestartMessageField =
     getValues('displayRestartMessage') || defaultValues?.displayRestartMessage;
 
-  console.log(displayRestartMessageField);
-
-  const isAdmin = isAdminFunc();
+  const isAdmin: boolean = isAdminFunc();
 
   return (
     <React.Fragment>

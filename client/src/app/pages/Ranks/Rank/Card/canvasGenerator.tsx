@@ -1,20 +1,5 @@
 import { getIdDiscord } from 'utils/api';
-
-function loadImages(urls) {
-  return Promise.all(urls.map(loadImage));
-}
-
-function loadImage(url) {
-  return new Promise((res, rej) =>
-    Object.assign(new Image(), {
-      src: url,
-      onload: function (e) {
-        res(this);
-      },
-      onerror: rej,
-    }),
-  );
-}
+import { loadImages } from 'utils/api';
 
 const generateWithGradient = (
   ctx,

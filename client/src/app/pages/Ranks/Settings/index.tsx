@@ -25,13 +25,13 @@ export default function Settings() {
 
   const { actions } = useDashboardSlice();
 
-  const settings = useSelector(selectSettings);
-  const loadingUpdate = useSelector(selectLoadingUpdate);
-  const loading = useSelector(selectLoading);
+  const settings: any = useSelector(selectSettings);
+  const loadingUpdate: boolean = useSelector(selectLoadingUpdate);
+  const loading: boolean = useSelector(selectLoading);
 
-  const textChannels = useSelector(selectTextChannels);
-  const voiceChannels = useSelector(selectVoiceChannels);
-  const [thereAreChanges, setThereAreChanges] = React.useState(false);
+  const textChannels: any[] = useSelector(selectTextChannels);
+  const voiceChannels: any[] = useSelector(selectVoiceChannels);
+  const [thereAreChanges, setThereAreChanges] = React.useState<boolean>(false);
 
   const { control, handleSubmit, watch, reset, getValues, formState } = useForm(
     {
@@ -40,7 +40,7 @@ export default function Settings() {
     },
   );
 
-  const formData = watch();
+  const formData: any = watch();
 
   React.useEffect(() => {
     if (thereAreChanges && !loadingUpdate) {
@@ -55,16 +55,6 @@ export default function Settings() {
       xps = levelGenerator(formData.levelMultiplier);
     }
 
-    /*  if (
-      Object.keys(settings).length > 0 &&
-      Object.keys(formData).length > 0 &&
-      !_.isEqual({ ...settings.rank, ...formData, ...{ xps } }, settings?.rank)
-    ) {
-      setThereAreChanges(true);
-    } else {
-      setThereAreChanges(false);
-    } */
-
     setThereAreChanges(
       Object.keys(settings).length > 0 &&
         Object.keys(formData).length > 0 &&
@@ -75,7 +65,7 @@ export default function Settings() {
     );
   }, [formData]);
 
-  const onSubmit = data => {
+  const onSubmit = (data: any): void => {
     let xps = settings.rank.xps;
 
     if (settings?.rank.levelMultiplier !== data.levelMultiplier) {

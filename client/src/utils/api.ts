@@ -1,4 +1,5 @@
-import axios from 'axios';
+import axios, { AxiosPromise } from 'axios';
+
 const TOKEN_LABEL = 'token';
 const USER_ROLE_LABEL = 'userRole';
 const USERNAME_LABEL = 'username';
@@ -56,8 +57,11 @@ export function getBaseHeaders(headers = {}, isBodyFormData) {
   return completeHeaders;
 }
 
-export function poweredFetch({ headers = {}, ...options }) {
-  const isBodyFormData = options.data instanceof FormData;
+export const poweredFetch = ({
+  headers = {},
+  ...options
+}): AxiosPromise<any> => {
+  const isBodyFormData: boolean = options.data instanceof FormData;
   const finalOptions = {
     headers: {
       ...getBaseHeaders(headers, isBodyFormData),
@@ -66,9 +70,9 @@ export function poweredFetch({ headers = {}, ...options }) {
   };
 
   return axios(finalOptions).then(checkAuthorized).catch(checkAuthorized);
-}
+};
 
-export function checkAuthorized(response) {
+export const checkAuthorized = response => {
   if (
     response.status === 401 ||
     response.status === 403 ||
@@ -86,8 +90,24 @@ export function checkAuthorized(response) {
     window.location.href = '/';
   }
   return response;
-}
+};
 
-export function isAdmin() {
+export const isAdmin = (): boolean => {
   return getUserRole() === 'admin';
-}
+};
+
+export const loadImages = (urls: string[]) => {
+  return Promise.all(urls.map(loadImage));
+};
+
+export const loadImage = (url: string) => {
+  return new Promise((res, rej) =>
+    Object.assign(new Image(), {
+      src: url,
+      onload: function (e) {
+        res(this);
+      },
+      onerror: rej,
+    }),
+  );
+};

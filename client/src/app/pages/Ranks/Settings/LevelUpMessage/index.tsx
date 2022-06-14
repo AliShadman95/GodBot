@@ -24,8 +24,6 @@ export default function LevelUpMessage({
   const displayLevelUpMessageField =
     getValues('displayLevelUpMessage') || defaultValues?.displayLevelUpMessage;
 
-  console.log(displayLevelUpMessageField);
-
   return (
     <React.Fragment>
       <Accordion defaultExpanded>

@@ -78,11 +78,11 @@ export default function PrimaryNavBar() {
   const { actions } = useAuthenticationProviderSlice();
 
   const rankInfo = useSelector(selectRankInfo);
-  const isMobile = useMediaQuery('(max-width:600px)');
+  const isMobile: boolean = useMediaQuery('(max-width:600px)');
 
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState<boolean>(true);
 
-  const toggleDrawer = () => {
+  const toggleDrawer = (): void => {
     setOpen(!open);
   };
 

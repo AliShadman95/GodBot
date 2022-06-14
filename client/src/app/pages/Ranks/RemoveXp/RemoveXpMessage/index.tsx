@@ -16,7 +16,7 @@ import Title from 'app/components/Title';
 import { isAdmin as isAdminFunc } from 'utils/api';
 
 export default function RemoveXpMessage({ control, defaultValues, roles }) {
-  const isAdmin = isAdminFunc();
+  const isAdmin: boolean = isAdminFunc();
 
   return (
     <React.Fragment>

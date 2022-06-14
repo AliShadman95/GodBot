@@ -18,18 +18,18 @@ import Title from 'app/components/Title';
 export default function RemoveXp() {
   const dispatch = useDispatch();
   const { actions } = useDashboardSlice();
-  const settings = useSelector(selectSettings);
-  const loadingUpdate = useSelector(selectLoadingUpdate);
-  const loading = useSelector(selectLoading);
-  const roles = useSelector(selectRoles);
-  const [thereAreChanges, setThereAreChanges] = React.useState(false);
+  const settings: any = useSelector(selectSettings);
+  const loadingUpdate: boolean = useSelector(selectLoadingUpdate);
+  const loading: boolean = useSelector(selectLoading);
+  const roles: any[] = useSelector(selectRoles);
+  const [thereAreChanges, setThereAreChanges] = React.useState<boolean>(false);
 
   const { control, handleSubmit, watch, reset } = useForm({
     defaultValues: settings?.rank,
     mode: 'onChange',
   });
 
-  const formData = watch();
+  const formData: any = watch();
 
   React.useEffect(() => {
     if (thereAreChanges && !loadingUpdate) {
@@ -38,15 +38,6 @@ export default function RemoveXp() {
   }, [loadingUpdate]);
 
   React.useEffect(() => {
-    /*  if (
-      Object.keys(settings).length > 0 &&
-      Object.keys(formData).length > 0 &&
-      !_.isEqual({ ...settings.rank, ...formData }, settings?.rank)
-    ) {
-      setThereAreChanges(true);
-    } else {
-      setThereAreChanges(false);
-    } */
     setThereAreChanges(
       Object.keys(settings).length > 0 &&
         Object.keys(formData).length > 0 &&
@@ -54,7 +45,7 @@ export default function RemoveXp() {
     );
   }, [formData]);
 
-  const onSubmit = data => {
+  const onSubmit = (data: any): void => {
     dispatch(
       actions.updateSettingsAction({
         ...settings,

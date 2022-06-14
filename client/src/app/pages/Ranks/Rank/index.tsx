@@ -18,12 +18,12 @@ import { getIdDiscord } from 'utils/api';
 export default function Ranks() {
   const dispatch = useDispatch();
   const { actions } = useDashboardSlice();
-  const settings = useSelector(selectSettings);
-  const loadingUpdate = useSelector(selectLoadingUpdate);
-  const loading = useSelector(selectLoading);
-  const cardInfo = useSelector(selectCardInfo);
+  const settings: any = useSelector(selectSettings);
+  const loadingUpdate: boolean = useSelector(selectLoadingUpdate);
+  const loading: boolean = useSelector(selectLoading);
+  const cardInfo: any = useSelector(selectCardInfo);
 
-  const idDiscord = getIdDiscord();
+  const idDiscord: string | null = getIdDiscord();
 
   const [color1, setColor1] = useState('white');
   const [color2, setColor2] = useState('white');
