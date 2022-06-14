@@ -10,8 +10,17 @@ interface userInfo {
 	rank: number;
 }
 
-const generateBackground = (ctx, { isGradient, gradientColor1, gradientColor2 }: DiscordCardInferface): void => {
+const generateBackground = async (
+	ctx,
+	{ isGradient, gradientColor1, gradientColor2, isImage, image }: DiscordCardInferface,
+): Promise<void> => {
+	if (isImage && image !== "") {
+		const a = await canvas.loadImage(image);
+		ctx.drawImage(a, 0, 0, 1342, 853);
+		return;
+	}
 	// Add gradient - we use createLinearGradient to do this
+
 	const grd = ctx.createLinearGradient(0, 853, 1352, 0);
 	grd.addColorStop(0, gradientColor1);
 	isGradient && grd.addColorStop(1, gradientColor2 || "#0a0a0a");
@@ -160,7 +169,7 @@ const generateRankCard = async (
 			(xp, index) => parseInt(userInfo?.points) >= xp && parseInt(userInfo.points) < settings?.xps[index + 1],
 		) + 1;
 
-	generateBackground(ctx, card);
+	await generateBackground(ctx, card);
 	generateText(ctx, settings, userInfo, card, currentLevelIndex);
 	generateProgressBar(ctx, settings, userInfo, card, currentLevelIndex);
 	await generateAvatar(ctx, c, userInfo);

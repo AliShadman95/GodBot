@@ -40,6 +40,8 @@ const rank = async (ctx): Promise<void> => {
 		color2: "#000000",
 		color3: "#02d032",
 		idDiscord: "0",
+		isImage: false,
+		image: "",
 	};
 
 	const userInfo = {

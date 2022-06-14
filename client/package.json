@@ -1,6 +1,6 @@
 {
   "name": "client",
-  "version": "1.0.8",
+  "version": "1.1.0",
   "private": true,
   "dependencies": {
     "@emotion/react": "11.9.0",
@@ -95,6 +95,11 @@
   },
   "eslintConfig": {
     "extends": "react-app"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "app/images/*"
+    ]
   },
   "browserslist": {
     "production": [

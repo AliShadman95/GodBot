@@ -444,6 +444,24 @@ export interface DiscordCardInferface {
 	 *
 	 */
 	color3: string;
+	/**
+	 * Discord Card Interface
+	 * =====================
+	 *
+	 *
+	 * @param { boolean } isImage - if the background of the rank card is a image
+	 *
+	 */
+	isImage: boolean;
+	/**
+	 * Discord Card Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } image - URL of the image
+	 *
+	 */
+	image: string;
 }
 
 /**

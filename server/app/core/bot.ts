@@ -4,15 +4,24 @@ import commands from "@app/routes/commands";
 import express from "express";
 import bot from "@app/core/token";
 import cors from "cors";
+import fileUpload from "express-fileupload";
+
 const settings = require("@app/restApi/settings");
 const auth = require("@app/restApi/auth");
 const ranks = require("@app/restApi/ranks");
 const main = require("@app/restApi/main");
 const authJwt = require("@app/restApi/authHandlers");
+
 require("dotenv").config();
 
 const app = express();
 app.use(cors());
+
+app.use(
+	fileUpload({
+		createParentPath: true,
+	}),
+);
 
 const port = process.env.PORT || 8080;
 app.use(express.json());

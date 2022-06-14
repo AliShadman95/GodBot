@@ -16,6 +16,7 @@ import { useDashboardSlice } from './slice/index';
 import PrimaryNavBar from '../PrimaryNavBar';
 import Copyright from 'app/components/Copyright';
 import { getIdDiscord, getUsername } from 'utils/api';
+import AlertInfo from '../Alert';
 
 export default function Dashboard() {
   const dispatch = useDispatch();
@@ -27,6 +28,7 @@ export default function Dashboard() {
     dispatch(actions.getAllRanksAction());
     dispatch(actions.getVoiceChannelsAction());
     dispatch(actions.getTextChannelsAction());
+
     dispatch(actions.getRolesAction());
     dispatch(
       actions.getRankUserAction({
@@ -53,7 +55,9 @@ export default function Dashboard() {
         }}
       >
         <Toolbar />
+
         <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
+          <AlertInfo />
           <Grid container spacing={3}>
             <Grid item xs={12} md={12} lg={12}>
               <Switch>

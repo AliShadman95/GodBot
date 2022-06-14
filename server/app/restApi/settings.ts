@@ -5,6 +5,10 @@ import db from "@routes/api/database";
 import { DiscordSettingsInterface } from "@app/types/databases.type";
 import discord from "@routes/api/discord";
 import logger from "@app/functions/utils/logger";
+import fs from "fs";
+import path from "path";
+import { Blob } from "buffer";
+
 // middleware that is specific to this router
 router.use(function timeLog(req: express.Request, res: express.Response, next): void {
 	logger.info(`Time: ${Date.now()}`, "settings.ts:timeLog()");

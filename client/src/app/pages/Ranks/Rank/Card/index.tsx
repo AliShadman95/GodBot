@@ -12,6 +12,7 @@ import {
   CircularProgress,
   Accordion,
   AccordionSummary,
+  FormControl,
   AccordionDetails,
 } from '@mui/material';
 import Title from 'app/components/Title';
@@ -22,6 +23,7 @@ import {
   selectRankInfo,
   selectAllRanks,
 } from '../../../Dashboard/slice/selectors';
+import Input from 'app/components/Fields/Input';
 
 const CustomBox = ({ color, onClick, isOpen, setColor, disabled = false }) => {
   return (
@@ -69,6 +71,7 @@ const CustomBox = ({ color, onClick, isOpen, setColor, disabled = false }) => {
     </React.Fragment>
   );
 };
+
 const Card = ({
   cardInfo,
   control,
@@ -92,6 +95,8 @@ const Card = ({
   let canvasRef = useRef<HTMLCanvasElement>(null);
   const [openPicker, setOpenPicker] = useState('');
   const isGradientField = watch('isGradient');
+  const isImageField = watch('isImage');
+  const imageField = watch('image');
 
   const rankInfo = useSelector(selectRankInfo);
   const allRanks = useSelector(selectAllRanks);
@@ -109,6 +114,8 @@ const Card = ({
       rankInfo,
       settings,
       allRanks,
+      isImageField,
+      imageField,
     );
   };
 
@@ -130,21 +137,30 @@ const Card = ({
         aria-controls="panel1a-content"
         id="panel1a-header"
       >
-        <Title>
-          {' '}
-          <Title>Server rank card</Title>
-        </Title>
+        <Title>Server rank card</Title>
       </AccordionSummary>
       <AccordionDetails>
         <div style={{ marginBottom: '2em' }}>
           <Grid container>
-            <Grid item xs={7} md={10}>
+            <Grid item xs={12} md={12} lg={8}>
               <Typography component="p" color="main" gutterBottom>
                 Puoi customizzare la card del rank. Ogni membro del server avrà
                 questa.
               </Typography>
             </Grid>
-            <Grid item xs={5} md={2}>
+            <Grid item xs={6} md={6} lg={2}>
+              <SwitchField
+                name="isImage"
+                labelid="isImage"
+                id="isImage"
+                margin="normal"
+                variant="outlined"
+                label={isImageField ? 'Immagine' : 'Senza immagine'}
+                defaultValue={cardInfo.isImage}
+                control={control}
+              />
+            </Grid>
+            <Grid item xs={6} md={6} lg={2}>
               <SwitchField
                 name="isGradient"
                 labelid="isGradient"
@@ -156,6 +172,7 @@ const Card = ({
                 }
                 defaultValue={cardInfo.isGradient}
                 control={control}
+                disabled={isImageField}
               />
             </Grid>
           </Grid>
@@ -172,17 +189,19 @@ const Card = ({
                 maxWidth: '100%',
                 height: '78%',
                 marginTop: '2.5em',
+                zIndex: 200,
               }}
             />
           </Grid>
           <Box width="100%" />
-          <Grid item xs={12} md={4} lg={5} sx={{ my: 2 }}>
+
+          <Grid item xs={12} md={4} lg={4} my={{ xs: 1, md: 2, lg: 2 }}>
             <Typography component="p" color="main" gutterBottom>
               Colori Principali
             </Typography>
 
             <Grid container>
-              <Grid item xs={4} md={4} lg={3}>
+              <Grid item xs={4} md={4} lg={4}>
                 <CustomBox
                   color={color1}
                   isOpen={openPicker === 'color1'}
@@ -192,7 +211,7 @@ const Card = ({
                   setColor={setColor1}
                 />
               </Grid>
-              <Grid item xs={4} md={4} lg={3}>
+              <Grid item xs={4} md={4} lg={4}>
                 <CustomBox
                   color={color2}
                   isOpen={openPicker === 'color2'}
@@ -202,7 +221,7 @@ const Card = ({
                   setColor={setColor2}
                 />
               </Grid>
-              <Grid item xs={4} md={4} lg={3}>
+              <Grid item xs={4} md={4} lg={4}>
                 <CustomBox
                   color={color3}
                   isOpen={openPicker === 'color3'}
@@ -214,42 +233,84 @@ const Card = ({
               </Grid>
             </Grid>
           </Grid>
-          <Grid item xs={12} md={4} lg={5} sx={{ my: 2 }}>
-            <Typography component="p" color="main" gutterBottom>
-              Colori Sfondo
-            </Typography>
 
-            <Grid container>
-              <Grid item xs={4} md={4} lg={3}>
-                <CustomBox
-                  color={gradientColor1}
-                  isOpen={openPicker === 'gradientColor1'}
-                  onClick={() =>
-                    setOpenPicker(
-                      openPicker === 'gradientColor1' ? '' : 'gradientColor1',
-                    )
-                  }
-                  setColor={setGradientColor1}
-                />
+          {isImageField ? (
+            <React.Fragment>
+              <Grid item xs={12} md={4} lg={5} mt={{ xs: 4, md: 4, lg: 8 }}>
+                <FormControl fullWidth>
+                  <Input
+                    id="image"
+                    name="image"
+                    label="Link immagine"
+                    control={control}
+                    defaultValue={cardInfo.image}
+                    rules={{ required: true }}
+                  />
+                </FormControl>
               </Grid>
-              <Grid item xs={4} md={4} lg={3}>
-                <CustomBox
-                  color={gradientColor2}
-                  isOpen={openPicker === 'gradientColor2'}
-                  onClick={() =>
-                    isGradientField &&
-                    setOpenPicker(
-                      openPicker === 'gradientColor2' ? '' : 'gradientColor2',
-                    )
-                  }
-                  setColor={setGradientColor2}
-                  disabled={!isGradientField}
-                />
+              <Grid item xs={1} md={1} lg={1} mt={{ xs: 4, md: 4, lg: 8 }} />
+            </React.Fragment>
+          ) : (
+            <React.Fragment>
+              <Grid
+                item
+                xs={12}
+                md={4}
+                lg={1}
+                my={{ xs: 1, md: 1, lg: 2 }}
+              ></Grid>
+              <Grid item xs={12} md={4} lg={3} my={{ xs: 1, md: 1, lg: 2 }}>
+                <Typography component="p" color="main" gutterBottom>
+                  Colori Sfondo
+                </Typography>
+                <Grid container>
+                  <Grid item xs={4} md={4} lg={6}>
+                    <CustomBox
+                      color={gradientColor1}
+                      isOpen={openPicker === 'gradientColor1'}
+                      onClick={() =>
+                        !isImageField &&
+                        setOpenPicker(
+                          openPicker === 'gradientColor1'
+                            ? ''
+                            : 'gradientColor1',
+                        )
+                      }
+                      setColor={setGradientColor1}
+                      disabled={isImageField}
+                    />
+                  </Grid>
+                  <Grid item xs={4} md={4} lg={6}>
+                    <CustomBox
+                      color={gradientColor2}
+                      isOpen={openPicker === 'gradientColor2'}
+                      onClick={() =>
+                        !isImageField &&
+                        isGradientField &&
+                        setOpenPicker(
+                          openPicker === 'gradientColor2'
+                            ? ''
+                            : 'gradientColor2',
+                        )
+                      }
+                      setColor={setGradientColor2}
+                      disabled={isImageField || !isGradientField}
+                    />
+                  </Grid>
+                </Grid>
               </Grid>
-            </Grid>
-          </Grid>
+              <Grid item xs={12} md={4} lg={2} sx={{ my: 2 }}></Grid>
+            </React.Fragment>
+          )}
 
-          <Grid item xs={12} md={4} lg={2} sx={{ my: 2 }} display="flex">
+          <Grid
+            item
+            xs={12}
+            md={4}
+            lg={2}
+            my={{ xs: 0, md: 0, lg: 2 }}
+            display="flex"
+          >
             <Box display="flex" alignItems="flex-end" maxHeight={'7em'}>
               <Button
                 color="secondary"
