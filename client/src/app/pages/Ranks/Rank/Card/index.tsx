@@ -102,8 +102,6 @@ const Card = ({
   const rankInfo = useSelector(selectRankInfo);
   const allRanks = useSelector(selectAllRanks);
 
-  console.log(formState.isValid, formState.errors);
-
   const draw = (ctx, canvas) => {
     generateCard(
       ctx,
@@ -120,6 +118,33 @@ const Card = ({
       isImageField,
       imageField,
     );
+  };
+
+  function isValidHttpUrl(string) {
+    let url;
+
+    try {
+      url = new URL(string);
+    } catch (_) {
+      return false;
+    }
+
+    return url.protocol === 'http:' || url.protocol === 'https:';
+  }
+
+  console.log(formState.isValid, formState.errors);
+
+  const getHelperTextLink = () => {
+    if (imageField !== undefined) {
+      if (!isValidHttpUrl(imageField)) {
+        return 'Devi usare un link valido';
+      }
+      if (imageField.includes('wiki')) {
+        return 'Stai usando un link di wikipedia';
+      }
+    }
+
+    return 'Non usare link di wikipedia!';
   };
 
   useEffect(() => {
@@ -248,16 +273,15 @@ const Card = ({
                     control={control}
                     defaultValue={cardInfo.image}
                     error={
-                      imageField !== undefined && imageField.includes('wiki')
+                      imageField !== undefined &&
+                      (imageField.includes('wiki') ||
+                        !isValidHttpUrl(imageField))
                     }
                     rules={{
-                      validate: value => !value.includes('wiki'),
+                      validate: value =>
+                        !value.includes('wiki') && isValidHttpUrl(value),
                     }}
-                    helperText={
-                      imageField !== undefined && imageField.includes('wiki')
-                        ? 'Stai usando un link di wikipedia'
-                        : 'Non usare link di wikipedia!'
-                    }
+                    helperText={getHelperTextLink()}
                   />
                 </FormControl>
               </Grid>
