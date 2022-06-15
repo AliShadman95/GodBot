@@ -180,8 +180,16 @@ const generateWithImage = (
   rank,
   settings,
   images,
+  sx,
+  sy,
+  sWidth,
+  sHeight,
+  dx,
+  dy,
+  dWidth,
+  dHeight,
 ) => {
-  ctx.drawImage(images[1], 0, 0, 1342, 853);
+  ctx.drawImage(images[1], sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
 
   // AVATAR GENERATOR
 
@@ -342,6 +350,16 @@ export const generateCard = async (
   allRanks,
   isImageField,
   image,
+  sx,
+  sy,
+  sWidth,
+  sHeight,
+  dx,
+  dy,
+  dWidth,
+  dHeight,
+  cardInfo,
+  resetImagePosition,
 ): Promise<void> => {
   ctx.restore();
 
@@ -358,12 +376,44 @@ export const generateCard = async (
       .findIndex(u => u.id === rankInfo?.id) + 1;
 
   if (isImageField && image !== '') {
-    const images = await loadImages([
+    const images: any = await loadImages([
       `https://cdn.discordapp.com/avatars/${getIdDiscord()}/${
         rankInfo?.avatar || 0
       }.jpg`,
       image,
     ]);
+
+    const isNewImage =
+      images &&
+      images.length > 0 &&
+      sWidth !== images[1].width &&
+      sHeight !== images[1].height;
+
+    if (
+      cardInfo.sx !== sx ||
+      cardInfo.sy !== sy ||
+      cardInfo.sWidth !== sWidth ||
+      cardInfo.sHeight !== sHeight ||
+      cardInfo.dx !== dx ||
+      cardInfo.dy !== dy ||
+      cardInfo.dWidth !== dWidth ||
+      cardInfo.dHeight !== dHeight
+    ) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    if (isNewImage) {
+      resetImagePosition(
+        0,
+        0,
+        images[1].width,
+        images[1].height,
+        0,
+        0,
+        1342,
+        853,
+      );
+    }
 
     generateWithImage(
       ctx,
@@ -376,6 +426,14 @@ export const generateCard = async (
       rank,
       settings,
       images,
+      sx,
+      sy,
+      sWidth,
+      sHeight,
+      dx,
+      dy,
+      dWidth,
+      dHeight,
     );
   } else {
     const avatarImage = await loadImages([

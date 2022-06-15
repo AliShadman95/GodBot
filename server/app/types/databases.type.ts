@@ -462,6 +462,78 @@ export interface DiscordCardInferface {
 	 *
 	 */
 	image: string;
+	/**
+	 * Discord Card Interface
+	 * =====================
+	 *
+	 *
+	 * @param { number } sx - x position of the image
+	 *
+	 */
+	sx: number;
+	/**
+	 * Discord Card Interface
+	 * =====================
+	 *
+	 *
+	 * @param { number } sy - y position of the image
+	 *
+	 */
+	sy: number;
+	/**
+	 * Discord Card Interface
+	 * =====================
+	 *
+	 *
+	 * @param { number } sWidth - width of the image
+	 *
+	 */
+	sWidth: number;
+	/**
+	 * Discord Card Interface
+	 * =====================
+	 *
+	 *
+	 * @param { number } sHeight - height of the image
+	 *
+	 */
+	sHeight: number;
+	/**
+	 * Discord Card Interface
+	 * =====================
+	 *
+	 *
+	 * @param { number } dx - x position of the container
+	 *
+	 */
+	dx: number;
+	/**
+	 * Discord Card Interface
+	 * =====================
+	 *
+	 *
+	 * @param { number } dy - y position of the container
+	 *
+	 */
+	dy: number;
+	/**
+	 * Discord Card Interface
+	 * =====================
+	 *
+	 *
+	 * @param { number } dWidth - width of the container
+	 *
+	 */
+	dWidth: number;
+	/**
+	 * Discord Card Interface
+	 * =====================
+	 *
+	 *
+	 * @param { number } dHeight - height of the container
+	 *
+	 */
+	dHeight: number;
 }
 
 /**

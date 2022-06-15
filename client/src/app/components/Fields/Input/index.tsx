@@ -39,6 +39,7 @@ const Input = ({
             autoComplete={autoComplete}
             disabled={disabled}
             {...field}
+            {...props}
           />
         )}
         name={name}
@@ -67,4 +68,5 @@ Input.propTypes = {
   error: PropTypes.bool,
   autoFocus: PropTypes.bool,
   autoComplete: PropTypes.string,
+  variant: PropTypes.string,
 };

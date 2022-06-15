@@ -42,6 +42,14 @@ const rank = async (ctx): Promise<void> => {
 		idDiscord: "0",
 		isImage: false,
 		image: "",
+		sx: 0,
+		sy: 0,
+		sWidth: 1920,
+		sHeight: 1080,
+		dx: 0,
+		dy: 0,
+		dWidth: 1342,
+		dHeight: 853,
 	};
 
 	const userInfo = {

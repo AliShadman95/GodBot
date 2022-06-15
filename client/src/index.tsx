@@ -30,6 +30,8 @@ import './locales/i18n';
 
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
+import './styles.css';
+
 let theme = createTheme({
   palette: {
     mode: 'dark',

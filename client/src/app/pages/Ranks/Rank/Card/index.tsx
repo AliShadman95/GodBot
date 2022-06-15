@@ -14,6 +14,7 @@ import {
   AccordionSummary,
   FormControl,
   AccordionDetails,
+  TextField as MuiInput,
 } from '@mui/material';
 import Title from 'app/components/Title';
 import SwitchField from 'app/components/Fields/Switch';
@@ -93,6 +94,23 @@ const Card = ({
   setThereAreChanges,
   settings,
   formState,
+  sx,
+  sy,
+  sWidth,
+  sHeight,
+  dx,
+  dy,
+  dWidth,
+  dHeight,
+  setSx,
+  setSy,
+  setSWidth,
+  setSHeight,
+  setDx,
+  setDy,
+  setDWidth,
+  setDHeight,
+  resetImagePosition,
 }) => {
   let canvasRef = useRef<HTMLCanvasElement>(null);
   const [openPicker, setOpenPicker] = useState<string>('');
@@ -118,8 +136,31 @@ const Card = ({
       allRanks,
       isImageField,
       imageField,
+      sx,
+      sy,
+      sWidth,
+      sHeight,
+      dx,
+      dy,
+      dWidth,
+      dHeight,
+      cardInfo,
+      resetImagePosition,
     );
   };
+
+  useEffect(() => {
+    if (
+      imageField &&
+      imageField !== '' &&
+      isValidHttpUrl(imageField) &&
+      !imageField.includes('wiki') &&
+      formState.dirtyFields.image
+    ) {
+      setSWidth(cardInfo.sWidth || 0);
+      setSHeight(cardInfo.sHeight || 0);
+    }
+  }, [imageField]);
 
   const getHelperTextLink = (): string => {
     if (imageField !== undefined) {
@@ -194,7 +235,7 @@ const Card = ({
         </div>
         <Divider sx={{ my: 1 }} />
         <Grid container spacing={3}>
-          <Grid item xs={12} md={5} lg={5}>
+          <Grid item xs={12} md={12} lg={5}>
             <canvas
               ref={canvasRef}
               width={1342}
@@ -208,9 +249,98 @@ const Card = ({
               }}
             />
           </Grid>
+
           <Box width="100%" />
 
-          <Grid item xs={12} md={4} lg={4} my={{ xs: 1, md: 2, lg: 2 }}>
+          {isImageField && (
+            <Grid item xs={12} md={12} lg={7}>
+              <Typography mb={2} component="p" color="main" gutterBottom>
+                Modifica immagine
+              </Typography>
+              <Box
+                sx={{
+                  '& .MuiTextField-root': { m: 1, width: '25ch' },
+                }}
+              >
+                <MuiInput
+                  id="sx"
+                  name="sx"
+                  label="Posizione X dell'immagine"
+                  type="number"
+                  value={sx}
+                  variant="standard"
+                  onChange={e => setSx(parseInt(e.target.value))}
+                />
+
+                <MuiInput
+                  id="sy"
+                  name="sy"
+                  variant="standard"
+                  type="number"
+                  label="Posizione Y dell'immagine"
+                  value={sy}
+                  onChange={e => setSy(parseInt(e.target.value))}
+                />
+
+                <MuiInput
+                  id="sWidth"
+                  name="sWidth"
+                  label="Larghezza immagine"
+                  type="number"
+                  value={sWidth}
+                  variant="standard"
+                  onChange={e => setSWidth(parseInt(e.target.value))}
+                />
+                <MuiInput
+                  id="sHeight"
+                  name="sHeight"
+                  label="Altezza immagine"
+                  type="number"
+                  variant="standard"
+                  value={sHeight}
+                  onChange={e => setSHeight(parseInt(e.target.value))}
+                />
+                <MuiInput
+                  id="dx"
+                  name="dx"
+                  label="Posizione X Contenitore"
+                  type="number"
+                  value={dx}
+                  variant="standard"
+                  onChange={e => setDx(parseInt(e.target.value))}
+                />
+                <MuiInput
+                  id="dy"
+                  name="dy"
+                  label="Posizione Y Contenitore"
+                  type="number"
+                  variant="standard"
+                  value={dy}
+                  onChange={e => setDy(parseInt(e.target.value))}
+                />
+                <MuiInput
+                  id="dWidth"
+                  name="dWidth"
+                  label="Larghezza Contenitore"
+                  type="number"
+                  variant="standard"
+                  value={dWidth}
+                  onChange={e => setDWidth(parseInt(e.target.value))}
+                />
+                <MuiInput
+                  id="dHeight"
+                  name="dHeight"
+                  label="Altezza Contenitore"
+                  type="number"
+                  variant="standard"
+                  value={dHeight}
+                  onChange={e => setDHeight(parseInt(e.target.value))}
+                />
+              </Box>
+            </Grid>
+          )}
+
+          <Grid item xs={12} md={6} lg={4} my={{ xs: 1, md: 2, lg: 2 }}>
             <Typography component="p" color="main" gutterBottom>
               Colori Principali
             </Typography>
@@ -251,12 +381,13 @@ const Card = ({
 
           {isImageField ? (
             <React.Fragment>
-              <Grid item xs={12} md={4} lg={5} mt={{ xs: 4, md: 4, lg: 8 }}>
+              <Grid item xs={12} md={4} lg={9} mt={{ xs: 4, md: 4, lg: 8 }}>
                 <FormControl fullWidth>
                   <Input
                     id="image"
                     name="image"
                     label="Link immagine"
+                    variant="standard"
                     control={control}
                     defaultValue={cardInfo.image}
                     error={
@@ -279,11 +410,11 @@ const Card = ({
               <Grid
                 item
                 xs={12}
-                md={4}
+                md={1}
                 lg={1}
                 my={{ xs: 1, md: 1, lg: 2 }}
               ></Grid>
-              <Grid item xs={12} md={4} lg={3} my={{ xs: 1, md: 1, lg: 2 }}>
+              <Grid item xs={12} md={5} lg={3} my={{ xs: 1, md: 1, lg: 2 }}>
                 <Typography component="p" color="main" gutterBottom>
                   Colori Sfondo
                 </Typography>
@@ -349,6 +480,16 @@ const Card = ({
                   setColor3(cardInfo.color3 || 'white');
                   setGradientColor1(cardInfo.gradientColor1 || 'white');
                   setGradientColor2(cardInfo.gradientColor2 || 'white');
+                  resetImagePosition(
+                    cardInfo.sx || 0,
+                    cardInfo.sy || 0,
+                    cardInfo.sWidth || 0,
+                    cardInfo.sHeight || 0,
+                    cardInfo.dx || 0,
+                    cardInfo.dy || 0,
+                    cardInfo.dWidth || 0,
+                    cardInfo.dHeight || 0,
+                  );
                   setThereAreChanges(false);
                 }}
               >
@@ -360,7 +501,9 @@ const Card = ({
                 variant="contained"
                 sx={{ margin: '0.5em' }}
                 type="submit"
-                disabled={!thereAreChanges || !formState.isValid}
+                disabled={
+                  !thereAreChanges || Object.keys(formState.errors).length > 0
+                }
               >
                 {loadingUpdate ? (
                   <CircularProgress color="inherit" size={20} />

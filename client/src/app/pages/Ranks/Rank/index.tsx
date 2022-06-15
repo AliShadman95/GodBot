@@ -30,6 +30,14 @@ export default function Ranks() {
   const [color3, setColor3] = useState('white');
   const [gradientColor1, setGradientColor1] = useState('white');
   const [gradientColor2, setGradientColor2] = useState('white');
+  const [sx, setSx] = useState(0);
+  const [sy, setSy] = useState(0);
+  const [sWidth, setSWidth] = useState(0);
+  const [sHeight, setSHeight] = useState(0);
+  const [dx, setDx] = useState(0);
+  const [dy, setDy] = useState(0);
+  const [dWidth, setDWidth] = useState(0);
+  const [dHeight, setDHeight] = useState(0);
 
   const [thereAreChanges, setThereAreChanges] = React.useState(false);
 
@@ -38,6 +46,26 @@ export default function Ranks() {
     mode: 'onChange',
   });
 
+  const resetImagePosition = (
+    sxValue,
+    syValue,
+    sWidthValue,
+    sHeightValue,
+    dxValue,
+    dyValue,
+    dWidthValue,
+    dHeightValue,
+  ) => {
+    setSx(sxValue);
+    setSy(syValue);
+    setSWidth(sWidthValue);
+    setSHeight(sHeightValue);
+    setDx(dxValue);
+    setDy(dyValue);
+    setDWidth(dWidthValue);
+    setDHeight(dHeightValue);
+  };
+
   React.useEffect(() => {
     if (cardInfo && Object.keys(cardInfo).length > 0) {
       setColor1(cardInfo.color1);
@@ -45,6 +73,17 @@ export default function Ranks() {
       setColor3(cardInfo.color3);
       setGradientColor1(cardInfo.gradientColor1);
       setGradientColor2(cardInfo.gradientColor2);
+
+      resetImagePosition(
+        cardInfo.sx,
+        cardInfo.sy,
+        cardInfo.sWidth,
+        cardInfo.sHeight,
+        cardInfo.dx,
+        cardInfo.dy,
+        cardInfo.dWidth,
+        cardInfo.dHeight,
+      );
     }
   }, [cardInfo]);
 
@@ -69,6 +108,14 @@ export default function Ranks() {
             ...(color3 !== 'white' && { color3 }),
             ...(gradientColor1 !== 'white' && { gradientColor1 }),
             ...(gradientColor2 !== 'white' && { gradientColor2 }),
+            sx,
+            sy,
+            sWidth,
+            sHeight,
+            dx,
+            dy,
+            dWidth,
+            dHeight,
           },
           cardInfo,
         ),
@@ -92,6 +139,14 @@ export default function Ranks() {
                     gradientColor1,
                     gradientColor2,
                     idDiscord,
+                    sx,
+                    sy,
+                    sWidth,
+                    sHeight,
+                    dx,
+                    dy,
+                    dWidth,
+                    dHeight,
                   }
                 : c,
             ),
@@ -134,6 +189,23 @@ export default function Ranks() {
               setThereAreChanges={setThereAreChanges}
               settings={settings}
               formState={formState}
+              sx={sx}
+              sy={sy}
+              sWidth={sWidth}
+              sHeight={sHeight}
+              dx={dx}
+              dy={dy}
+              dWidth={dWidth}
+              dHeight={dHeight}
+              setSx={setSx}
+              setSy={setSy}
+              setSWidth={setSWidth}
+              setSHeight={setSHeight}
+              setDx={setDx}
+              setDy={setDy}
+              setDWidth={setDWidth}
+              setDHeight={setDHeight}
+              resetImagePosition={resetImagePosition}
             />
           </form>
         </React.Fragment>
