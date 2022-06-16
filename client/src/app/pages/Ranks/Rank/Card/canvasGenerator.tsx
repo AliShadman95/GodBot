@@ -3,12 +3,8 @@ import { loadImages } from 'utils/api';
 
 const generateWithGradient = (
   ctx,
-  gradientColor1,
-  gradientColor2,
+  colors,
   isGradientField,
-  color1,
-  color2,
-  color3,
   currentLevelIndex,
   rankInfo,
   rank,
@@ -16,8 +12,9 @@ const generateWithGradient = (
   c,
   avatarImage,
 ) => {
-  // GRADIENT BACKGROUND GENERATOR
+  const { color1, color2, color3, gradientColor1, gradientColor2 } = colors;
 
+  // GRADIENT BACKGROUND GENERATOR
   const grd = ctx.createLinearGradient(0, 853, 1352, 0);
   grd.addColorStop(0, gradientColor1);
   isGradientField && grd.addColorStop(1, gradientColor2 || '#0a0a0a');
@@ -171,31 +168,25 @@ const generateWithGradient = (
 
 const generateWithImage = (
   ctx,
-  c,
-  color1,
-  color2,
-  color3,
+  canvas,
+  colors,
   rankInfo,
   currentLevelIndex,
   rank,
   settings,
   images,
-  sx,
-  sy,
-  sWidth,
-  sHeight,
-  dx,
-  dy,
-  dWidth,
-  dHeight,
+  imagePosition,
 ) => {
+  const { color1, color2, color3 } = colors;
+  const { sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight } = imagePosition;
+
   ctx.drawImage(images[1], sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
 
   // AVATAR GENERATOR
 
   const circle = {
-    x: c.width / 7,
-    y: c.height / 2,
+    x: canvas.width / 7,
+    y: canvas.height / 2,
     radius: 140,
   };
 
@@ -339,29 +330,20 @@ const generateWithImage = (
 export const generateCard = async (
   ctx,
   canvas,
-  color1,
-  color2,
-  color3,
-  gradientColor1,
-  gradientColor2,
+  colors,
+  imagePosition,
   isGradientField,
   rankInfo,
   settings,
   allRanks,
   isImageField,
   image,
-  sx,
-  sy,
-  sWidth,
-  sHeight,
-  dx,
-  dy,
-  dWidth,
-  dHeight,
-  cardInfo,
+  defaultValues,
   resetImagePosition,
 ): Promise<void> => {
   ctx.restore();
+
+  const { sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight } = imagePosition;
 
   const currentLevelIndex =
     settings?.rank?.xps?.findIndex(
@@ -390,14 +372,14 @@ export const generateCard = async (
       sHeight !== images[1].height;
 
     if (
-      cardInfo.sx !== sx ||
-      cardInfo.sy !== sy ||
-      cardInfo.sWidth !== sWidth ||
-      cardInfo.sHeight !== sHeight ||
-      cardInfo.dx !== dx ||
-      cardInfo.dy !== dy ||
-      cardInfo.dWidth !== dWidth ||
-      cardInfo.dHeight !== dHeight
+      defaultValues.sx !== sx ||
+      defaultValues.sy !== sy ||
+      defaultValues.sWidth !== sWidth ||
+      defaultValues.sHeight !== sHeight ||
+      defaultValues.dx !== dx ||
+      defaultValues.dy !== dy ||
+      defaultValues.dWidth !== dWidth ||
+      defaultValues.dHeight !== dHeight
     ) {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
@@ -418,22 +400,13 @@ export const generateCard = async (
     generateWithImage(
       ctx,
       canvas,
-      color1,
-      color2,
-      color3,
+      colors,
       rankInfo,
       currentLevelIndex,
       rank,
       settings,
       images,
-      sx,
-      sy,
-      sWidth,
-      sHeight,
-      dx,
-      dy,
-      dWidth,
-      dHeight,
+      imagePosition,
     );
   } else {
     const avatarImage = await loadImages([
@@ -444,12 +417,8 @@ export const generateCard = async (
 
     generateWithGradient(
       ctx,
-      gradientColor1,
-      gradientColor2,
+      colors,
       isGradientField,
-      color1,
-      color2,
-      color3,
       currentLevelIndex,
       rankInfo,
       rank,

@@ -18,10 +18,12 @@ import { getIdDiscord } from 'utils/api';
 export default function Ranks() {
   const dispatch = useDispatch();
   const { actions } = useDashboardSlice();
+
   const settings: any = useSelector(selectSettings);
   const loadingUpdate: boolean = useSelector(selectLoadingUpdate);
   const loading: boolean = useSelector(selectLoading);
-  const cardInfo: any = useSelector(selectCardInfo);
+
+  const defaultValues: any = useSelector(selectCardInfo);
 
   const idDiscord: string | null = getIdDiscord();
 
@@ -42,11 +44,11 @@ export default function Ranks() {
   const [thereAreChanges, setThereAreChanges] = React.useState(false);
 
   const { control, handleSubmit, watch, reset, formState } = useForm({
-    defaultValues: cardInfo,
+    defaultValues,
     mode: 'onChange',
   });
 
-  const resetImagePosition = (
+  const setImagePosition = (
     sxValue,
     syValue,
     sWidthValue,
@@ -66,26 +68,42 @@ export default function Ranks() {
     setDHeight(dHeightValue);
   };
 
-  React.useEffect(() => {
-    if (cardInfo && Object.keys(cardInfo).length > 0) {
-      setColor1(cardInfo.color1);
-      setColor2(cardInfo.color2);
-      setColor3(cardInfo.color3);
-      setGradientColor1(cardInfo.gradientColor1);
-      setGradientColor2(cardInfo.gradientColor2);
+  const setColors = (
+    color1Value,
+    color2Value,
+    color3Value,
+    gradientColor1Value,
+    gradientColor2Value,
+  ) => {
+    setColor1(color1Value);
+    setColor2(color2Value);
+    setColor3(color3Value);
+    setGradientColor1(gradientColor1Value);
+    setGradientColor2(gradientColor2Value);
+  };
 
-      resetImagePosition(
-        cardInfo.sx,
-        cardInfo.sy,
-        cardInfo.sWidth,
-        cardInfo.sHeight,
-        cardInfo.dx,
-        cardInfo.dy,
-        cardInfo.dWidth,
-        cardInfo.dHeight,
+  React.useEffect(() => {
+    if (defaultValues && Object.keys(defaultValues).length > 0) {
+      setColors(
+        defaultValues.color1,
+        defaultValues.color2,
+        defaultValues.color3,
+        defaultValues.gradientColor1,
+        defaultValues.gradientColor2,
+      );
+
+      setImagePosition(
+        defaultValues.sx,
+        defaultValues.sy,
+        defaultValues.sWidth,
+        defaultValues.sHeight,
+        defaultValues.dx,
+        defaultValues.dy,
+        defaultValues.dWidth,
+        defaultValues.dHeight,
       );
     }
-  }, [cardInfo]);
+  }, [defaultValues]);
 
   const formData = watch();
 
@@ -97,11 +115,11 @@ export default function Ranks() {
 
   React.useEffect(() => {
     setThereAreChanges(
-      Object.keys(cardInfo).length > 0 &&
+      Object.keys(defaultValues).length > 0 &&
         Object.keys(formData).length > 0 &&
         !_.isEqual(
           {
-            ...cardInfo,
+            ...defaultValues,
             ...formData,
             ...(color1 !== 'white' && { color1 }),
             ...(color2 !== 'white' && { color2 }),
@@ -117,7 +135,7 @@ export default function Ranks() {
             dWidth,
             dHeight,
           },
-          cardInfo,
+          defaultValues,
         ),
     );
   }, [formData]);
@@ -170,42 +188,32 @@ export default function Ranks() {
           </div>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Card
-              cardInfo={cardInfo}
+              defaultValues={defaultValues}
+              setColors={setColors}
+              setImagePosition={setImagePosition}
               control={control}
               reset={reset}
               watch={watch}
-              loadingUpdate={loadingUpdate}
-              color1={color1}
-              color2={color2}
-              color3={color3}
-              gradientColor1={gradientColor1}
-              gradientColor2={gradientColor2}
-              setColor1={setColor1}
-              setColor2={setColor2}
-              setColor3={setColor3}
-              setGradientColor1={setGradientColor1}
-              setGradientColor2={setGradientColor2}
+              colors={{
+                color1,
+                color2,
+                color3,
+                gradientColor1,
+                gradientColor2,
+              }}
+              imagePosition={{
+                sx,
+                sy,
+                sWidth,
+                sHeight,
+                dx,
+                dy,
+                dWidth,
+                dHeight,
+              }}
               thereAreChanges={thereAreChanges}
               setThereAreChanges={setThereAreChanges}
-              settings={settings}
               formState={formState}
-              sx={sx}
-              sy={sy}
-              sWidth={sWidth}
-              sHeight={sHeight}
-              dx={dx}
-              dy={dy}
-              dWidth={dWidth}
-              dHeight={dHeight}
-              setSx={setSx}
-              setSy={setSy}
-              setSWidth={setSWidth}
-              setSHeight={setSHeight}
-              setDx={setDx}
-              setDy={setDy}
-              setDWidth={setDWidth}
-              setDHeight={setDHeight}
-              resetImagePosition={resetImagePosition}
             />
           </form>
         </React.Fragment>
