@@ -41,7 +41,7 @@ const generateBackground = async (
 				},
 				function (err, res, data) {
 					if (err) {
-						throw err;
+						console.log(err);
 					}
 					console.log({ response: res }); // 200
 					console.log({ data }); // Buffer('this is the server response')
