@@ -31,12 +31,13 @@ const generateBackground = async (
 	if (isImage && image !== "") {
 		try {
 			const a = await canvas.loadImage(image);
+			console.log({ a });
 			if (!a) {
 				return;
 			}
 			ctx.drawImage(a, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
 		} catch (error) {
-			console.log(error);
+			console.log({ error });
 		}
 		return;
 	}
