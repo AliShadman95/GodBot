@@ -32,7 +32,13 @@ const generateBackground = async (
 	if (isImage && image !== "") {
 		try {
 			get.concat(
-				"https://c.wallhere.com/photos/3d/58/Persona_5_video_games_Persona_series-1207737.jpg!d",
+				{
+					url: "https://c.wallhere.com/photos/3d/58/Persona_5_video_games_Persona_series-1207737.jpg!d",
+					headers: {
+						"user-agent":
+							"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.67 Safari/537.36",
+					},
+				},
 				function (err, res, data) {
 					if (err) {
 						throw err;
