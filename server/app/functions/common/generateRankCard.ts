@@ -1,6 +1,7 @@
 import canvas, { registerFont } from "canvas"; // For canvas.
 import { DiscordSettingsRankInterface, DiscordCardInferface } from "@app/types/databases.type";
 registerFont("app/fonts/Inter-Regular.ttf", { family: "InterBold" });
+import get from "simple-get";
 
 interface userInfo {
 	username: string;
@@ -30,6 +31,17 @@ const generateBackground = async (
 ): Promise<void> => {
 	if (isImage && image !== "") {
 		try {
+			get.concat(
+				"https://c.wallhere.com/photos/3d/58/Persona_5_video_games_Persona_series-1207737.jpg!d",
+				function (err, res, data) {
+					if (err) {
+						throw err;
+					}
+					console.log({ response: res }); // 200
+					console.log({ data }); // Buffer('this is the server response')
+				},
+			);
+
 			const a = await canvas.loadImage(image);
 			console.log({ a });
 			if (!a) {

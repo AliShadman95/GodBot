@@ -78,6 +78,7 @@
 		"jsonwebtoken": "^8.5.1",
 		"mongoose": "^5.13.14",
 		"node-html-to-image": "^3.2.4",
+		"simple-get": "^4.0.1",
 		"ts-jest": "^27.1.2",
 		"ts-node": "^10.4.0",
 		"ts-patch": "^2.0.1",
