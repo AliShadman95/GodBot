@@ -1,5 +1,4 @@
 import { Grid } from '@mui/material';
-
 const Canvas = ({ canvasRef }) => {
   return (
     <Grid item xs={12} md={12} lg={5}>

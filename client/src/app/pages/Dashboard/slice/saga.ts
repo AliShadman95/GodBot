@@ -100,10 +100,34 @@ function* getAllRanks(dispatch) {
   }
 }
 
+function* uploadImage({ payload }) {
+  console.log(payload);
+  yield put(dashboardActions.uploadImageLoading());
+
+  const formData = new FormData();
+
+  formData.append('file', payload.file);
+  formData.append('username', payload.username);
+  formData.append('id', payload.id);
+
+  const response = yield call(poweredFetch, {
+    method: 'POST',
+    url: `${process.env.REACT_APP_SERVER_URL}/settings/backgroundImage`,
+    data: formData,
+    headers: { 'Content-Type': 'multipart/formdata' },
+  });
+  if (response.status === 200) {
+    yield put(dashboardActions.uploadImageSuccess(response.data));
+  } else {
+    yield put(dashboardActions.uploadImageError(response.data));
+  }
+}
+
 export function* dashboardSaga() {
   try {
     yield all([
       takeLatest(dashboardActions.getSettingsAction, getSettings),
+      takeLatest(dashboardActions.uploadImageAction, uploadImage),
       takeLatest(dashboardActions.getAllRanksAction, getAllRanks),
       takeLatest(dashboardActions.getRankUserAction, getRankUser),
       takeLatest(dashboardActions.getVoiceChannelsAction, getVoiceChannels),

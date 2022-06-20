@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
-import { Grid, FormControl } from '@mui/material';
+import { Grid, FormControl, Button } from '@mui/material';
 import Input from 'app/components/Fields/Input';
 import { isValidHttpUrl } from 'utils/utils';
 
@@ -11,6 +11,8 @@ const ImageLink = ({
   formState,
   setImagePosition,
   imagePosition,
+  file,
+  setFile,
 }) => {
   const { sx, sy, dx, dy, dWidth, dHeight } = imagePosition;
 

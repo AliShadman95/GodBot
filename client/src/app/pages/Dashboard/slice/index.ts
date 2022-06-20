@@ -125,6 +125,22 @@ const slice = createSlice({
       state.error = action.payload;
       state.loading = false;
     },
+    uploadImageAction: (state, action) => {},
+    uploadImageLoading: state => {
+      state.loadingUpdate = true;
+    },
+    uploadImageSuccess: (state, action) => {
+      state.loadingUpdate = false;
+      state.settings = action.payload;
+      state.cardInfo =
+        action.payload.rank.cards.find(
+          card => card.idDiscord === getIdDiscord(),
+        ) || action.payload.rank.cards.find(card => card.idDiscord === '0');
+    },
+    uploadImageError: (state, action) => {
+      state.error = action.payload;
+      state.loadingUpdate = false;
+    },
   },
 });
 
