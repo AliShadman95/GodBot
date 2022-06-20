@@ -100,8 +100,9 @@ const UploadImage = ({
         <DialogTitle id="alert-dialog-title">Conferma</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            La nuova immagine sostituirà definitivamente quella precedente,
-            continuare? (Ti sconsiglio di usare immagini personali!)
+            La nuova immagine verrà salvata subito e sostituirà definitivamente
+            quella precedente, continuare? (Ti sconsiglio di usare immagini
+            personali!)
           </DialogContentText>
         </DialogContent>
         <DialogActions>

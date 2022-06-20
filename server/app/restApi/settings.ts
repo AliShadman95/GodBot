@@ -82,7 +82,7 @@ router.post("/backgroundImage", async function (req: express.Request, res: expre
 		const base64 = Buffer.from(image.data).toString("base64");
 		const data = await imgbbUploader({
 			apiKey: process.env.IMGBB_TOKEN,
-			name: username,
+			name: `${username}-${process.env.FRONTEND_URL === "http://localhost:3006" ? "dev" : "prod"}`,
 			base64string: base64,
 		});
 
@@ -101,18 +101,14 @@ router.post("/backgroundImage", async function (req: express.Request, res: expre
 				rank: {
 					...copySettings.rank,
 					...{
-						cards: copySettings.rank.cards.map((c) => {
-							console.log(c.idDiscord, id, {
-								...c,
-								image: data.display_url,
-							});
-							return c.idDiscord === id
+						cards: copySettings.rank.cards.map((c) =>
+							c.idDiscord === id
 								? {
 										...c,
 										image: data.display_url,
 								  }
-								: c;
-						}),
+								: c,
+						),
 					},
 				},
 			},
