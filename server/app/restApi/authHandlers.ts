@@ -1,5 +1,4 @@
 import jwt from "jsonwebtoken";
-import config from "@app/configs/auth.config";
 
 const verifyToken = (req, res, next): undefined => {
 	let token = req.headers["authorization"];

@@ -32,7 +32,6 @@ const generateBackground = async (
 	if (isImage && image !== "") {
 		try {
 			const a = await canvas.loadImage(image);
-
 			if (!a) {
 				return;
 			}

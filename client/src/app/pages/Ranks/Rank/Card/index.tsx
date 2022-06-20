@@ -22,8 +22,8 @@ import ColoriSfondo from './components/ColoriSfondo';
 import ImageForm from './components/ImageForm';
 import Header from './components/Header';
 import Canvas from './components/Canvas';
-import ImageLink from './components/ImageLink';
 import Buttons from './components/Buttons';
+import UploadImage from './components/UploadImage';
 
 const Card = ({
   defaultValues,
@@ -118,7 +118,7 @@ const Card = ({
 
           {isImageField ? (
             <React.Fragment>
-              <ImageLink
+              <UploadImage
                 control={control}
                 defaultValues={defaultValues}
                 imageField={imageField}

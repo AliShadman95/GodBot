@@ -43,7 +43,7 @@ export default function Ranks() {
 
   const [thereAreChanges, setThereAreChanges] = React.useState(false);
 
-  const { control, handleSubmit, watch, reset, formState } = useForm({
+  const { control, handleSubmit, watch, reset, formState, setValue } = useForm({
     defaultValues,
     mode: 'onChange',
   });
@@ -102,6 +102,8 @@ export default function Ranks() {
         defaultValues.dWidth,
         defaultValues.dHeight,
       );
+
+      setValue('image', defaultValues.image);
     }
   }, [defaultValues]);
 

@@ -8,9 +8,9 @@
 import 'react-app-polyfill/ie11';
 import 'react-app-polyfill/stable';
 import CssBaseline from '@mui/material/CssBaseline';
+import { createRoot } from 'react-dom/client';
 
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import FontFaceObserver from 'fontfaceobserver';
 import { AuthenticationProvider } from 'app/pages/AuthenticationProvider';
@@ -59,22 +59,21 @@ openSansObserver.load().then(() => {
 });
 
 const store = configureAppStore();
-const MOUNT_NODE = document.getElementById('root') as HTMLElement;
 
-ReactDOM.render(
+const MOUNT_NODE = document.getElementById('root') as HTMLElement;
+const root = createRoot(MOUNT_NODE);
+
+root.render(
   <Provider store={store}>
     <HelmetProvider>
-      <React.StrictMode>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <AuthenticationProvider>
-            <App />
-          </AuthenticationProvider>
-        </ThemeProvider>
-      </React.StrictMode>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <AuthenticationProvider>
+          <App />
+        </AuthenticationProvider>
+      </ThemeProvider>
     </HelmetProvider>
   </Provider>,
-  MOUNT_NODE,
 );
 
 // Hot reloadable translation json files
