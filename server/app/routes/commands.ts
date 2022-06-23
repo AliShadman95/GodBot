@@ -8,6 +8,8 @@ import removeXp from "@app/functions/commands/removeXp";
 import version from "@app/functions/commands/version";
 import help from "@app/functions/commands/help";
 import info from "@app/functions/commands/info";
+import daily from "@app/functions/commands/daily";
+import weekly from "@app/functions/commands/weekly";
 
 const commands = {
 	commandsHandler,
@@ -20,7 +22,22 @@ const commands = {
 	version,
 	help,
 	info,
+	daily,
+	weekly,
 };
 
-export { commandsHandler, launch, voiceDetection, removeXp, leaderboard, rank, giveXp, version, help, info };
+export {
+	commandsHandler,
+	launch,
+	voiceDetection,
+	removeXp,
+	leaderboard,
+	rank,
+	giveXp,
+	version,
+	help,
+	info,
+	daily,
+	weekly,
+};
 export default commands;

@@ -12,11 +12,14 @@ import RankSettings from '../Ranks/Settings';
 import Settings from '../Settings';
 import GiveXp from '../Ranks/GiveXp';
 import RemoveXp from '../Ranks/RemoveXp';
+import Daily from '../Economy/Daily';
 import { useDashboardSlice } from './slice/index';
 import PrimaryNavBar from '../PrimaryNavBar';
 import Copyright from 'app/components/Copyright';
 import { getIdDiscord, getUsername } from 'utils/api';
 import AlertInfo from '../Alert';
+import Weekly from '../Economy/Weekly';
+import EconomySettings from '../Economy/Settings';
 
 export default function Dashboard() {
   const dispatch = useDispatch();
@@ -76,6 +79,15 @@ export default function Dashboard() {
                 </Route>
                 <Route path={`${path}/rank/remove-xp`}>
                   <RemoveXp />
+                </Route>
+                <Route path={`${path}/economy/daily`}>
+                  <Daily />
+                </Route>
+                <Route path={`${path}/economy/weekly`}>
+                  <Weekly />
+                </Route>
+                <Route path={`${path}/economy/settings`}>
+                  <EconomySettings />
                 </Route>
               </Switch>
             </Grid>
