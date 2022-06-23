@@ -141,6 +141,22 @@ const slice = createSlice({
       state.error = action.payload;
       state.loadingUpdate = false;
     },
+    uploadCoinIconAction: (state, action) => {},
+    uploadCoinIconLoading: state => {
+      state.loadingUpdate = true;
+    },
+    uploadCoinIconSuccess: (state, action) => {
+      state.loadingUpdate = false;
+      state.settings = action.payload;
+      state.cardInfo =
+        action.payload.rank.cards.find(
+          card => card.idDiscord === getIdDiscord(),
+        ) || action.payload.rank.cards.find(card => card.idDiscord === '0');
+    },
+    uploadCoinIconError: (state, action) => {
+      state.error = action.payload;
+      state.loadingUpdate = false;
+    },
   },
 });
 
