@@ -1,5 +1,5 @@
 /**
- * Grammy Telegram API Framework Hears
+ * Voice Detection Func
  * =====================
  *
  * Alì Shadman [@AliShadman95] (https://github.com/AliShadman95)
@@ -19,13 +19,18 @@ import isLevelUp from "@app/functions/common/isLevelUp";
 // Use this const for testing
 const minimumSecondsInVoiceChannel = 600;
 
+// This check if we are adding already someone (To prevent users join at the same time and being added 2x)
+let isSomeoneInJoinQueue = false;
+
 const userJoin = async (id: string, username: string): Promise<void> => {
 	logger.info(`User joined ${id}-${username}`, "voiceDetection.ts:userJoin()");
+	isSomeoneInJoinQueue = true;
 	if (id === "0") {
 		return;
 	}
 
 	await db.voiceChannel.add({ id, username, joinTime: Date.now() });
+	isSomeoneInJoinQueue = false;
 };
 
 const userLeft = async (
@@ -40,6 +45,7 @@ const userLeft = async (
 	}: DiscordSettingsRankInterface,
 ): Promise<void> => {
 	logger.info(`User left ${member.id}-${member.username}`, "voiceDetection.ts:userLeft()");
+
 	const userInChannel = await db.voiceChannel.get({ id: member.id });
 
 	if (userInChannel.id !== "0") {
@@ -149,11 +155,18 @@ const voiceDetection = async (): Promise<void> => {
 				case 1:
 					break;
 				case 2:
-					newUserChannel?.members.forEach(async (m) => {
-						if (!m.user.bot) {
-							await userJoin(m.user.id, m.user.username);
-						}
-					});
+					if (!isSomeoneInJoinQueue) {
+						newUserChannel?.members.forEach(async (m) => {
+							if (!m.user.bot) {
+								await userJoin(m.user.id, m.user.username);
+							}
+						});
+					} else {
+						logger.error(
+							`${username} tryed to join but we are not running the func for him, the queue was full and he is being added`,
+							"voiceDetection.ts:userJoin()",
+						);
+					}
 					break;
 				default:
 					await userJoin(userId || "0", username);
@@ -166,8 +179,8 @@ const voiceDetection = async (): Promise<void> => {
 				case 0:
 					break;
 				case 1:
-					await userLeft(newMember.member?.user, settings.rank);
 					await userLeft(oldUserChannel.members.first()?.user, settings.rank);
+					await userLeft(newMember.member?.user, settings.rank);
 					break;
 				default:
 					await userLeft(newMember.member?.user, settings.rank);
