@@ -20,6 +20,7 @@ import { removexp } from "../slash/removexp";
 import { rank } from "../slash/rank";
 import { daily } from "../slash/daily";
 import { weekly } from "../slash/weekly";
+import { coins } from "../slash/coins";
 
 const registerCommands = async () => {
 	const commands = [
@@ -32,6 +33,7 @@ const registerCommands = async () => {
 		version.toJSON(),
 		daily.toJSON(),
 		weekly.toJSON(),
+		coins.toJSON(),
 	];
 
 	const rest = new REST({ version: "9" }).setToken(process.env.BOT_TOKEN || "");

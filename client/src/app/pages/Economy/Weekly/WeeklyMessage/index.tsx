@@ -24,7 +24,7 @@ export default function WeeklyMessage({
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Title>Messaggio commando /weekly</Title>
+          <Title>Messaggio comando /weekly</Title>
         </AccordionSummary>
         <AccordionDetails>
           <div style={{ marginBottom: '1em' }}>

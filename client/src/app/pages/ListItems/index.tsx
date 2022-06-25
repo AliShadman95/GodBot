@@ -12,6 +12,7 @@ import DateRangeIcon from '@mui/icons-material/DateRange';
 import Settings from '@mui/icons-material/Settings';
 import Divider from '@mui/material/Divider';
 import TodayIcon from '@mui/icons-material/Today';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 
 export const MainListItems = () => {
   const history = useHistory();
@@ -101,6 +102,18 @@ export const MainListItems = () => {
         </ListItemIcon>
         <ListItemText primary="/weekly" />
       </ListItemButton>
+
+      <ListItemButton
+        onClick={() => {
+          history.push(`${url}/economy/coins`);
+        }}
+      >
+        <ListItemIcon>
+          <AttachMoneyIcon />
+        </ListItemIcon>
+        <ListItemText primary="/coins" />
+      </ListItemButton>
+
       <ListItemButton
         onClick={() => {
           history.push(`${url}/economy/settings`);

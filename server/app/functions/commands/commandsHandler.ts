@@ -65,6 +65,9 @@ const commandsHandler = async (): Promise<void> => {
 				case "weekly":
 					commands.weekly(ctx);
 					break;
+				case "coins":
+					commands.coins(ctx);
+					break;
 				default:
 					break;
 			}

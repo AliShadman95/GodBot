@@ -7,6 +7,7 @@ import removexp from "@app/functions/slash/removexp";
 import version from "@app/functions/slash/version";
 import daily from "@app/functions/slash/daily";
 import weekly from "@app/functions/slash/weekly";
+import coins from "@app/functions/slash/coins";
 
 const slash = {
 	givexp,
@@ -18,7 +19,8 @@ const slash = {
 	info,
 	daily,
 	weekly,
+	coins,
 };
 
-export { info, help, version, removexp, leaderboard, rank, givexp, daily, weekly };
+export { info, help, version, removexp, leaderboard, rank, givexp, daily, weekly, coins };
 export default slash;

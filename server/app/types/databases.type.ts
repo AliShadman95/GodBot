@@ -52,6 +52,7 @@ export interface DiscordSettingsInterface {
  * @param { string } dailyMaxReward - Maximum daily reward
  * @param { string } weeklyRewardMin - Minimum weekly reward
  * @param { string } weeklyMaxReqrd - Maximum weekly reward
+ * @param { string } showCoinsMessage - Message to send when the user wants to see his coins
  *
  */
 export interface DiscordSettingsEconomyInterface {
@@ -118,6 +119,15 @@ export interface DiscordSettingsEconomyInterface {
 	 *
 	 */
 	weeklyRewardMessage: string;
+	/**
+	 * Discord Settings Economy Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } showCoinsMessage - Message to send when the user wants to see his coins
+	 *
+	 */
+	showCoinsMessage: string;
 }
 
 /**

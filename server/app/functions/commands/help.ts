@@ -61,6 +61,7 @@ const economyHelp = (ctx, isFromSelect: boolean) => {
 		.addFields(
 			{ name: "`/daily`", value: "Ottieni le tue monete giornaliere." },
 			{ name: "`/weekly`", value: "Ottieni le tue monete settimanali." },
+			{ name: "`/coins (utente opzionale)`", value: "Mostra le tue monete o quelle di un'altra persona." },
 		);
 
 	if (isFromSelect) {

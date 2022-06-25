@@ -20,6 +20,7 @@ import { getIdDiscord, getUsername } from 'utils/api';
 import AlertInfo from '../Alert';
 import Weekly from '../Economy/Weekly';
 import EconomySettings from '../Economy/Settings';
+import Coins from '../Economy/Coins';
 
 export default function Dashboard() {
   const dispatch = useDispatch();
@@ -85,6 +86,9 @@ export default function Dashboard() {
                 </Route>
                 <Route path={`${path}/economy/weekly`}>
                   <Weekly />
+                </Route>
+                <Route path={`${path}/economy/coins`}>
+                  <Coins />
                 </Route>
                 <Route path={`${path}/economy/settings`}>
                   <EconomySettings />

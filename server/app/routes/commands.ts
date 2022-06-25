@@ -10,6 +10,7 @@ import help from "@app/functions/commands/help";
 import info from "@app/functions/commands/info";
 import daily from "@app/functions/commands/daily";
 import weekly from "@app/functions/commands/weekly";
+import coins from "@app/functions/commands/coins";
 
 const commands = {
 	commandsHandler,
@@ -24,6 +25,7 @@ const commands = {
 	info,
 	daily,
 	weekly,
+	coins,
 };
 
 export {
@@ -39,5 +41,6 @@ export {
 	info,
 	daily,
 	weekly,
+	coins,
 };
 export default commands;
