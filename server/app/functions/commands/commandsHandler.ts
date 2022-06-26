@@ -68,6 +68,9 @@ const commandsHandler = async (): Promise<void> => {
 				case "coins":
 					commands.coins(ctx);
 					break;
+				case "dice":
+					commands.dice(ctx);
+					break;
 				default:
 					break;
 			}
