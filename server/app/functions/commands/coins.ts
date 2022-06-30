@@ -20,11 +20,23 @@ const coins = async (ctx): Promise<void> => {
 
 	const settings = await db.settings.get({});
 
+	const guild = await discord.api.guild.getGuild();
+	const coinEmoji = guild.emojis.cache.find((emoji) => emoji.name === "godbot");
+
+	if (!coinEmoji) {
+		discord.api.interactions.send(
+			ctx,
+			"Non sono riuscito a trovare l'emoji delle monete. Controlla che sia presente nel server.",
+			"",
+		);
+		return;
+	}
+
 	discord.api.interactions.send(
 		ctx,
 		`${settings?.economy?.showCoinsMessage
 			.replace("{user}", selectedUser.username)
-			.replace("{coinsTotali}", `${user.coins} ${settings?.economy?.coinName}`)}`,
+			.replace("{coinsTotali}", `${user.coins} ${settings?.economy?.coinName} ${coinEmoji}`)}`,
 		"",
 	);
 };

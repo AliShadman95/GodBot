@@ -21,6 +21,15 @@ const dice = async (ctx): Promise<void> => {
 	const coinEmoji = guild.emojis.cache.find((emoji) => emoji.name === "godbot");
 	const coinName = settings?.economy?.coinName;
 
+	if (selectedCoins > parseInt(user.coins)) {
+		discord.api.interactions.send(
+			ctx,
+			`🎲 ${selectedUser.username} non hai abbastanza ${settings?.economy?.coinName} ${coinEmoji} per giocare.`,
+			"",
+		);
+		return;
+	}
+
 	if (!coinEmoji) {
 		discord.api.interactions.send(
 			ctx,
@@ -61,6 +70,8 @@ const dice = async (ctx): Promise<void> => {
 	if (isDraw) {
 		newCoins += selectedCoins;
 	}
+
+	await db.economy.update({ id: selectedUser.id }, { ...user, coins: newCoins.toString() });
 
 	discord.api.interactions.send(
 		ctx,

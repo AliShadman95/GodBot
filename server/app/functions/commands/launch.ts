@@ -22,6 +22,7 @@ import { daily } from "../slash/daily";
 import { weekly } from "../slash/weekly";
 import { coins } from "../slash/coins";
 import { dice } from "../slash/dice";
+import { guess } from "../slash/guess";
 
 const registerCommands = async () => {
 	const commands = [
@@ -36,6 +37,7 @@ const registerCommands = async () => {
 		weekly.toJSON(),
 		coins.toJSON(),
 		dice.toJSON(),
+		guess.toJSON(),
 	];
 
 	const rest = new REST({ version: "9" }).setToken(process.env.BOT_TOKEN || "");

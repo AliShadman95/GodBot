@@ -767,3 +767,82 @@ export interface DiscordEconomyInterface {
 	 */
 	discriminator: string;
 }
+/**
+ * Discord Games Interface
+ * =====================
+ *
+ * @Context: message.author.User
+ *
+ *
+ * @param { string } guess - guess
+ *
+ */
+export interface DiscordGamesInterface {
+	/**
+	 * Discord Economy Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } guess - guess game info
+	 *
+	 */
+	guess: DiscordGuessInterface[];
+}
+/**
+ * Discord Guess Interface
+ * =====================
+ *
+ * @Context: message.author.User
+ *
+ *
+ * @param { string } userId - id of user playing game
+ * @param { string } numberToGuess - number to guess
+ *
+ */
+export interface DiscordGuessInterface {
+	/**
+	 * Discord Guess Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } userId - id of user playing game
+	 *
+	 */
+	userId: string;
+	/**
+	 * Discord Guess Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } username - username of the user playing game
+	 *
+	 */
+	username: string;
+	/**
+	 * Discord Guess Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } numberToGuess - number to guess
+	 *
+	 */
+	numberToGuess: string;
+	/**
+	 * Discord Guess Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } coinsPlayed - amount of coins user played
+	 *
+	 */
+	coinsPlayed: string;
+	/**
+	 * Discord Guess Interface
+	 * =====================
+	 *
+	 *
+	 * @param { number } attempts - amount of attempts user made
+	 *
+	 */
+	attempts: number;
+}
