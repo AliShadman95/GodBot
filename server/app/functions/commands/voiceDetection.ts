@@ -150,6 +150,11 @@ const voiceDetection = async (): Promise<void> => {
 			afkChannel?.id !== newUserChannel.id &&
 			afkChannel?.id !== oldUserChannel.id;
 
+		logger.info(
+			`${username} changed the voice state: DEBUG THIS: isJoinNormal: ${isJoinNormal} isLeaveNormal: ${isLeaveNormal} isJoinAfkDirect: ${isJoinAfkDirect} isJoinAfkFromChannel: ${isJoinAfkFromChannel} isJoinChannelFromAfk: ${isJoinChannelFromAfk} isLeftAfk: ${isLeftAfk} isChangeChannel: ${isChangeChannel}`,
+			"voiceDetection.ts:userJoin()",
+		);
+
 		const joinVoiceChannel = async (): Promise<void> => {
 			switch (newUserChannel?.members?.filter((m) => !m.user.bot).size) {
 				case 1:
