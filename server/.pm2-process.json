@@ -11,5 +11,8 @@
 	"ignore_watch": [".git", "logs", "databases", "node_modules", "npm-debug.log"],
 	"watch_options": {
 		"followSymlinks": false
+	},
+	"env": {
+		"NODE_ENV": "production"
 	}
 }

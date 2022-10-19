@@ -5,6 +5,7 @@ import express from "express";
 import bot from "@app/core/token";
 import cors from "cors";
 import fileUpload from "express-fileupload";
+import path from "path";
 
 const settings = require("@app/restApi/settings");
 const auth = require("@app/restApi/auth");
