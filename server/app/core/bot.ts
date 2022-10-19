@@ -12,7 +12,7 @@ const ranks = require("@app/restApi/ranks");
 const main = require("@app/restApi/main");
 const authJwt = require("@app/restApi/authHandlers");
 
-require("dotenv").config();
+require("dotenv").config({ path: `.env.${process.env.NODE_ENV}` });
 
 const app = express();
 app.use(cors());

@@ -1,5 +1,5 @@
 {
-	"name": "aboutmeinfo-telegram-bot",
+	"name": "godbot",
 	"script": "dist/core/bot.js",
 	"watch": true,
 	"max_restarts": 9999,
