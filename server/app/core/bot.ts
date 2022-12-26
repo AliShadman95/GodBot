@@ -5,6 +5,7 @@ import express from "express";
 import bot from "@app/core/token";
 import cors from "cors";
 import fileUpload from "express-fileupload";
+import path from "path";
 
 const settings = require("@app/restApi/settings");
 const auth = require("@app/restApi/auth");
@@ -12,7 +13,7 @@ const ranks = require("@app/restApi/ranks");
 const main = require("@app/restApi/main");
 const authJwt = require("@app/restApi/authHandlers");
 
-require("dotenv").config();
+require("dotenv").config({ path: `.env.${process.env.NODE_ENV}` });
 
 const app = express();
 app.use(cors());

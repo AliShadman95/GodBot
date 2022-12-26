@@ -131,3 +131,5 @@ app/configs/version.json
 /README copy.md
 
 .env
+.env.production
+.env.development

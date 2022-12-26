@@ -1,5 +1,5 @@
 {
-	"name": "aboutmeinfo-telegram-bot",
+	"name": "godbot",
 	"script": "dist/core/bot.js",
 	"watch": true,
 	"max_restarts": 9999,
@@ -11,5 +11,8 @@
 	"ignore_watch": [".git", "logs", "databases", "node_modules", "npm-debug.log"],
 	"watch_options": {
 		"followSymlinks": false
+	},
+	"env": {
+		"NODE_ENV": "production"
 	}
 }
