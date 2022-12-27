@@ -66,7 +66,7 @@ const guess = async (ctx): Promise<void> => {
 				{
 					userId: selectedUser.id,
 					username: selectedUser.username,
-					attempts: 0,
+					attempts: 5,
 					coinsPlayed: selectedCoins,
 					numberToGuess: winningNumber.toString(),
 				},

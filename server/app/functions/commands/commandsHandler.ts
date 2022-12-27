@@ -26,7 +26,7 @@ const commandsHandler = async (): Promise<void> => {
 		const gamesDb = await db.games.get({});
 
 		if (gamesDb?.guess.some((game) => game.userId === discord.api.message.getUserID(ctx)) && Number(ctx.content)) {
-			await games.guess(ctx.content, gamesDb?.guess);
+			await games.guess(ctx, gamesDb);
 		}
 
 		if (discord.api.message.isBot(ctx)) {

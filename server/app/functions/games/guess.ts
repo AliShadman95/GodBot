@@ -9,42 +9,22 @@ const wait = require("node:timers/promises").setTimeout;
  * Play the guess game
  *
  * @param ctx
- */ 3;
-const guess = async (message, guess): Promise<void> => {
-	console.log(message, guess);
+ */
 
-	if (parseInt(message) === parseInt(guess.numberToGuess)) {
-		console.log("indovinato");
-		return;
-	}
-	if (parseInt(message) > parseInt(guess.numberToGuess)) {
-		console.log("il umero che cerchi è inferiore");
-		return;
-	}
-	if (parseInt(message) < parseInt(guess.numberToGuess)) {
-		console.log("Il numero che cerchi è maggiore");
-		return;
-	}
+const guess = async (ctx, gamesDb): Promise<void> => {
+	const { author: user, content: message } = ctx;
+	const id = discord.api.message.getUserID(ctx);
 
-	/* const selectedUser = ctx.user;
-	const selectedCoins = ctx.options.getInteger("coins");
-
-	const user = await db.economy.get({ id: selectedUser.id });
 	const settings = await db.settings.get({});
+	const userEconomy = await db.economy.get({ id });
+
+	const userGame = gamesDb?.guess.find((game) => game.userId === id);
 
 	const guild = await discord.api.guild.getGuild();
 	const coinEmoji = guild.emojis.cache.find((emoji) => emoji.name === "godbot");
 	const coinName = settings?.economy?.coinName;
 
-	if (selectedCoins > parseInt(user.coins)) {
-		discord.api.interactions.send(
-			ctx,
-			`🎲 ${selectedUser.username} non hai abbastanza ${settings?.economy?.coinName} ${coinEmoji} per giocare.`,
-			"",
-		);
-		return;
-	}
-
+	// If there is not coin emoji
 	if (!coinEmoji) {
 		discord.api.interactions.send(
 			ctx,
@@ -54,55 +34,73 @@ const guess = async (message, guess): Promise<void> => {
 		return;
 	}
 
-	const min = 1;
-	const max = 100;
+	// If user win
+	if (parseInt(message) === parseInt(userGame?.numberToGuess)) {
+		await db.games.update(
+			{},
+			{
+				...gamesDb,
+				guess: gamesDb?.guess.filter((game) => game.userId !== discord.api.message.getUserID(ctx)),
+			},
+		);
 
-	const winningNumber = Math.floor(Math.random() * (max - min + 1) + min);
+		await db.economy.update(
+			{ id },
+			{ ...userEconomy, coins: (parseInt(userEconomy?.coins) + userGame?.coinsPlayed).toString() },
+		);
 
-	const games = await db.games.get({});
-
-	const userGame = games?.guess.find((game) => game.userId === selectedUser.id);
-
-	console.log(games);
-
-	if (userGame) {
 		discord.api.interactions.send(
 			ctx,
-			"Hai già una partita di guess in corso. Devi aspettare che finisca prima di giocare una nuova.",
+			`:tada: ${user?.username}, hai indovinato il numero e hai vinto ${
+				userGame?.coinsPlayed
+			} ${coinName} ${coinEmoji}! Complimenti, ora hai un totale di ${
+				parseInt(userEconomy?.coins) + userGame?.coinsPlayed
+			} ${coinName} ${coinEmoji}!`,
 			"",
 		);
+
+		return;
+	}
+
+	// If user lose and don't have more attempts
+	if (userGame?.attempts - 1 === 0) {
+		await db.games.update(
+			{},
+			{
+				...gamesDb,
+				guess: gamesDb?.guess.filter((game) => game.userId !== discord.api.message.getUserID(ctx)),
+			},
+		);
+
+		await db.economy.update(
+			{ id },
+			{ ...userEconomy, coins: (parseInt(userEconomy?.coins) - userGame?.coinsPlayed).toString() },
+		);
+
+		discord.api.interactions.send(
+			ctx,
+			`:thinking: ${user?.username}, non hai indovinato il numero e hai perso **${userGame?.coinsPlayed}** ${coinName} ${coinEmoji}! Il numero era **${userGame?.numberToGuess}**. :grimacing:`,
+			"",
+		);
+
 		return;
 	}
 
 	await db.games.update(
 		{},
 		{
-			...games,
-			guess: [
-				...games.guess,
-				{
-					userId: selectedUser.id,
-					username: selectedUser.username,
-					attempts: 0,
-					coinsPlayed: selectedCoins,
-					numberToGuess: winningNumber.toString(),
-				},
-			],
+			...gamesDb,
+			guess: gamesDb.guess.map((game) => (game.userId === id ? { ...game, attempts: game.attempts - 1 } : game)),
 		},
 	);
 
 	discord.api.interactions.send(
 		ctx,
-		`:thinking: ${selectedUser.username} punta ${selectedCoins} ${coinName} ${coinEmoji} e aziona la mistery machine...`,
+		`:thinking: ${user?.username}, il numero che stai cercando di indovinare è **${
+			parseInt(message) > parseInt(userGame?.numberToGuess) ? "inferiore" : "superiore"
+		} a ${parseInt(message)}** \n *Hai ancora ${userGame?.attempts - 1} tentativi*.`,
 		"",
 	);
-
-	await wait(3000);
-
-	discord.api.interactions.updateReply(
-		ctx,
-		`:thinking: ${selectedUser.username}, la mistery machine è pronta, hai ***5 tentativi*** per indovinare il numero da 1 a 100... Scrivi un numero`,
-	); */
 };
 
 export { guess };

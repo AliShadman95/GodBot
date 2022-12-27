@@ -45,7 +45,6 @@ const weekly = async (ctx): Promise<void> => {
 			coins: "0",
 			lastDailyReward: 0,
 			lastWeeklyReward: 0,
-			hasStartedGame: false,
 		});
 		user = await db.economy.get({ id: selectedUser.id });
 	}
