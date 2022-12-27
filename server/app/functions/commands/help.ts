@@ -23,6 +23,9 @@ const help = async (ctx): Promise<void> => {
 		case "economy":
 			economyHelp(ctx, isFromSelect);
 			break;
+		case "games":
+			gameHelp(ctx, isFromSelect);
+			break;
 		default:
 			mainHelp(ctx);
 			break;
@@ -71,6 +74,23 @@ const economyHelp = (ctx, isFromSelect: boolean) => {
 	discord.api.interactions.sendEmbeded(ctx, [embedMessage]);
 };
 
+const gameHelp = (ctx, isFromSelect: boolean) => {
+	const embedMessage = new MessageEmbed()
+		.setColor("#0099ff")
+		.setDescription("Lista di tutti i giochi disponibili.")
+		.setAuthor({ name: "GODBOT - Games", iconURL: "https://cdn-icons-png.flaticon.com/512/2534/2534504.png" })
+		.addFields(
+			{ name: "`/dice [coins]`", value: "Tira dei dadi e tenta la fortuna!" },
+			{ name: "`/guess [coins]`", value: "Indovina un numero da 1 a 100!" },
+		);
+
+	if (isFromSelect) {
+		discord.api.interactions.followUp(ctx, [embedMessage]);
+		return;
+	}
+	discord.api.interactions.sendEmbeded(ctx, [embedMessage]);
+};
+
 const generaleHelp = (ctx, isFromSelect: boolean) => {
 	const embedMessage = new MessageEmbed()
 		.setColor("#0099ff")
@@ -103,6 +123,7 @@ const mainHelp = (ctx) => {
 			{ name: "Rank", value: "`/help rank`", inline: true },
 			{ name: "Economy", value: "`/help economy`", inline: true },
 			{ name: "Generale", value: "`/help generale`", inline: true },
+			{ name: "Games", value: "`/help games`", inline: true },
 		);
 
 	const row = new MessageActionRow().addComponents(
@@ -124,6 +145,11 @@ const mainHelp = (ctx) => {
 					label: "Generale",
 					description: "Comandi generali del bot.",
 					value: "generale",
+				},
+				{
+					label: "Games",
+					description: "Lista dei giochi disponibili.",
+					value: "games",
 				},
 			]),
 	);
