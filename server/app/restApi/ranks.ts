@@ -15,12 +15,14 @@ router.get("/", async function (req: express.Request, res: express.Response): Pr
 
 	const guild = await bot.guilds.fetch(process.env.GUILD_ID || "");
 	const members = await guild.members.fetch();
+	const promises: any = [];
 	users.forEach(async (user) => {
 		const member = members.find((m) => m.id === user.id);
 		if (member) {
-			await db.rank.update({ id: user.id }, { ...user, avatar: member.avatar || "0" });
+			promises.push(db.rank.update({ id: user.id }, { ...user, avatar: member.avatar || "0" }));
 		}
 	});
+	await Promise.all(promises);
 	users = await db.rank.getAll();
 	res.json(users);
 });
