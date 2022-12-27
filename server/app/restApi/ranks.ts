@@ -2,6 +2,7 @@ import express from "express";
 const router = express.Router();
 import db from "@routes/api/database";
 import logger from "@app/functions/utils/logger";
+import bot from "@app/core/token";
 
 // middleware that is specific to this router
 router.use(function timeLog(req: express.Request, res: express.Response, next): void {
@@ -10,17 +11,34 @@ router.use(function timeLog(req: express.Request, res: express.Response, next): 
 });
 // define the home page route
 router.get("/", async function (req: express.Request, res: express.Response): Promise<void> {
-	const users = await db.rank.getAll();
+	let users = await db.rank.getAll();
+
+	const guild = await bot.guilds.fetch(process.env.GUILD_ID || "");
+	const members = await guild.members.fetch();
+	const promises: any = [];
+	users.forEach(async (user) => {
+		const member = members.find((m) => m.id === user.id);
+		if (member) {
+			promises.push(db.rank.update({ id: user.id }, { ...user, avatar: member?.user?.avatar || "0" }));
+		}
+	});
+	await Promise.all(promises);
+	users = await db.rank.getAll();
 	res.json(users);
 });
 
 // define the home page route
 router.get("/rank", async function (req: express.Request, res: express.Response): Promise<void> {
-	const users = await db.rank.get({ id: req.query.id });
+	let user = await db.rank.get({ id: req.query.id });
+
+	// Updating user avatar
+	const { avatar } = await bot.users.fetch(req.query.id);
+	await db.rank.update({ id: req.query.id }, { ...user, avatar: avatar || "0" });
+	user = await db.rank.get({ id: req.query.id });
 
 	const response =
-		users.id !== "0"
-			? users
+		user.id !== "0"
+			? user
 			: {
 					id: "0",
 					username: req.query.username,

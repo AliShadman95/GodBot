@@ -1,6 +1,6 @@
 {
 	"name": "godbot",
-	"script": "dist/core/bot.js",
+	"script": "dist/app/core/bot.js",
 	"watch": true,
 	"max_restarts": 9999,
 	"max_memory_restart": "1024M",

@@ -154,11 +154,13 @@ const get = async (search: Record<string, number | string | boolean>): Promise<D
 
 const getAll = async (): Promise<DiscordRankInterface[]> => {
 	try {
-		const users = await query.find({}, { _id: 0, __v: 0 }, function (error: string) {
-			if (error) {
-				logger.error(JSON.stringify(error || ""), "rank.ts:get()");
-			}
-		});
+		const users = await query
+			.find({}, { _id: 0, __v: 0 }, function (error: string) {
+				if (error) {
+					logger.error(JSON.stringify(error || ""), "rank.ts:get()");
+				}
+			})
+			.lean();
 		return (await users) || [];
 	} catch (error: any) {
 		logger.error(JSON.stringify(error || ""), "rank.ts:get()");
