@@ -19,7 +19,7 @@ router.get("/", async function (req: express.Request, res: express.Response): Pr
 	users.forEach(async (user) => {
 		const member = members.find((m) => m.id === user.id);
 		if (member) {
-			promises.push(db.rank.update({ id: user.id }, { ...user, avatar: member.avatar || "0" }));
+			promises.push(db.rank.update({ id: user.id }, { ...user, avatar: member?.user?.avatar || "0" }));
 		}
 	});
 	await Promise.all(promises);
