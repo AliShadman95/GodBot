@@ -1,6 +1,6 @@
 import discord from "@routes/api/discord";
 import db from "@routes/api/database";
-import { generateRankCard } from "@app/functions/common/generateRankCard";
+import { generateRankCard } from "@app/functions/canvas/generateRankCard";
 
 /**
  * command: !rank

@@ -5,6 +5,7 @@ import leaderboard from "@app/functions/slash/leaderboard";
 import rank from "@app/functions/slash/rank";
 import removexp from "@app/functions/slash/removexp";
 import version from "@app/functions/slash/version";
+import valorantInfo from "@app/functions/slash/valorantInfo";
 
 const slash = {
 	givexp,
@@ -14,7 +15,8 @@ const slash = {
 	version,
 	help,
 	info,
+	valorantInfo,
 };
 
-export { info, help, version, removexp, leaderboard, rank, givexp };
+export { info, help, version, removexp, leaderboard, rank, givexp, valorantInfo };
 export default slash;

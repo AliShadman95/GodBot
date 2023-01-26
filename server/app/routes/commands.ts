@@ -8,6 +8,7 @@ import removeXp from "@app/functions/commands/removeXp";
 import version from "@app/functions/commands/version";
 import help from "@app/functions/commands/help";
 import info from "@app/functions/commands/info";
+import valorantInfo from "@app/functions/commands/valorantInfo";
 
 const commands = {
 	commandsHandler,
@@ -20,7 +21,20 @@ const commands = {
 	version,
 	help,
 	info,
+	valorantInfo,
 };
 
-export { commandsHandler, launch, voiceDetection, removeXp, leaderboard, rank, giveXp, version, help, info };
+export {
+	commandsHandler,
+	launch,
+	voiceDetection,
+	removeXp,
+	leaderboard,
+	rank,
+	giveXp,
+	version,
+	help,
+	info,
+	valorantInfo,
+};
 export default commands;

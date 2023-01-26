@@ -59,6 +59,9 @@ const commandsHandler = async (): Promise<void> => {
 				case "info":
 					commands.info(ctx);
 					break;
+				case "valorantinfo":
+					commands.valorantInfo(ctx);
+					break;
 				default:
 					break;
 			}

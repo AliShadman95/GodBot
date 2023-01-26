@@ -18,6 +18,7 @@ import { help } from "../slash/help";
 import { leaderboard } from "../slash/leaderboard";
 import { removexp } from "../slash/removexp";
 import { rank } from "../slash/rank";
+import { valorantInfo } from "../slash/valorantInfo";
 
 const registerCommands = async () => {
 	const commands = [
@@ -28,6 +29,7 @@ const registerCommands = async () => {
 		removexp.toJSON(),
 		rank.toJSON(),
 		version.toJSON(),
+		valorantInfo.toJSON(),
 	];
 
 	const rest = new REST({ version: "9" }).setToken(process.env.BOT_TOKEN || "");

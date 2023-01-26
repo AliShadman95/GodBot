@@ -1,7 +1,6 @@
 import canvas, { registerFont } from "canvas"; // For canvas.
 import { DiscordSettingsRankInterface, DiscordCardInferface } from "@app/types/databases.type";
 registerFont("app/fonts/Inter-Regular.ttf", { family: "InterBold" });
-import get from "simple-get";
 
 interface userInfo {
 	username: string;
