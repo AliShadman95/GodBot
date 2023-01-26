@@ -13,6 +13,23 @@ import differenceInMinutes from "date-fns/differenceInMinutes";
 // Use this const for testing // daily = 1440
 const miniumMinutesForReward = 60;
 
+const mestieri = [
+	"dentista",
+	"muratore",
+	"architetto",
+	"content creator",
+	"programmatore",
+	"pizzaiolo",
+	"pasticcere",
+	"magazziniere",
+	"medico",
+	"pilota",
+	"pittore",
+	"scultore",
+	"pescatore",
+	"pilota",
+];
+
 const work = async (ctx): Promise<void> => {
 	const selectedUser = ctx.user;
 
@@ -23,7 +40,7 @@ const work = async (ctx): Promise<void> => {
 		discord.api.interactions.send(
 			ctx,
 			`Stai ancora lavorando, devi aspettare ancora ${
-				(miniumMinutesForReward - differenceInMinutes(Date.now(), user.lastWorkTime)) % 60
+				miniumMinutesForReward - differenceInMinutes(Date.now(), user.lastWorkTime)
 			} minuto/i.`,
 			"",
 		);
@@ -33,7 +50,7 @@ const work = async (ctx): Promise<void> => {
 	const { economy } = await db.settings.get({});
 
 	const coinAwarded =
-		Math.floor(Math.random() * (parseInt(economy.workRewardMin) - (parseInt(economy.workRewardMax) + 1))) +
+		Math.floor(Math.random() * (parseInt(economy.dailyRewardMax) - (parseInt(economy.workRewardMin) + 1))) +
 		parseInt(economy.workRewardMin);
 
 	// If working is done
@@ -87,7 +104,10 @@ const work = async (ctx): Promise<void> => {
 
 	discord.api.interactions.send(
 		ctx,
-		economy?.workInProgressMessage.replace("{user}", `<@${user.id}>` || "").replace("{hours}", "1"),
+		economy?.workInProgressMessage
+			.replace("{user}", `<@${user.id}>` || "")
+			.replace("{hours}", "1")
+			.replace("{mestiere}", `${mestieri[Math.floor(Math.random() * mestieri.length)]}` || ")"),
 		"",
 	);
 };

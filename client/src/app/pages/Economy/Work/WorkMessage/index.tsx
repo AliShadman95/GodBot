@@ -51,7 +51,7 @@ export default function WorkMessage({
                   rows={4}
                   multiline
                   helperText={
-                    "Usare {user} e {hours} per inserire il nome dell'utente e le ore totali."
+                    "Usare {user}, {hours} e {mestiere} per inserire il nome dell'utente, le ore totali e il mestiere."
                   }
                 />
               </FormControl>
