@@ -82,6 +82,9 @@ const commandsHandler = async (): Promise<void> => {
 				case "guess":
 					commands.guess(ctx);
 					break;
+				case "work":
+					commands.work(ctx);
+					break;
 				default:
 					break;
 			}

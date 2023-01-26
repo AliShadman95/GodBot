@@ -128,6 +128,42 @@ export interface DiscordSettingsEconomyInterface {
 	 *
 	 */
 	showCoinsMessage: string;
+	/**
+	 * Discord Settings Economy Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } workInProgressMessage - Message to send when user starts to work
+	 *
+	 */
+	workInProgressMessage: string;
+	/**
+	 * Discord Settings Economy Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } workDoneMessage - Message to send when user finish to work
+	 *
+	 */
+	workDoneMessage: string;
+	/**
+	 * Discord Settings Economy Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } workRewardMin - Minimum work reward
+	 *
+	 */
+	workRewardMin: string;
+	/**
+	 * Discord Settings Economy Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } workRewardMax - Maximum work reward
+	 *
+	 */
+	workRewardMax: string;
 }
 
 /**
@@ -766,6 +802,15 @@ export interface DiscordEconomyInterface {
 	 *
 	 */
 	discriminator: string;
+	/**
+	 * Discord Economy Interface
+	 * =====================
+	 *
+	 *
+	 * @param { number } lastWorkTime - last time user worked
+	 *
+	 */
+	lastWorkTime: number;
 }
 /**
  * Discord Games Interface

@@ -20,6 +20,7 @@ const schema = new Schema<DiscordEconomyInterface>({
 	discriminator: { type: String, default: "" },
 	lastDailyReward: { type: Number, default: 0 },
 	lastWeeklyReward: { type: Number, default: 0 },
+	lastWorkTime: { type: Number, default: 0 },
 });
 
 const query = model<DiscordEconomyInterface>("Economy", schema, "economy");

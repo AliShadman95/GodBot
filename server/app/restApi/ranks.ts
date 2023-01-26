@@ -12,6 +12,10 @@ router.use(function timeLog(req: express.Request, res: express.Response, next): 
 // define the home page route
 router.get("/", async function (req: express.Request, res: express.Response): Promise<void> {
 	let users = await db.rank.getAll();
+	const economy = await db.economy.getAll();
+
+	console.log("economy", economy);
+	console.log("users", users);
 
 	const guild = await bot.guilds.fetch(process.env.GUILD_ID || "");
 	const members = await guild.members.fetch();
@@ -24,7 +28,10 @@ router.get("/", async function (req: express.Request, res: express.Response): Pr
 	});
 	await Promise.all(promises);
 	users = await db.rank.getAll();
-	res.json(users);
+
+	const result = users.map((user) => ({ ...user, coins: economy.find((e) => e.id === user.id)?.coins || 0 }));
+
+	res.json(result);
 });
 
 // define the home page route

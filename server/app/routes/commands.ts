@@ -13,6 +13,7 @@ import weekly from "@app/functions/commands/weekly";
 import coins from "@app/functions/commands/coins";
 import dice from "@app/functions/commands/dice";
 import guess from "@app/functions/commands/guess";
+import work from "@app/functions/commands/work";
 
 const commands = {
 	commandsHandler,
@@ -30,6 +31,7 @@ const commands = {
 	coins,
 	dice,
 	guess,
+	work,
 };
 
 export {
@@ -48,5 +50,6 @@ export {
 	coins,
 	dice,
 	guess,
+	work,
 };
 export default commands;
