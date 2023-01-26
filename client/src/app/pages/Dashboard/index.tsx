@@ -21,6 +21,7 @@ import AlertInfo from '../Alert';
 import Weekly from '../Economy/Weekly';
 import EconomySettings from '../Economy/Settings';
 import Coins from '../Economy/Coins';
+import Work from '../Economy/Work';
 
 export default function Dashboard() {
   const dispatch = useDispatch();
@@ -92,6 +93,9 @@ export default function Dashboard() {
                 </Route>
                 <Route path={`${path}/economy/settings`}>
                   <EconomySettings />
+                </Route>
+                <Route path={`${path}/economy/work`}>
+                  <Work />
                 </Route>
               </Switch>
             </Grid>

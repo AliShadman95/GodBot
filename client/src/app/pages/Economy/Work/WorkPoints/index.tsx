@@ -12,8 +12,8 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Input from 'app/components/Fields/Input';
 import Title from 'app/components/Title';
 
-export default function DailyPoints({ control, watch, defaultValues, errors }) {
-  const dailyRewardMin = watch('dailyRewardMin');
+export default function WorkPoints({ control, watch, defaultValues, errors }) {
+  const workRewardMin = watch('workRewardMin');
 
   return (
     <React.Fragment>
@@ -23,15 +23,15 @@ export default function DailyPoints({ control, watch, defaultValues, errors }) {
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Title>Punti giornalieri</Title>
+          <Title>Punti lavoro</Title>
         </AccordionSummary>
         <AccordionDetails>
           <div style={{ marginBottom: '1em' }}>
             <Grid container>
               <Grid item xs={12} md={10}>
                 <Typography component="p" color="main" gutterBottom>
-                  Ogni volta che un utente usa il comando /daily, l'utente potrà
-                  ricevere monete.
+                  Ogni volta che un utente usa il comando /work e finisce di
+                  lavorare, l'utente potrà ricevere monete.
                 </Typography>
               </Grid>
             </Grid>
@@ -41,43 +41,43 @@ export default function DailyPoints({ control, watch, defaultValues, errors }) {
             <Grid item xs={12} md={6} lg={6}>
               <FormControl fullWidth>
                 <Input
-                  id="dailyRewardMin"
-                  name="dailyRewardMin"
+                  id="workRewardMin"
+                  name="workRewardMin"
                   label="Punti minimi giornalieri"
                   margin="normal"
                   control={control}
-                  defaultValue={defaultValues.dailyRewardMin}
+                  defaultValue={defaultValues.workRewardMin}
                   type="number"
                   min={10}
                   max={30}
                   rules={{ required: true, min: 10, max: 30 }}
-                  error={errors.dailyRewardMin}
+                  error={errors.workRewardMin}
                   helperText={
-                    errors.dailyRewardMin
+                    errors.workRewardMin
                       ? 'TI GIURO! (Il minimo è 10 e il massimo è 30)'
                       : ''
                   }
                 />
                 <Input
-                  id="dailyRewardMax"
-                  name="dailyRewardMax"
+                  id="workRewardMax"
+                  name="workRewardMax"
                   label="Punti massimi giornalieri"
                   margin="normal"
                   control={control}
-                  defaultValue={defaultValues.dailyRewardMax}
+                  defaultValue={defaultValues.workRewardMax}
                   type="number"
-                  min={parseInt(dailyRewardMin) + 1}
+                  min={parseInt(workRewardMin) + 1}
                   max={40}
                   rules={{
                     required: true,
-                    min: parseInt(dailyRewardMin) + 1,
+                    min: parseInt(workRewardMin) + 1,
                     max: 40,
                   }}
-                  error={errors.dailyRewardMax}
+                  error={errors.workRewardMax}
                   helperText={
-                    errors.dailyRewardMax
+                    errors.workRewardMax
                       ? `TI GIURO! (Il minimo è ${
-                          parseInt(dailyRewardMin) + 1
+                          parseInt(workRewardMin) + 1
                         } e il massimo è 40)`
                       : ''
                   }

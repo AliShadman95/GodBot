@@ -36,7 +36,7 @@ export default function WeeklyPoints({
               <Grid item xs={12} md={10}>
                 <Typography component="p" color="main" gutterBottom>
                   Ogni volta che un utente usa il comando /weekly, l'utente
-                  potrà ricevere punti.
+                  potrà ricevere monete.
                 </Typography>
               </Grid>
             </Grid>

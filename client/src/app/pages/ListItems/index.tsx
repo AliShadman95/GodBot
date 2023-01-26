@@ -13,6 +13,7 @@ import Settings from '@mui/icons-material/Settings';
 import Divider from '@mui/material/Divider';
 import TodayIcon from '@mui/icons-material/Today';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
 
 export const MainListItems = () => {
   const history = useHistory();
@@ -112,6 +113,17 @@ export const MainListItems = () => {
           <AttachMoneyIcon />
         </ListItemIcon>
         <ListItemText primary="/coins" />
+      </ListItemButton>
+
+      <ListItemButton
+        onClick={() => {
+          history.push(`${url}/economy/work`);
+        }}
+      >
+        <ListItemIcon>
+          <WorkOutlineIcon />
+        </ListItemIcon>
+        <ListItemText primary="/work" />
       </ListItemButton>
 
       <ListItemButton
