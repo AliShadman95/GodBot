@@ -9,6 +9,12 @@ import version from "@app/functions/commands/version";
 import help from "@app/functions/commands/help";
 import info from "@app/functions/commands/info";
 import valorantInfo from "@app/functions/commands/valorantInfo";
+import daily from "@app/functions/commands/daily";
+import weekly from "@app/functions/commands/weekly";
+import coins from "@app/functions/commands/coins";
+import dice from "@app/functions/commands/dice";
+import guess from "@app/functions/commands/guess";
+import work from "@app/functions/commands/work";
 
 const commands = {
 	commandsHandler,
@@ -22,6 +28,12 @@ const commands = {
 	help,
 	info,
 	valorantInfo,
+	daily,
+	weekly,
+	coins,
+	dice,
+	guess,
+	work,
 };
 
 export {
@@ -36,5 +48,11 @@ export {
 	help,
 	info,
 	valorantInfo,
+	daily,
+	weekly,
+	coins,
+	dice,
+	guess,
+	work,
 };
 export default commands;

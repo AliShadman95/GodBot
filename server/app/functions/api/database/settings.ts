@@ -13,6 +13,7 @@ import { logger } from "@app/functions/utils/logger";
 
 const schema = new Schema<DiscordSettingsInterface>({
 	rank: { type: Object, default: {} },
+	economy: { type: Object, default: {} },
 });
 
 const query = model<DiscordSettingsInterface>("Settings", schema, "settings");

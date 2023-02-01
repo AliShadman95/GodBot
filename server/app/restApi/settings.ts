@@ -124,4 +124,58 @@ router.post("/backgroundImage", async function (req: express.Request, res: expre
 	}
 });
 
+router.post("/coinIcon", async function (req: express.Request, res: express.Response): Promise<void> {
+	if (!req.files) {
+		res.status(500).send("No files sent");
+		return;
+	}
+
+	try {
+		const image = req.files.file;
+
+		const base64 = Buffer.from(image.data).toString("base64");
+		const data = await imgbbUploader({
+			apiKey: process.env.IMGBB_TOKEN,
+			name: `coin-${process.env.FRONTEND_URL === "http://localhost:3006" ? "dev" : "prod"}`,
+			base64string: base64,
+		});
+
+		if (!data) {
+			res.status(500).send("Errore nell'upload dell'immagine");
+		}
+
+		const guild = await discord.api.guild.getGuild();
+
+		const godBotEmoji = (await guild.emojis.fetch()).find((e) => e.name === "godbot");
+
+		if (godBotEmoji) {
+			await guild.emojis.delete(godBotEmoji.id);
+		}
+		await guild.emojis.create(data.display_url, "godbot");
+
+		const settings = await db.settings.get({});
+
+		const copySettings = JSON.parse(JSON.stringify(settings));
+
+		await db.settings.update(
+			{},
+			{
+				...copySettings,
+				economy: {
+					...copySettings.economy,
+					coinIcon: data.display_url,
+				},
+			},
+		);
+
+		const newData = await db.settings.get({});
+
+		res.json(newData || "Errore nella modifica dei settaggi / upload file");
+	} catch (error) {
+		console.log(error);
+		res.status(500).send("Errore nell'upload dell'immagine");
+		return;
+	}
+});
+
 module.exports = router;

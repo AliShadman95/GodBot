@@ -79,6 +79,19 @@ const updateEmbedReply = async (ctx: any, embeds: any[], components: any = null)
 	}
 };
 
+const updateReply = async (ctx: any, text: string): Promise<any> => {
+	if (text) {
+		let message;
+		try {
+			message = await ctx.editReply(text);
+			return message;
+		} catch (err: any) {
+			console.log(err);
+			logger.error(JSON.stringify(err), "interactions.ts:updateEmbedReply()");
+		}
+	}
+};
+
 const resetSelectInteraction = async (ctx: any): Promise<any> => {
 	if (ctx) {
 		let message;
@@ -107,6 +120,7 @@ export {
 	resetSelectInteraction,
 	updateEmbedReply,
 	followUp,
+	updateReply,
 };
 export default {
 	getUsername,
@@ -119,4 +133,5 @@ export default {
 	resetSelectInteraction,
 	updateEmbedReply,
 	followUp,
+	updateReply,
 };

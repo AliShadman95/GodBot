@@ -16,7 +16,8 @@
  * @Context: message.author.User
  *
  *
- * @param { Record<string, string | number | boolean> } id - Object with all the settings for the feature rank
+ * @param { Record<string, string | number | boolean> } rank - Object with all the settings for the feature rank
+ * @param { Record<string, string | number | boolean> } economy - Object with all the settings for the feature economy
  *
  */
 export interface DiscordSettingsInterface {
@@ -25,10 +26,144 @@ export interface DiscordSettingsInterface {
 	 * =====================
 	 *
 	 *
-	 * @param { Record<string, string | number | boolean> } id - Object with all the settings for the feature rank
+	 * @param { Record<string, string | number | boolean> } rank - Object with all the settings for the feature rank
 	 *
 	 */
 	rank: DiscordSettingsRankInterface;
+	/**
+	 * Discord Settings Interface
+	 * =====================
+	 *
+	 *
+	 * @param { Record<string, string | number | boolean> } economy - Object with all the settings for the feature economy
+	 *
+	 */
+	economy: DiscordSettingsEconomyInterface;
+}
+
+/**
+ * Discord Settings Economy Interface
+ * =====================
+ *
+ *
+ *
+ * @param {  string } coinName - Name of the coin
+ * @param { string } dailyRewardMin - Minimum daily reward
+ * @param { string } dailyMaxReward - Maximum daily reward
+ * @param { string } weeklyRewardMin - Minimum weekly reward
+ * @param { string } weeklyMaxReqrd - Maximum weekly reward
+ * @param { string } showCoinsMessage - Message to send when the user wants to see his coins
+ *
+ */
+export interface DiscordSettingsEconomyInterface {
+	/**
+	 * Discord Settings Economy Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } coinName - Name of the coin
+	 *
+	 */
+	coinName: string;
+	/**
+	 * Discord Settings Economy Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } dailyRewardMin - Minimum daily reward
+	 *
+	 */
+	dailyRewardMin: string;
+	/**
+	 * Discord Settings Economy Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } dailyRewardMax - Maximum daily reward
+	 *
+	 */
+	dailyRewardMax: string;
+	/**
+	 * Discord Settings Economy Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } weeklyRewardMin - Minimum weekly reward
+	 *
+	 */
+	weeklyRewardMin: string;
+	/**
+	 * Discord Settings Economy Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } weeklyRewardMax - Maximum weekly reward
+	 *
+	 */
+	weeklyRewardMax: string;
+	/**
+	 * Discord Settings Economy Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } dailyRewardMessage - Message to send when the daily reward is given
+	 *
+	 */
+	dailyRewardMessage: string;
+	/**
+	 * Discord Settings Economy Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } weeklyRewardMessage - Message to send when the weekly reward is given
+	 *
+	 */
+	weeklyRewardMessage: string;
+	/**
+	 * Discord Settings Economy Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } showCoinsMessage - Message to send when the user wants to see his coins
+	 *
+	 */
+	showCoinsMessage: string;
+	/**
+	 * Discord Settings Economy Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } workInProgressMessage - Message to send when user starts to work
+	 *
+	 */
+	workInProgressMessage: string;
+	/**
+	 * Discord Settings Economy Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } workDoneMessage - Message to send when user finish to work
+	 *
+	 */
+	workDoneMessage: string;
+	/**
+	 * Discord Settings Economy Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } workRewardMin - Minimum work reward
+	 *
+	 */
+	workRewardMin: string;
+	/**
+	 * Discord Settings Economy Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } workRewardMax - Maximum work reward
+	 *
+	 */
+	workRewardMax: string;
 }
 
 /**
@@ -243,6 +378,7 @@ export interface DiscordSettingsRankInterface {
  * @param { string } points - points of user
  * @param { number } messageAwarded - points awarded per message
  * @param { number } secondsInVoiceChanel - seconds in voice channel
+ * @param { string } discriminator - user discriminator from discord
  *
  */
 export interface DiscordRankInterface {
@@ -574,4 +710,184 @@ export interface DiscordVoiceChannelInterface {
 	 *
 	 */
 	joinTime: number;
+}
+
+/**
+ * Discord Economy Interface
+ * =====================
+ *
+ * @Context: message.author.User
+ *
+ *
+ * @param { string } id - discord id
+ * @param { boolean } bot - is user a bot
+ * @param { string } username - user username from discord
+ * @param { string } avatar - avatar code from discord
+ * @param { string } coins - coins of user
+ * @param { number } lastDailyReward - time when user last received daily reward
+ * @param { number } lastWeeklyReward - time when user last received weekly reward
+ * @param { string } discriminator - user discriminator from discord
+ *
+ */
+export interface DiscordEconomyInterface {
+	/**
+	 * Discord Economy Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } id - discord id
+	 *
+	 */
+	id: string;
+	/**
+	 * Discord Economy Interface
+	 * =====================
+	 *
+	 *
+	 * @param { boolean } bot - is user a bot
+	 *
+	 */
+	bot?: boolean;
+	/**
+	 * Discord Economy Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } username - user username from discord
+	 *
+	 */
+	username?: string;
+	/**
+	 * Discord Economy Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } avatar - avatar code from discord
+	 *
+	 */
+	avatar?: string;
+	/**
+	 * Discord Economy Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } coins - coins of user
+	 *
+	 */
+	coins: string;
+	/**
+	 * Discord Economy Interface
+	 * =====================
+	 *
+	 *
+	 * @param { number } lastDailyReward - time when user last received daily reward
+	 *
+	 */
+	lastDailyReward: number;
+	/**
+	 * Discord Economy Interface
+	 * =====================
+	 *
+	 *
+	 * @param { number } lastWeeklyReward - time when user last received weekly reward
+	 *
+	 */
+	lastWeeklyReward: number;
+	/**
+	 * Discord Economy Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } discriminator - user discriminator from discord
+	 *
+	 */
+	discriminator: string;
+	/**
+	 * Discord Economy Interface
+	 * =====================
+	 *
+	 *
+	 * @param { number } lastWorkTime - last time user worked
+	 *
+	 */
+	lastWorkTime: number;
+}
+/**
+ * Discord Games Interface
+ * =====================
+ *
+ * @Context: message.author.User
+ *
+ *
+ * @param { string } guess - guess
+ *
+ */
+export interface DiscordGamesInterface {
+	/**
+	 * Discord Economy Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } guess - guess game info
+	 *
+	 */
+	guess: DiscordGuessInterface[];
+}
+/**
+ * Discord Guess Interface
+ * =====================
+ *
+ * @Context: message.author.User
+ *
+ *
+ * @param { string } userId - id of user playing game
+ * @param { string } numberToGuess - number to guess
+ *
+ */
+export interface DiscordGuessInterface {
+	/**
+	 * Discord Guess Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } userId - id of user playing game
+	 *
+	 */
+	userId: string;
+	/**
+	 * Discord Guess Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } username - username of the user playing game
+	 *
+	 */
+	username: string;
+	/**
+	 * Discord Guess Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } numberToGuess - number to guess
+	 *
+	 */
+	numberToGuess: string;
+	/**
+	 * Discord Guess Interface
+	 * =====================
+	 *
+	 *
+	 * @param { string } coinsPlayed - amount of coins user played
+	 *
+	 */
+	coinsPlayed: string;
+	/**
+	 * Discord Guess Interface
+	 * =====================
+	 *
+	 *
+	 * @param { number } attempts - amount of attempts user made
+	 *
+	 */
+	attempts: number;
 }

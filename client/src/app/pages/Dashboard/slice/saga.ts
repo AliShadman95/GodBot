@@ -122,12 +122,33 @@ function* uploadImage({ payload }) {
     yield put(dashboardActions.uploadImageError(response.data));
   }
 }
+function* uploadCoinIcon({ payload }) {
+  console.log(payload);
+  yield put(dashboardActions.uploadCoinIconLoading());
+
+  const formData = new FormData();
+
+  formData.append('file', payload.file);
+
+  const response = yield call(poweredFetch, {
+    method: 'POST',
+    url: `${process.env.REACT_APP_SERVER_URL}/settings/coinIcon`,
+    data: formData,
+    headers: { 'Content-Type': 'multipart/formdata' },
+  });
+  if (response.status === 200) {
+    yield put(dashboardActions.uploadCoinIconSuccess(response.data));
+  } else {
+    yield put(dashboardActions.uploadCoinIconError(response.data));
+  }
+}
 
 export function* dashboardSaga() {
   try {
     yield all([
       takeLatest(dashboardActions.getSettingsAction, getSettings),
       takeLatest(dashboardActions.uploadImageAction, uploadImage),
+      takeLatest(dashboardActions.uploadCoinIconAction, uploadCoinIcon),
       takeLatest(dashboardActions.getAllRanksAction, getAllRanks),
       takeLatest(dashboardActions.getRankUserAction, getRankUser),
       takeLatest(dashboardActions.getVoiceChannelsAction, getVoiceChannels),

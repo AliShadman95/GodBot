@@ -10,6 +10,8 @@ import bot from "@app/core/token";
 import discord from "@routes/api/discord";
 import commands from "@app/routes/commands";
 import addPointsHandler from "@app/functions/common/addPointsHandler";
+import db from "@routes/api/database";
+import games from "@app/routes/games";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const wait = require("node:timers/promises").setTimeout;
 
@@ -21,6 +23,12 @@ const wait = require("node:timers/promises").setTimeout;
  */
 const commandsHandler = async (): Promise<void> => {
 	bot.on("messageCreate", async (ctx): Promise<void> => {
+		const gamesDb = await db.games.get({});
+
+		if (gamesDb?.guess.some((game) => game.userId === discord.api.message.getUserID(ctx)) && Number(ctx.content)) {
+			await games.guess(ctx, gamesDb);
+		}
+
 		if (discord.api.message.isBot(ctx)) {
 			return;
 		}
@@ -61,6 +69,24 @@ const commandsHandler = async (): Promise<void> => {
 					break;
 				case "valorantinfo":
 					commands.valorantInfo(ctx);
+					break;
+				case "daily":
+					commands.daily(ctx);
+					break;
+				case "weekly":
+					commands.weekly(ctx);
+					break;
+				case "coins":
+					commands.coins(ctx);
+					break;
+				case "dice":
+					commands.dice(ctx);
+					break;
+				case "guess":
+					commands.guess(ctx);
+					break;
+				case "work":
+					commands.work(ctx);
 					break;
 				default:
 					break;

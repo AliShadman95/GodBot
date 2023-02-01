@@ -36,7 +36,6 @@ const UploadImage = ({
   const handleClose = () => setOpen(false);
 
   const uploadImage = () => {
-    console.log('CONFIRMING');
     dispatch(
       dashboardActions.uploadImageAction({
         file,

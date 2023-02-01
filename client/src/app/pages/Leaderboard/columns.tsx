@@ -70,6 +70,7 @@ export const columns = isAdmin => [
     flex: 4,
     minWidth: 150,
   },
+  { field: 'coins', headerName: 'COINS', flex: 0.6, minWidth: 100 },
   { field: 'messageAwarded', headerName: 'MESSAGGI', flex: 0.6, minWidth: 100 },
   {
     field: 'minutesInVoiceChannel',

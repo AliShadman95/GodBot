@@ -1,5 +1,5 @@
 /**
- * Migration script for the database.
+ * Database Api Routes
  * =====================
  *
  *                Alì Shadman [@AliShadman95] (https://github.com/AliShadman95)
@@ -12,6 +12,8 @@ import rank from "@app/functions/api/database/rank";
 import settings from "@app/functions/api/database/settings";
 import users from "@app/functions/api/database/users";
 import voiceChannel from "@app/functions/api/database/voiceChannel";
+import economy from "@app/functions/api/database/economy";
+import games from "@app/functions/api/database/games";
 
 const db = {
 	connection: connection,
@@ -19,6 +21,8 @@ const db = {
 	settings: settings,
 	users: users,
 	voiceChannel: voiceChannel,
+	economy: economy,
+	games: games,
 };
 
 export { db };
