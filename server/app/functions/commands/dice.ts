@@ -84,6 +84,7 @@ const dice = async (ctx): Promise<void> => {
 	discord.api.interactions.updateReply(
 		ctx,
 		`🎲 ${selectedUser.username} ottiene **${userFirstDice}** e **${userSecondDice}**...`,
+		"",
 	);
 
 	await wait(3000);
@@ -91,6 +92,7 @@ const dice = async (ctx): Promise<void> => {
 	discord.api.interactions.updateReply(
 		ctx,
 		`🎲 ${selectedUser.username}, il tuo avversario tira i dati e... ottiene **${botFirstDice}** e **${botSecondDice}**...`,
+		"",
 	);
 
 	await wait(3000);
@@ -104,6 +106,7 @@ const dice = async (ctx): Promise<void> => {
 				? `hai ***pareggiato*** e hai ottenuto 0 ${coinName} ${coinEmoji}`
 				: `hai ***perso*** ${parseInt(user.coins) - newCoins} ${coinName} ${coinEmoji}`
 		}`,
+		"",
 	);
 };
 

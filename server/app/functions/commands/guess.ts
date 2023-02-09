@@ -85,6 +85,7 @@ const guess = async (ctx): Promise<void> => {
 	discord.api.interactions.updateReply(
 		ctx,
 		`:thinking: ${selectedUser.username}, la mistery machine è pronta, hai ***5 tentativi*** per indovinare il numero da 1 a 100... Scrivi un numero`,
+		"",
 	);
 };
 

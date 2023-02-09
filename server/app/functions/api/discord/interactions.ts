@@ -79,11 +79,11 @@ const updateEmbedReply = async (ctx: any, embeds: any[], components: any = null)
 	}
 };
 
-const updateReply = async (ctx: any, text: string): Promise<any> => {
-	if (text) {
+const updateReply = async (ctx: any, text: string, image: any): Promise<any> => {
+	if (text || image) {
 		let message;
 		try {
-			message = await ctx.editReply(text);
+			message = await ctx.editReply(image ? { files: [{ attachment: image }] } : text);
 			return message;
 		} catch (err: any) {
 			console.log(err);

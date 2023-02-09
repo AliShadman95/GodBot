@@ -1,6 +1,5 @@
-import canvas, { registerFont } from "canvas"; // For canvas.
+import Canvas from "@app/functions/canvas/canvas";
 import { DiscordSettingsRankInterface, DiscordCardInferface } from "@app/types/databases.type";
-registerFont("app/fonts/Inter-Regular.ttf", { family: "InterBold" });
 
 interface userInfo {
 	username: string;
@@ -30,7 +29,7 @@ const generateBackground = async (
 ): Promise<void> => {
 	if (isImage && image !== "") {
 		try {
-			const a = await canvas.loadImage(image);
+			const a = await Canvas.loadImage(image);
 			if (!a) {
 				return;
 			}
@@ -165,7 +164,7 @@ const generateAvatar = async (ctx, c, { avatar }: userInfo): Promise<void> => {
 	ctx.closePath();
 	ctx.clip();
 
-	const a = await canvas.loadImage(avatar);
+	const a = await Canvas.loadImage(avatar);
 
 	// Compute aspectration
 	const aspect = a.height / a.width;
@@ -182,7 +181,7 @@ const generateRankCard = async (
 	userInfo: userInfo,
 ): Promise<Buffer> => {
 	// Create canvas
-	const c = canvas.createCanvas(1342, 400);
+	const c = Canvas.createCanvas(1342, 400);
 	const ctx = c.getContext("2d");
 
 	const currentLevelIndex =

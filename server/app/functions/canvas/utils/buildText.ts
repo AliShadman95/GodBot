@@ -1,4 +1,4 @@
-export const buildText = async function ({ ctx, text, size, x, y, color, align, font, rotate } = {}) {
+const buildText = async function ({ ctx, text, size, x, y, color, align, font, rotate }) {
 	ctx.font = `${size}px ${font ? font : "DinNext"}`;
 	ctx.fillStyle = color ? color : "#ffffff";
 	ctx.textAlign = align ? align : "left";
@@ -11,3 +11,6 @@ export const buildText = async function ({ ctx, text, size, x, y, color, align, 
 		ctx.fillText(text, x, y);
 	}
 };
+
+export { buildText };
+export default buildText;

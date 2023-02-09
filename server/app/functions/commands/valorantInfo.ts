@@ -1,5 +1,6 @@
 import discord from "@routes/api/discord";
-import configs from "@app/configs/config";
+import { generateValorantStats } from "@app/functions/canvas/generateValorantStats";
+import valorant from "@routes/api/valorant";
 
 /**
  * command: !valorantinfo
@@ -9,13 +10,13 @@ import configs from "@app/configs/config";
  * @param ctx
  */
 const valorantInfo = async (ctx): Promise<void> => {
-	/* discord.api.interactions.send(
-		ctx,
-		`Ecco il link per accedere alla leaderboard: ${process.env.FRONTEND_URL}/leaderboard/${Math.floor(
-			Math.random() * 10,
-		)}`,
-		"",
-	); */
+	await ctx.deferReply();
+
+	const stats = await valorant.api.matches.getStats("bax", "126");
+
+	const card = await generateValorantStats(stats);
+
+	discord.api.interactions.updateReply(ctx, "", card);
 };
 
 export { valorantInfo };
