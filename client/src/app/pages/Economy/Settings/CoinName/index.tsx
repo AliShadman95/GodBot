@@ -39,7 +39,6 @@ export default function CoinName({
   const handleClose = () => setOpen(false);
 
   const uploadImage = () => {
-    console.log('CONFIRMING');
     dispatch(
       dashboardActions.uploadCoinIconAction({
         file,
@@ -124,7 +123,6 @@ export default function CoinName({
                         const file = e.target.files[0];
 
                         if (file.size > 256000) {
-                          console.log('SHOWING ALERT');
                           dispatch(
                             alertActions.showAlert(
                               'La dimensione del file supera i 256kb',

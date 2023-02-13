@@ -14,9 +14,6 @@ router.get("/", async function (req: express.Request, res: express.Response): Pr
 	let users = await db.rank.getAll();
 	const economy = await db.economy.getAll();
 
-	console.log("economy", economy);
-	console.log("users", users);
-
 	const guild = await bot.guilds.fetch(process.env.GUILD_ID || "");
 	const members = await guild.members.fetch();
 	const promises: any = [];

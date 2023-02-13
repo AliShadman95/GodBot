@@ -26,6 +26,9 @@ const help = async (ctx): Promise<void> => {
 		case "games":
 			gameHelp(ctx, isFromSelect);
 			break;
+		case "valorant":
+			valorantHelp(ctx, isFromSelect);
+			break;
 		default:
 			mainHelp(ctx);
 			break;
@@ -49,6 +52,25 @@ const rankHelp = (ctx, isFromSelect: boolean) => {
 
 			{ name: "`/leaderboard`", value: "Ottieni un link per accedere alla leaderboard." },
 		);
+
+	if (isFromSelect) {
+		discord.api.interactions.followUp(ctx, [embedMessage]);
+		return;
+	}
+	discord.api.interactions.sendEmbeded(ctx, [embedMessage]);
+};
+
+const valorantHelp = (ctx, isFromSelect: boolean) => {
+	const embedMessage = new MessageEmbed()
+		.setColor("#0099ff")
+		.setDescription(
+			"Questo plugin ti permette di ottenere statistiche di un giocatore di Valorant o altre informazioni riguardo al gioco.",
+		)
+		.setAuthor({ name: "GODBOT - Valorant", iconURL: "https://cdn-icons-png.flaticon.com/512/2534/2534504.png" })
+		.addFields({
+			name: "`/valstats [riot-id]`",
+			value: "Ottieni informazioni sulle ultime 20 partite di un giocatore di Valorant",
+		});
 
 	if (isFromSelect) {
 		discord.api.interactions.followUp(ctx, [embedMessage]);
@@ -124,6 +146,7 @@ const mainHelp = (ctx) => {
 			{ name: "Economy", value: "`/help economy`", inline: true },
 			{ name: "Generale", value: "`/help generale`", inline: true },
 			{ name: "Games", value: "`/help games`", inline: true },
+			{ name: "Valorant", value: "`/help valorant`", inline: true },
 		);
 
 	const row = new MessageActionRow().addComponents(
@@ -150,6 +173,11 @@ const mainHelp = (ctx) => {
 					label: "Games",
 					description: "Lista dei giochi disponibili.",
 					value: "games",
+				},
+				{
+					label: "Valorant",
+					description: "Ottieni info riguardo a Valorant.",
+					value: "valorant",
 				},
 			]),
 	);

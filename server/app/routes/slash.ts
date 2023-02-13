@@ -5,7 +5,7 @@ import leaderboard from "@app/functions/slash/leaderboard";
 import rank from "@app/functions/slash/rank";
 import removexp from "@app/functions/slash/removexp";
 import version from "@app/functions/slash/version";
-import valorantInfo from "@app/functions/slash/valorantInfo";
+import valstats from "@app/functions/slash/valstats";
 import daily from "@app/functions/slash/daily";
 import weekly from "@app/functions/slash/weekly";
 import coins from "@app/functions/slash/coins";
@@ -27,23 +27,8 @@ const slash = {
 	dice,
 	guess,
 	work,
-	valorantInfo,
+	valstats,
 };
 
-export {
-	info,
-	help,
-	version,
-	removexp,
-	leaderboard,
-	rank,
-	givexp,
-	daily,
-	weekly,
-	coins,
-	dice,
-	guess,
-	work,
-	valorantInfo,
-};
+export { info, help, version, removexp, leaderboard, rank, givexp, daily, weekly, coins, dice, guess, work, valstats };
 export default slash;

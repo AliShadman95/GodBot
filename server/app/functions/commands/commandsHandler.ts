@@ -67,8 +67,8 @@ const commandsHandler = async (): Promise<void> => {
 				case "info":
 					commands.info(ctx);
 					break;
-				case "valorantinfo":
-					commands.valorantInfo(ctx);
+				case "valstats":
+					commands.valstats(ctx);
 					break;
 				case "daily":
 					commands.daily(ctx);

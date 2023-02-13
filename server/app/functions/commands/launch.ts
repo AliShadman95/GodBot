@@ -18,7 +18,7 @@ import { help } from "../slash/help";
 import { leaderboard } from "../slash/leaderboard";
 import { removexp } from "../slash/removexp";
 import { rank } from "../slash/rank";
-import { valorantInfo } from "../slash/valorantInfo";
+import { valstats } from "../slash/valstats";
 import { daily } from "../slash/daily";
 import { weekly } from "../slash/weekly";
 import { coins } from "../slash/coins";
@@ -35,7 +35,7 @@ const registerCommands = async () => {
 		removexp.toJSON(),
 		rank.toJSON(),
 		version.toJSON(),
-		valorantInfo.toJSON(),
+		valstats.toJSON(),
 		daily.toJSON(),
 		weekly.toJSON(),
 		coins.toJSON(),

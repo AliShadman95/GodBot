@@ -1,14 +1,14 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 
-const valorantInfo = new SlashCommandBuilder()
-	.setName("valorantinfo")
+const valstats = new SlashCommandBuilder()
+	.setName("valstats")
 	.setDescription("Ottieni informazioni su un giocatore di Valorant")
 	.addStringOption((option) =>
 		option
-			.setName("username")
+			.setName("riot-id")
 			.setDescription("Il nome utente del giocatore di Valorant incluso il tag")
 			.setRequired(true),
 	);
 
-export { valorantInfo };
-export default { valorantInfo };
+export { valstats };
+export default { valstats };

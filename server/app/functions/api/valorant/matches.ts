@@ -44,6 +44,10 @@ const getStats = async (name: string, tag: string): Promise<any> => {
 
 	const matchesIds = await getLastTwentyMatchesIds(name, tag, puuid);
 
+	if (!matchesIds || !puuid) {
+		return null;
+	}
+
 	const promises: Promise<any>[] = [];
 
 	for (const matchId of matchesIds) {
@@ -52,10 +56,13 @@ const getStats = async (name: string, tag: string): Promise<any> => {
 
 	const matchesData = await Promise.all(promises);
 
-	const stats = matchesData.map((match) => {
+	if (!matchesData || matchesData?.some((m) => !m)) {
+		return null;
+	}
+
+	const stats = matchesData?.map((match) => {
 		const player = match.players?.all_players?.find((p) => p.puuid === puuid);
 
-		console.log(player, "player");
 		return {
 			stats: player?.stats,
 			teams: match.teams,

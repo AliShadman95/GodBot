@@ -8,7 +8,7 @@ import removeXp from "@app/functions/commands/removeXp";
 import version from "@app/functions/commands/version";
 import help from "@app/functions/commands/help";
 import info from "@app/functions/commands/info";
-import valorantInfo from "@app/functions/commands/valorantInfo";
+import valstats from "@app/functions/commands/valstats";
 import daily from "@app/functions/commands/daily";
 import weekly from "@app/functions/commands/weekly";
 import coins from "@app/functions/commands/coins";
@@ -27,7 +27,7 @@ const commands = {
 	version,
 	help,
 	info,
-	valorantInfo,
+	valstats,
 	daily,
 	weekly,
 	coins,
@@ -47,7 +47,7 @@ export {
 	version,
 	help,
 	info,
-	valorantInfo,
+	valstats,
 	daily,
 	weekly,
 	coins,

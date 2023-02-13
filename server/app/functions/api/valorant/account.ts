@@ -13,9 +13,9 @@ const getAccount = async (name: string, tag: string): Promise<any> => {
 };
 
 const getPuuid = async (name: string, tag: string): Promise<any> => {
-	const { data } = await getAccount(name, tag);
+	const response = await getAccount(name, tag);
 
-	return data?.puuid;
+	return response?.data?.puuid || null;
 };
 
 export { getPuuid };

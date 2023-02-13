@@ -5,5 +5,5 @@ export const buildBackground = async function (fileName) {
 	const ctx = canvas.getContext("2d");
 	const background = await Canvas.loadImage(`app/assets/${fileName}.png`);
 	ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
-	return canvas;
+	return { canvas, ctx };
 };
