@@ -22,8 +22,17 @@ const getRawData = async (type: string, puuid: string, queries: string): Promise
 	}
 };
 
-const getLastTwentyMatchesIds = async (name: string, tag: string, puuid: string): Promise<any> => {
-	const data = await getRawData("matchhistory", puuid, "endIndex=19");
+const getLastTwentyMatchesIds = async (puuid: string): Promise<any> => {
+	const data = await getRawData("matchhistory", puuid, "endIndex=20");
+
+	const result = data?.History;
+	const noDeathmatchResults = result?.filter((m: any) => m.QueueID !== "deathmatch");
+
+	if (result && noDeathmatchResults.length < 20) {
+		const extraMatches = await getRawData("matchhistory", puuid, "endIndex=20&queue=unrated");
+
+		return [...noDeathmatchResults, ...extraMatches?.History].splice(0, 20).map((m: any) => m.MatchID);
+	}
 
 	return data?.History?.map((d) => d.MatchID) || null;
 };
@@ -42,7 +51,7 @@ const getSingleMatchDetails = async (matchId: string): Promise<any> => {
 const getStats = async (name: string, tag: string): Promise<any> => {
 	const puuid = await valorant.api.account.getPuuid(name, tag);
 
-	const matchesIds = await getLastTwentyMatchesIds(name, tag, puuid);
+	const matchesIds = await getLastTwentyMatchesIds(puuid);
 
 	if (!matchesIds || !puuid) {
 		return null;
